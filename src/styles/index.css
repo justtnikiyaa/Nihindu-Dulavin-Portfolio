@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 7%;
+    --foreground: 220 10% 92%;
+    --card: 220 18% 11%;
+    --card-foreground: 220 10% 92%;
+    --primary: 18 90% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 16% 16%;
+    --secondary-foreground: 220 10% 85%;
+    --muted: 220 14% 14%;
+    --muted-foreground: 220 10% 55%;
+    --border: 220 14% 18%;
+    --input: 220 14% 18%;
+    --ring: 18 90% 55%;
+    --gradient-primary: linear-gradient(135deg, hsl(18 90% 55%), hsl(30 95% 60%));
+    --shadow-glow: 0 0 30px hsl(18 90% 55% / 0.15);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    @apply no-underline;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .glow-shadow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .section-padding {
+    padding: 5rem 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+}
