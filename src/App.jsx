@@ -1,5 +1,6 @@
 ﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import {
   FiArrowDown,
   FiCode,
@@ -18,6 +19,10 @@ import {
   FiX,
   FiZap,
 } from 'react-icons/fi'
+
+const EMAILJS_PUBLIC_KEY = 'M3iuh6A6Ea0oJZavH'
+const EMAILJS_TEMPLATE_ID = 'template_90o6olm'
+const EMAILJS_SERVICE_ID = 'service_sa9ob7e'
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -594,20 +599,33 @@ function Services() {
 function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [sending, setSending] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState('')
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setSending(true)
+    setSubmitMessage('')
 
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${form.name}`)
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`)
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+          to_name: 'Nihindu Dulavin',
+        },
+        EMAILJS_PUBLIC_KEY
+      )
 
-    window.location.href = `mailto:nihindudulavin02@gmail.com?subject=${subject}&body=${body}`
-
-    setTimeout(() => {
+      setSubmitMessage('Message sent successfully.')
       setSending(false)
       setForm({ name: '', email: '', message: '' })
-    }, 500)
+    } catch (error) {
+      setSending(false)
+      setSubmitMessage('Failed to send message. Please try again.')
+    }
   }
 
   return (
@@ -727,6 +745,7 @@ function Contact() {
             >
               {sending ? 'Sending...' : 'Send Message'}
             </button>
+            {submitMessage && <p className="text-sm text-muted-foreground">{submitMessage}</p>}
           </motion.form>
         </div>
       </div>
@@ -771,4 +790,5 @@ function App() {
 }
 
 export default App
+
 
