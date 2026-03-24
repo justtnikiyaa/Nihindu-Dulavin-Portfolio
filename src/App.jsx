@@ -71,6 +71,14 @@ const projects = [
     image: '/images/project-chat.jpg',
     github: 'https://github.com/justtnikiyaa/chat-app.git',
   },
+  {
+    title: 'AutoRentHub',
+    description:
+      'A full-stack vehicle rental platform for cars and bikes with secure authentication, booking management, online payments, and admin tools.',
+    tech: ['MERN Stack', 'Authentication', 'Payments'],
+    image: '/images/project-autorenthub.jpg',
+    github: 'https://github.com/justtnikiyaa/AutoRentHub.git',
+  },
 ]
 
 const services = [
