@@ -59,6 +59,7 @@ const projects = [
     tech: ['React', 'CSS', 'JavaScript'],
     image: '/images/project-sehera.jpg',
     github: 'https://github.com/justtnikiyaa/Sehera-Promotional-Apparels.git',
+    preview: 'https://sehera-promotional-apparels.netlify.app/',
   },
   {
     title: 'Unigig a freelance marketplace',
@@ -67,6 +68,7 @@ const projects = [
     tech: ['MERN Stack', 'Node.js', 'MongoDB'],
     image: '/images/project-itpm.jpg',
     github: 'https://github.com/justtnikiyaa/ITPM-Project-3rd-Year-1st-sem.git',
+    preview: '#',
   },
   {
     title: 'Chat App',
@@ -75,6 +77,7 @@ const projects = [
     tech: ['React', 'Express', 'Socket.io'],
     image: '/images/project-chat.jpg',
     github: 'https://github.com/justtnikiyaa/chat-app.git',
+    preview: '#',
   },
   {
     title: 'AutoRentHub',
@@ -83,6 +86,7 @@ const projects = [
     tech: ['MERN Stack', 'Authentication', 'Payments'],
     image: '/images/project-autorenthub.jpg',
     github: 'https://github.com/justtnikiyaa/AutoRentHub.git',
+    preview: '#',
   },
 ]
 
@@ -530,7 +534,7 @@ function Projects() {
 
                 <div className="flex gap-4">
                   <a
-                    href={project.github}
+                    href={project.preview}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
