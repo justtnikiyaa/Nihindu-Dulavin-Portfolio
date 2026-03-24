@@ -534,7 +534,7 @@ function Projects() {
 
                 <div className="flex gap-4">
                   <a
-                    href={project.preview}
+                    href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -543,7 +543,7 @@ function Projects() {
                   </a>
 
                   <a
-                    href={project.github}
+                    href={project.preview}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
