@@ -77,7 +77,7 @@ const projects = [
     tech: ['React', 'Express', 'Socket.io'],
     image: '/images/project-chat.jpg',
     github: 'https://github.com/justtnikiyaa/chat-app.git',
-    preview: '#',
+    preview: 'https://chatapplk.netlify.app/login',
   },
   {
     title: 'AutoRentHub',
