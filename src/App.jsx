@@ -124,7 +124,7 @@ const contactItems = [
 
 const socialLinks = [
   { icon: FiGithub, href: 'https://github.com/justtnikiyaa', label: 'GitHub' },
-  { icon: FiLinkedin, href: 'https://linkedin.com/in/nihindu-dulavin', label: 'LinkedIn' },
+  { icon: FiLinkedin, href: 'https://www.linkedin.com/in/nihindu-dulavin-18bb76279', label: 'LinkedIn' },
   { icon: FiMail, href: 'mailto:nihindudulavin02@gmail.com', label: 'Email' },
 ]
 
@@ -790,5 +790,6 @@ function App() {
 }
 
 export default App
+
 
 
