@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
@@ -52,6 +52,15 @@ const skills = [
 ]
 
 const projects = [
+  {
+    title: 'Smart Campus',
+    description:
+      'A full-stack Smart Campus Operations Hub application featuring stable PostgreSQL database connectivity, cross-origin authentication, role-based access control, and optimized frontend service requests.',
+    tech: ['React', 'Node.js', 'PostgreSQL'],
+    image: '/images/project-smartcampus.jpg',
+    github: 'https://github.com/justtnikiyaa/it3030-paf-2026-smart-campus-group02.git',
+    preview: 'https://it3030-paf-2026-smart-campus-group0.vercel.app/',
+  },
   {
     title: 'Sehera Promotional Apparels',
     description:
