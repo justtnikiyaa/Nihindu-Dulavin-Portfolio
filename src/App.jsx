@@ -330,7 +330,7 @@ function Hero() {
               <div className="glow-shadow relative my-[15px] h-72 w-72 overflow-hidden rounded-full border-4 border-primary/30 md:h-96 md:w-96">
                 <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/10 via-transparent to-primary/5" />
                 <img
-                  src="/images/profile-photo.jpg"
+                  src="/images/profile-photo.png"
                   alt="Nihindu Dulavin"
                   width={512}
                   height={512}
