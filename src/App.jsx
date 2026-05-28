@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
@@ -293,8 +293,8 @@ function Hero() {
               </a>
 
               <a
-                href="/Nihindu-Dulavin-CV.pdf"
-                download="Nihindu-Dulavin-CV.pdf"
+                href="/Nihindu_Dulavin_CV.pdf"
+                download="Nihindu_Dulavin_CV.pdf"
                 className="flex items-center gap-2 rounded-xl border border-border px-6 py-3 font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
               >
                 <FiDownload size={16} /> CV
