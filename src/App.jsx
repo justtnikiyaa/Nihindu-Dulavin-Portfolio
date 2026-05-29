@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
@@ -77,7 +77,7 @@ const projects = [
     tech: ['MERN Stack', 'Node.js', 'MongoDB'],
     image: '/images/project-itpm.jpg',
     github: 'https://github.com/justtnikiyaa/ITPM-Project-3rd-Year-1st-sem.git',
-    preview: '#',
+    preview: 'https://itpm-project-3rd-year-1st-sem.onrender.com',
   },
   {
     title: 'Chat App',
