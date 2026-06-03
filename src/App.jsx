@@ -53,6 +53,15 @@ const skills = [
 
 const projects = [
   {
+    title: 'Shopping Cart System',
+    description:
+      'A full-stack e-commerce shopping cart platform featuring Google OAuth, dynamic cart operations, and an administrative dashboard for managing products, categories, and orders.',
+    tech: ['MERN Stack', 'Google OAuth', 'TailwindCSS'],
+    image: '/images/project-shoppingcart.png',
+    github: 'https://github.com/justtnikiyaa/Shopping-Cart-System.git',
+    preview: 'https://shopping-cart-fdy3.onrender.com',
+  },
+  {
     title: 'Smart Campus',
     description:
       'A full-stack Smart Campus Operations Hub application featuring stable PostgreSQL database connectivity, cross-origin authentication, role-based access control, and optimized frontend service requests.',
