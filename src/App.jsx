@@ -19,6 +19,7 @@ import {
   FiX,
   FiZap,
 } from 'react-icons/fi'
+import { SiFigma } from 'react-icons/si'
 
 const EMAILJS_PUBLIC_KEY = 'M3iuh6A6Ea0oJZavH'
 const EMAILJS_TEMPLATE_ID = 'template_90o6olm'
@@ -52,6 +53,14 @@ const skills = [
 ]
 
 const projects = [
+  {
+    title: 'Daily Task App',
+    description:
+      'A sleek and modern UI/UX design for a daily task tracking mobile application, designed to streamline productivity, enhance task organization, and provide a seamless user experience.',
+    tech: ['Figma', 'UI/UX Design', 'Mobile App'],
+    image: '/images/dailytask.png',
+    preview: 'https://www.figma.com/design/w3fSTue9lJuhDKdE8jAcaH/Daily-task-app?node-id=0-1&t=XtXbWgYSRGAqLAOZ-1',
+  },
   {
     title: 'Shopping Cart System',
     description:
@@ -551,23 +560,35 @@ function Projects() {
                 </div>
 
                 <div className="flex gap-4">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    <FiGithub size={16} /> GitHub
-                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      <FiGithub size={16} /> GitHub
+                    </a>
+                  )}
 
-                  <a
-                    href={project.preview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    <FiExternalLink size={16} /> Preview
-                  </a>
+                  {project.preview && (
+                    <a
+                      href={project.preview}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      {project.preview.includes('figma.com') ? (
+                        <>
+                          <SiFigma size={16} /> Figma
+                        </>
+                      ) : (
+                        <>
+                          <FiExternalLink size={16} /> Preview
+                        </>
+                      )}
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
