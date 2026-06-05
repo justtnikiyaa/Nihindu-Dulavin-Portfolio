@@ -201,7 +201,7 @@ const projects = [
 
 const educationTimeline = [
   {
-    year: '2024 - 2028',
+    year: '2023 - Present',
     title: 'BSc (Hons) in Information Technology',
     subtitle: 'Specialising in Information Technology',
     institution: 'SLIIT',
