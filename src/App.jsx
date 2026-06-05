@@ -552,7 +552,7 @@ function About() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative"
                 >
-                  <span className="absolute left-0 top-1.5 flex h-3.5 w-3.5 -translate-x-1/2 items-center justify-center rounded-full bg-background border border-primary">
+                  <span className="absolute -left-6 top-1.5 flex h-3.5 w-3.5 -translate-x-1/2 items-center justify-center rounded-full bg-background border border-primary">
                     <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                   </span>
 
