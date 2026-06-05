@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
   FiArrowDown,
@@ -41,30 +41,67 @@ const strengths = [
   { icon: FiMessageSquare, label: 'Dedicated' },
 ]
 
-const skills = [
-  { name: 'MERN Stack', level: 80 },
-  { name: 'HTML', level: 95 },
-  { name: 'CSS', level: 90 },
-  { name: 'JavaScript', level: 85 },
-  { name: 'Java', level: 75 },
-  { name: 'Git', level: 80 },
-  { name: 'Full Stack Development', level: 78 },
-  { name: 'Web Development', level: 88 },
+const skillCategories = [
+  {
+    title: 'Frontend Development',
+    icon: FiCode,
+    skills: [
+      { name: 'HTML', level: 95 },
+      { name: 'CSS', level: 90 },
+      { name: 'JavaScript', level: 85 },
+      { name: 'Web Development', level: 88 },
+    ]
+  },
+  {
+    title: 'Backend & Databases',
+    icon: FiLayers,
+    skills: [
+      { name: 'MERN Stack', level: 80 },
+      { name: 'Full Stack Development', level: 78 },
+      { name: 'Git', level: 80 },
+    ]
+  },
+  {
+    title: 'Languages & Tools',
+    icon: FiZap,
+    skills: [
+      { name: 'Java', level: 75 },
+      { name: 'Figma', level: 80 },
+    ]
+  }
 ]
 
 const projects = [
   {
     title: 'Daily Task App',
+    category: 'UI/UX',
     description:
       'A sleek and modern UI/UX design for a daily task tracking mobile application, designed to streamline productivity, enhance task organization, and provide a seamless user experience.',
+    longDescription:
+      'This Figma design project focuses on solving daily productivity issues by offering a highly visual, clean, and intuitive task tracking mobile interface. The design emphasizes seamless user onboarding, customizable task categorization, dark mode styling, and micro-interactions that make task management satisfying.',
+    features: [
+      'Visual timeline and board layouts for daily productivity tracking',
+      'Minimalist color scheme with high contrast indicators',
+      'Intuitive quick-add task drawer and swipe gesture triggers',
+      'Premium dark mode aesthetics with glowing color accents'
+    ],
     tech: ['Figma', 'UI/UX Design', 'Mobile App'],
     image: '/images/dailytask.png',
     preview: 'https://www.figma.com/design/w3fSTue9lJuhDKdE8jAcaH/Daily-task-app?node-id=0-1&t=XtXbWgYSRGAqLAOZ-1',
   },
   {
     title: 'Shopping Cart System',
+    category: 'Full Stack',
     description:
       'A full-stack e-commerce shopping cart platform featuring Google OAuth, dynamic cart operations, and an administrative dashboard for managing products, categories, and orders.',
+    longDescription:
+      'A robust e-commerce application built on the MERN stack. It includes security measures like Google OAuth, a dynamic and responsive shopping cart context, inventory checking, and a dedicated admin interface for managing the system.',
+    features: [
+      'Google OAuth 2.0 integration for secure and quick login',
+      'Real-time dynamic cart adjustments and instant price calculations',
+      'Admin dashboard with product creation, update, and deletion',
+      'Fully responsive product catalog and search filtering'
+    ],
     tech: ['MERN Stack', 'Google OAuth', 'TailwindCSS'],
     image: '/images/project-shoppingcart.png',
     github: 'https://github.com/justtnikiyaa/Shopping-Cart-System.git',
@@ -72,8 +109,17 @@ const projects = [
   },
   {
     title: 'Smart Campus',
+    category: 'Full Stack',
     description:
       'A full-stack Smart Campus Operations Hub application featuring stable PostgreSQL database connectivity, cross-origin authentication, role-based access control, and optimized frontend service requests.',
+    longDescription:
+      'Developed to coordinate daily activities, scheduling, and resources on a university campus. This application leverages PostgreSQL for structured transactional reliability and integrates custom role-based routing (Student, Faculty, Admin).',
+    features: [
+      'Role-based access controls protecting administrative routes',
+      'Relational database design with clean entity models in PostgreSQL',
+      'Cross-origin credentials authentication and JWT storage',
+      'High-performance API queries and caching structures'
+    ],
     tech: ['React', 'Node.js', 'PostgreSQL'],
     image: '/images/project-smartcampus.jpg',
     github: 'https://github.com/justtnikiyaa/it3030-paf-2026-smart-campus-group02.git',
@@ -81,8 +127,17 @@ const projects = [
   },
   {
     title: 'Sehera Promotional Apparels',
+    category: 'Frontend',
     description:
       'A company website developed for a promotional apparel company, featuring product showcases and a modern UI.',
+    longDescription:
+      'A high-performance business portal for promotional clothing orders. Features responsive catalogs, clean portfolio showcases, query forms, and custom CSS layouts emphasizing company colors and high-definition material displays.',
+    features: [
+      'Interactive clothing catalog with custom hover filters',
+      'Direct order inquiry system sending responses via email',
+      'Optimized lightweight asset delivery for rapid loading speeds',
+      'Fluid transitions and responsive flexbox grid layout'
+    ],
     tech: ['React', 'CSS', 'JavaScript'],
     image: '/images/project-sehera.jpg',
     github: 'https://github.com/justtnikiyaa/Sehera-Promotional-Apparels.git',
@@ -90,8 +145,17 @@ const projects = [
   },
   {
     title: 'Unigig a freelance marketplace',
+    category: 'Full Stack',
     description:
       'A freelance marketplace platform designed to connect clients and freelancers through a clean, modern web experience.',
+    longDescription:
+      'A comprehensive freelance workspace matching service, enabling clients to post jobs and freelancers to offer gig packages. Supported by MongoDB for flexible schema updates and search operations.',
+    features: [
+      'Gig-creation flow mimicking standard marketplace workflows',
+      'Bidding system allowing freelancers to respond to active job listings',
+      'Search indexing matching keywords against active gig details',
+      'Sleek message framework for client-freelancer communications'
+    ],
     tech: ['MERN Stack', 'Node.js', 'MongoDB'],
     image: '/images/project-itpm.jpg',
     github: 'https://github.com/justtnikiyaa/ITPM-Project-3rd-Year-1st-sem.git',
@@ -99,8 +163,17 @@ const projects = [
   },
   {
     title: 'Chat App',
+    category: 'Full Stack',
     description:
       'A real-time chat application with modern UI patterns and interactive messaging experience.',
+    longDescription:
+      'A Socket.io powered instant messenger supporting private and group chat rooms. Features automatic message sync, live user status updates, and interactive notifications.',
+    features: [
+      'Low-latency socket connections for real-time messaging',
+      'Room-joining architecture with private and public parameters',
+      'User active status displays and typing indicator events',
+      'Secure password hashing and JSON Web Token validations'
+    ],
     tech: ['React', 'Express', 'Socket.io'],
     image: '/images/project-chat.jpg',
     github: 'https://github.com/justtnikiyaa/chat-app.git',
@@ -108,14 +181,48 @@ const projects = [
   },
   {
     title: 'AutoRentHub',
+    category: 'Full Stack',
     description:
       'A full-stack vehicle rental platform for cars and bikes with secure authentication, booking management, online payments, and admin tools.',
+    longDescription:
+      'A premium logistics and rental system with interactive vehicle search, booking date calculations, secure payment gateways, and backend database integrations.',
+    features: [
+      'Datepicker validations avoiding overlapping double-bookings',
+      'Secure payment processing with instant success screen feedbacks',
+      'Admin portal to view stats, bookings, and register new vehicles',
+      'Filterable dashboard by vehicle type, availability, and pricing'
+    ],
     tech: ['MERN Stack', 'Authentication', 'Payments'],
     image: '/images/project-autorenthub.jpg',
     github: 'https://github.com/justtnikiyaa/AutoRentHub.git',
     preview: '#',
   },
 ]
+
+const educationTimeline = [
+  {
+    year: '2024 - 2028',
+    title: 'BSc (Hons) in Information Technology',
+    subtitle: 'Specialising in Information Technology',
+    institution: 'SLIIT',
+    details: 'Pursuing core computer science theory, web application frameworks, networking, and databases.',
+  },
+  {
+    year: '2025 - Present',
+    title: 'Full Stack & UI/UX Specialization',
+    subtitle: 'Self-Directed & Academic Projects',
+    institution: 'SLIIT Modules',
+    details: 'Developing responsive client applications, REST APIs, Socket.io architectures, and prototyping interface blueprints in Figma.',
+  },
+  {
+    year: 'Future Target',
+    title: 'Industry Placement & Advanced Specialization',
+    subtitle: 'Professional Development',
+    institution: 'Software Ecosystem',
+    details: 'Aspiring to merge scalable system design, robust backend testing, and user-centric frontend experiences in real-world scenarios.',
+  },
+]
+
 
 const services = [
   {
@@ -161,6 +268,12 @@ const socialLinks = [
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
@@ -220,6 +333,10 @@ function Navbar() {
           </a>
         </div>
       )}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-primary origin-[0%]"
+        style={{ scaleX }}
+      />
     </nav>
   )
 }
@@ -424,11 +541,35 @@ function About() {
               teams to improve both my technical and communication skills.
             </p>
 
-            <div className="rounded-xl border border-border bg-card p-5">
-              <h4 className="mb-1 font-heading text-sm font-semibold text-primary">Education</h4>
-              <p className="font-medium text-foreground">BSc (Hons) in Information Technology</p>
-              <p className="text-sm text-muted-foreground">Specialising in Information Technology</p>
-              <p className="text-sm text-muted-foreground">SLIIT | 2024 - 2028</p>
+            <h3 className="mb-6 mt-8 font-heading text-xl font-semibold text-foreground">My Education & Journey</h3>
+            <div className="relative border-l border-border pl-6 ml-2 space-y-8">
+              {educationTimeline.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative"
+                >
+                  <span className="absolute left-0 top-1.5 flex h-3.5 w-3.5 -translate-x-1/2 items-center justify-center rounded-full bg-background border border-primary">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  </span>
+
+                  <span className="mb-1 block text-xs font-semibold uppercase tracking-wider text-primary">
+                    {item.year}
+                  </span>
+                  <h4 className="font-heading text-sm font-bold text-foreground">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs font-medium text-muted-foreground">
+                    {item.subtitle} • <span className="text-foreground/80">{item.institution}</span>
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.details}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
 
@@ -478,31 +619,47 @@ function Skills() {
           </p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="rounded-xl border border-border bg-card p-5"
-            >
-              <div className="mb-3 flex justify-between">
-                <span className="text-sm font-medium text-foreground">{skill.name}</span>
-                <span className="text-sm font-semibold text-primary">{skill.level}%</span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-primary"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.2 + index * 0.05 }}
-                />
-              </div>
-            </motion.div>
-          ))}
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+          {skillCategories.map((category, catIdx) => {
+            const Icon = category.icon
+            return (
+              <motion.div
+                key={category.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: catIdx * 0.1 }}
+                className="rounded-xl border border-border bg-card p-6 shadow-md hover:border-primary/30 transition-colors"
+              >
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <Icon size={20} className="text-primary" />
+                  </div>
+                  <h3 className="font-heading text-base font-semibold text-foreground">{category.title}</h3>
+                </div>
+
+                <div className="space-y-5">
+                  {category.skills.map((skill, index) => (
+                    <div key={skill.name}>
+                      <div className="mb-2 flex justify-between">
+                        <span className="text-sm font-medium text-muted-foreground">{skill.name}</span>
+                        <span className="text-sm font-semibold text-primary">{skill.level}%</span>
+                      </div>
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                        <motion.div
+                          className="h-full rounded-full bg-gradient-primary"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: 0.1 + index * 0.05 }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -510,6 +667,15 @@ function Skills() {
 }
 
 function Projects() {
+  const [filter, setFilter] = useState('All')
+  const [selectedProject, setSelectedProject] = useState(null)
+
+  const categories = ['All', 'Full Stack', 'Frontend', 'UI/UX']
+
+  const filteredProjects = filter === 'All'
+    ? projects
+    : projects.filter(p => p.category === filter)
+
   return (
     <section id="projects" className="section-padding">
       <div className="container mx-auto">
@@ -518,7 +684,7 @@ function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-12 text-center"
         >
           <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
             My <span className="text-gradient">Projects</span>
@@ -526,74 +692,216 @@ function Projects() {
           <p className="mx-auto max-w-2xl text-muted-foreground">A showcase of projects I&apos;ve built and contributed to.</p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/40 md:col-span-1"
+        {/* Categories Tabs */}
+        <div className="mb-12 flex flex-wrap justify-center gap-3">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${
+                filter === cat
+                  ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
+                  : 'border border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground'
+              }`}
             >
-              <div className="h-48 overflow-hidden bg-muted">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  width={768}
-                  height={512}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              <div className="p-6">
-                <h3 className="mb-2 font-heading text-lg font-semibold text-foreground">{project.title}</h3>
-                <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-
-                <div className="mb-4 flex flex-wrap gap-2">
-                  {project.tech.map((item) => (
-                    <span key={item} className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-4">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-                    >
-                      <FiGithub size={16} /> GitHub
-                    </a>
-                  )}
-
-                  {project.preview && (
-                    <a
-                      href={project.preview}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-                    >
-                      {project.preview.includes('figma.com') ? (
-                        <>
-                          <SiFigma size={16} /> Figma
-                        </>
-                      ) : (
-                        <>
-                          <FiExternalLink size={16} /> Preview
-                        </>
-                      )}
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
+              {cat}
+            </button>
           ))}
         </div>
+
+        {/* Projects Grid */}
+        <motion.div 
+          layout 
+          className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                onClick={() => setSelectedProject(project)}
+                className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 md:col-span-1"
+              >
+                <div className="h-48 overflow-hidden bg-muted">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    width={768}
+                    height={512}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <div className="p-6">
+                  <span className="mb-2 inline-block rounded-md bg-secondary px-2.5 py-0.5 text-xs font-semibold text-primary">
+                    {project.category}
+                  </span>
+                  <h3 className="mb-2 font-heading text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
+                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-2">{project.description}</p>
+
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {project.tech.slice(0, 3).map((item) => (
+                      <span key={item} className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
+                        {item}
+                      </span>
+                    ))}
+                    {project.tech.length > 3 && (
+                      <span className="rounded-full bg-secondary px-2 py-1 text-xs text-muted-foreground">
+                        +{project.tech.length - 3} more
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        <FiGithub size={16} /> GitHub
+                      </a>
+                    )}
+
+                    {project.preview && (
+                      <a
+                        href={project.preview}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        {project.preview.includes('figma.com') ? (
+                          <>
+                            <SiFigma size={16} /> Figma
+                          </>
+                        ) : (
+                          <>
+                            <FiExternalLink size={16} /> Preview
+                          </>
+                        )}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Project Details Modal */}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProject(null)}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-md"
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.9, y: 20, opacity: 0 }}
+                transition={{ type: 'spring', duration: 0.5 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-2xl md:p-8"
+              >
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedProject(null)}
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary/80 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  aria-label="Close modal"
+                >
+                  <FiX size={20} />
+                </button>
+
+                <div className="grid gap-6 md:grid-cols-12">
+                  <div className="md:col-span-5">
+                    <div className="overflow-hidden rounded-xl border border-border bg-muted aspect-video md:aspect-square">
+                      <img
+                        src={selectedProject.image}
+                        alt={selectedProject.title}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col justify-between md:col-span-7">
+                    <div>
+                      <div className="mb-2 flex items-center gap-3">
+                        <span className="rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                          {selectedProject.category}
+                        </span>
+                      </div>
+                      <h3 className="mb-3 font-heading text-2xl font-bold text-foreground">{selectedProject.title}</h3>
+                      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{selectedProject.longDescription || selectedProject.description}</p>
+
+                      {selectedProject.features && (
+                        <div className="mb-6">
+                          <h4 className="mb-2 font-heading text-sm font-semibold text-foreground">Key Features:</h4>
+                          <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
+                            {selectedProject.features.map((feat, i) => (
+                              <li key={i}>{feat}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <div className="mb-6 flex flex-wrap gap-2">
+                        {selectedProject.tech.map((item) => (
+                          <span key={item} className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground font-medium border border-border">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex gap-4">
+                        {selectedProject.github && (
+                          <a
+                            href={selectedProject.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 rounded-xl bg-secondary border border-border px-5 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                          >
+                            <FiGithub size={18} /> GitHub
+                          </a>
+                        )}
+
+                        {selectedProject.preview && (
+                          <a
+                            href={selectedProject.preview}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 shadow-md shadow-primary/10"
+                          >
+                            {selectedProject.preview.includes('figma.com') ? (
+                              <>
+                                <SiFigma size={18} /> Figma Design
+                              </>
+                            ) : (
+                              <>
+                                <FiExternalLink size={18} /> Launch Preview
+                              </>
+                            )}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )
