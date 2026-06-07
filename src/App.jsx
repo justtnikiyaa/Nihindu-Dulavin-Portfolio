@@ -208,7 +208,7 @@ const educationTimeline = [
     details: 'Pursuing core computer science theory, web application frameworks, networking, and databases.',
   },
   {
-    year: '2025 - Present',
+    year: '2023 - Present',
     title: 'Full Stack & UI/UX Specialization',
     subtitle: 'Self-Directed & Academic Projects',
     institution: 'SLIIT Modules',
@@ -533,7 +533,7 @@ function About() {
             <p className="mb-4 leading-relaxed text-muted-foreground">
               I&apos;m Nihindu Dulavin, a passionate IT undergraduate specializing in Information Technology at the Sri
               Lanka Institute of Information Technology (SLIIT). I&apos;m currently pursuing my BSc (Hons) in Information
-              Technology (2024-2028).
+              Technology (2023-Present).
             </p>
             <p className="mb-6 leading-relaxed text-muted-foreground">
               My goal is to gain meaningful industry experience and grow into a skilled full stack developer. I&apos;m
