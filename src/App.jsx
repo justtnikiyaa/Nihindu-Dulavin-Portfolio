@@ -912,7 +912,7 @@ function TerminalConsole() {
     { type: 'output', text: 'Welcome to Nihindu\'s terminal! Type "help" to see available commands.' }
   ])
   const [input, setInput] = useState('')
-  const terminalEndRef = useRef(null)
+  const terminalBodyRef = useRef(null)
 
   const handleCommand = (e) => {
     e.preventDefault()
@@ -948,7 +948,9 @@ function TerminalConsole() {
   }
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight
+    }
   }, [history])
 
   return (
@@ -985,7 +987,7 @@ function TerminalConsole() {
           </div>
 
           {/* Console Area */}
-          <div className="h-64 overflow-y-auto bg-black/40 p-4 font-mono text-sm leading-relaxed text-emerald-400">
+          <div ref={terminalBodyRef} className="h-64 overflow-y-auto bg-black/40 p-4 font-mono text-sm leading-relaxed text-emerald-400">
             <div className="space-y-2">
               {history.map((line, idx) => (
                 <div key={idx} className="whitespace-pre-wrap">
@@ -998,7 +1000,6 @@ function TerminalConsole() {
                   )}
                 </div>
               ))}
-              <div ref={terminalEndRef} />
             </div>
           </div>
 
