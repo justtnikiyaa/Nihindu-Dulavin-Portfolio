@@ -1024,6 +1024,8 @@ function TerminalConsole() {
 
 function GithubDashboard() {
   const [githubData, setGithubData] = useState(null)
+  const currentYear = new Date().getFullYear().toString()
+  const [selectedYear, setSelectedYear] = useState(currentYear)
 
   useEffect(() => {
     async function fetchStats() {
@@ -1039,11 +1041,11 @@ function GithubDashboard() {
         // Calculate Longest Streak
         let currentStreak = 0
         let maxStreak = 0
-        const sortedContributions = [...contribData.contributions].sort(
+        const sorted = [...contribData.contributions].sort(
           (a, b) => new Date(a.date) - new Date(b.date)
         )
 
-        for (const day of sortedContributions) {
+        for (const day of sorted) {
           if (day.count > 0) {
             currentStreak++
             if (currentStreak > maxStreak) {
@@ -1054,27 +1056,22 @@ function GithubDashboard() {
           }
         }
 
-        // Calculate annual contributions for current year
-        const currentYear = new Date().getFullYear().toString()
-        const annualContrib = contribData.total[currentYear] || 0
-
         // Calculate active weeks (out of the last 52 weeks)
-        const lastYearContribs = sortedContributions.slice(-364)
+        const lastYearContribs = sorted.slice(-364)
         let activeWeeksCount = 0
         for (let i = 0; i < lastYearContribs.length; i += 7) {
           const week = lastYearContribs.slice(i, i + 7)
-          const hasContribution = week.some(day => day.count > 0)
-          if (hasContribution) {
+          if (week.some(day => day.count > 0)) {
             activeWeeksCount++
           }
         }
 
         setGithubData({
           publicRepos: userData.public_repos || 0,
-          annualContributions: annualContrib,
           longestStreak: maxStreak,
           activeWeeks: `${activeWeeksCount}/52`,
-          contributions: sortedContributions.slice(-252) // 36 columns * 7 days
+          allTotals: contribData.total, // e.g. {"2024":1, "2025":0, "2026":258}
+          allContributions: sorted
         })
       } catch (err) {
         console.error('Failed to fetch github stats', err)
@@ -1084,21 +1081,70 @@ function GithubDashboard() {
     fetchStats()
   }, [])
 
-  const columns = 36
-  const defaultCells = Array.from({ length: columns * 7 }, (_, idx) => {
-    return (idx % 3 === 0 || idx % 7 === 0) ? (idx % 4) : 0
+  // Filter and group calendar days
+  let displayDays = []
+  if (githubData) {
+    if (selectedYear === currentYear) {
+      displayDays = githubData.allContributions.slice(-364) // Last 364 days
+    } else {
+      displayDays = githubData.allContributions.filter(c => c.date.startsWith(selectedYear))
+    }
+  }
+
+  // Align starting weekday
+  let alignedDays = []
+  if (displayDays.length > 0) {
+    const firstDayOfWeek = new Date(displayDays[0].date).getDay()
+    const placeholders = Array.from({ length: firstDayOfWeek }, () => ({
+      date: '',
+      count: -1,
+      level: -1
+    }))
+    alignedDays = [...placeholders, ...displayDays]
+  } else {
+    // Simulated loading/fallback days
+    alignedDays = Array.from({ length: 53 * 7 }, (_, idx) => ({
+      date: '',
+      count: (idx % 11 === 0 || idx % 19 === 0) ? (idx % 4) : 0,
+      level: (idx % 11 === 0 || idx % 19 === 0) ? (idx % 4) : 0
+    }))
+  }
+
+  // Group into weeks
+  const weeksList = []
+  for (let i = 0; i < alignedDays.length; i += 7) {
+    weeksList.push(alignedDays.slice(i, i + 7))
+  }
+
+  // Compute month headers
+  const monthsHeader = []
+  let prevMonth = ''
+  weeksList.forEach((week, colIdx) => {
+    const firstValidDay = week.find(d => d.date !== '')
+    if (firstValidDay) {
+      const dateObj = new Date(firstValidDay.date)
+      const monthName = dateObj.toLocaleString('default', { month: 'short' })
+      if (monthName !== prevMonth) {
+        monthsHeader.push({ label: monthName, colIndex: colIdx })
+        prevMonth = monthName
+      }
+    }
   })
+
+  const years = githubData 
+    ? Object.keys(githubData.allTotals).sort((a, b) => b - a) 
+    : [currentYear, '2025', '2024']
+
+  const yearTotal = githubData 
+    ? (githubData.allTotals[selectedYear] || 0) 
+    : 272
 
   const stats = [
     { label: 'Total Repositories', value: githubData ? `${githubData.publicRepos}` : '18+' },
-    { label: 'Annual Contributions', value: githubData ? `${githubData.annualContributions}` : '820+' },
+    { label: 'Annual Contributions', value: githubData ? `${githubData.allTotals[currentYear] || 0}` : '258' },
     { label: 'Active Weeks', value: githubData ? githubData.activeWeeks : '48/52' },
     { label: 'Longest Streak', value: githubData ? `${githubData.longestStreak} Days` : '18 Days' }
   ]
-
-  const displayCells = githubData 
-    ? githubData.contributions.map(c => c.level)
-    : defaultCells
 
   return (
     <section className="section-padding bg-card/30">
@@ -1116,60 +1162,138 @@ function GithubDashboard() {
           <p className="mx-auto max-w-2xl text-muted-foreground font-medium">Recent contributions and development statistics on GitHub.</p>
         </motion.div>
 
-        <div className="mx-auto max-w-4xl space-y-8">
-          {/* Heatmap Grid */}
+        <div className="mx-auto max-w-5xl space-y-8">
+          {/* Main Calendar Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="rounded-xl border border-border bg-card p-6"
+            className="rounded-xl border border-border bg-card p-6 shadow-md"
           >
-            <div className="mb-4 flex items-center justify-between">
-              <span className="text-sm font-semibold text-foreground">justtnikiyaa Contributions</span>
+            {/* Header info */}
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-bold text-foreground">
+                  {yearTotal} contributions in {selectedYear === currentYear ? 'the last year' : selectedYear}
+                </h3>
+                <p className="text-xs text-muted-foreground">Account: @justtnikiyaa</p>
+              </div>
               <a
                 href="https://github.com/justtnikiyaa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-xs text-primary hover:underline"
+                className="flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3.5 py-1.5 text-xs font-semibold text-muted-foreground hover:border-primary/45 hover:text-primary transition-all"
               >
-                <FiGithub size={14} /> Follow on GitHub
+                <FiGithub size={14} /> View GitHub Profile
               </a>
             </div>
 
-            {/* Grid Container */}
-            <div className="overflow-x-auto pb-2">
-              <div 
-                className="grid grid-flow-col gap-1"
-                style={{ 
-                  gridTemplateRows: 'repeat(7, minmax(0, 1fr))',
-                  gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`
-                }}
-              >
-                {displayCells.map((level, idx) => {
-                  let bgClass = 'bg-secondary'
-                  if (level === 1) bgClass = 'bg-emerald-900/40'
-                  if (level === 2) bgClass = 'bg-emerald-700/60'
-                  if (level === 3) bgClass = 'bg-emerald-500'
-                  return (
-                    <div
-                      key={idx}
-                      className={`h-2.5 w-2.5 rounded-sm transition-colors hover:scale-110 ${bgClass}`}
-                      title={`${level > 0 ? level * 2 + ' contributions' : 'No contributions'}`}
-                    />
-                  )
-                })}
+            {/* Layout Flexbox */}
+            <div className="flex flex-col gap-6 md:flex-row md:items-start justify-between">
+              {/* Year Selectors on mobile (top of calendar) */}
+              <div className="flex flex-wrap gap-2 md:hidden">
+                {years.map(y => (
+                  <button
+                    key={y}
+                    onClick={() => setSelectedYear(y)}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
+                      selectedYear === y
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-muted-foreground'
+                    }`}
+                  >
+                    {y}
+                  </button>
+                ))}
               </div>
-            </div>
 
-            <div className="mt-4 flex justify-between text-xs text-muted-foreground">
-              <span>Learn more daily</span>
-              <div className="flex items-center gap-1.5">
-                <span>Less</span>
-                <span className="h-2.5 w-2.5 rounded-sm bg-secondary" />
-                <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/40" />
-                <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700/60" />
-                <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" />
-                <span>More</span>
+              {/* Grid Wrapper */}
+              <div className="flex-1 overflow-x-auto pb-4">
+                <div className="min-w-[760px] flex flex-col">
+                  {/* Months Header row */}
+                  <div className="relative h-6 w-full text-xs text-muted-foreground mb-1 select-none">
+                    {monthsHeader.map((m, idx) => (
+                      <span 
+                        key={idx} 
+                        className="absolute font-semibold text-[11px]"
+                        style={{ left: `${m.colIndex * 14.2 + 28}px` }} // Aligned offset with labels
+                      >
+                        {m.label}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Day labels + Heatmap */}
+                  <div className="flex gap-2.5">
+                    {/* Y-axis days */}
+                    <div className="grid grid-rows-7 gap-1 text-[10px] text-muted-foreground select-none h-[77px] w-6 pr-1.5 font-medium leading-none justify-between items-center py-[1px]">
+                      <span></span>
+                      <span>Mon</span>
+                      <span></span>
+                      <span>Wed</span>
+                      <span></span>
+                      <span>Fri</span>
+                      <span></span>
+                    </div>
+
+                    {/* Columns grid */}
+                    <div className="grid grid-flow-col gap-1 select-none">
+                      {weeksList.map((week, colIdx) => (
+                        <div key={colIdx} className="grid grid-rows-7 gap-1">
+                          {week.map((day, rowIdx) => {
+                            let bgClass = 'bg-secondary/40' // placeholder background
+                            if (day.level === 0) bgClass = 'bg-secondary/80'
+                            if (day.level === 1) bgClass = 'bg-emerald-900/40'
+                            if (day.level === 2) bgClass = 'bg-emerald-700/60'
+                            if (day.level === 3) bgClass = 'bg-emerald-500/80'
+                            if (day.level === 4) bgClass = 'bg-emerald-500'
+
+                            return (
+                              <div
+                                key={rowIdx}
+                                className={`h-2.5 w-2.5 rounded-sm transition-all duration-300 hover:scale-125 ${
+                                  day.count === -1 ? 'opacity-0 pointer-events-none' : bgClass
+                                }`}
+                                title={day.count > -1 ? `${day.count} contributions on ${day.date || 'unknown'}` : ''}
+                              />
+                            )
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Legend footer */}
+                  <div className="mt-4 flex justify-between items-center text-[10px] text-muted-foreground pl-7">
+                    <span>Learn how we count contributions</span>
+                    <div className="flex items-center gap-1.5 select-none">
+                      <span>Less</span>
+                      <span className="h-2.5 w-2.5 rounded-sm bg-secondary/80" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/40" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700/60" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500/80" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" />
+                      <span>More</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Year Selectors on Desktop (Right side list) */}
+              <div className="hidden md:flex flex-col gap-1.5 border-l border-border pl-6 pr-2 min-w-[90px]">
+                {years.map(y => (
+                  <button
+                    key={y}
+                    onClick={() => setSelectedYear(y)}
+                    className={`rounded-lg px-4 py-2 text-xs font-bold transition-all text-left border ${
+                      selectedYear === y
+                        ? 'bg-primary border-primary text-primary-foreground shadow-md shadow-primary/10'
+                        : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/40'
+                    }`}
+                  >
+                    {y}
+                  </button>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -1182,7 +1306,7 @@ function GithubDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/30"
+                className="rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/30 shadow-sm"
               >
                 <p className="text-2xl font-bold text-foreground mb-1">{value}</p>
                 <p className="text-xs text-muted-foreground font-medium">{label}</p>
