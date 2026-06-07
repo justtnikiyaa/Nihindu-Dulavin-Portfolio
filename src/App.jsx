@@ -1023,17 +1023,82 @@ function TerminalConsole() {
 }
 
 function GithubDashboard() {
+  const [githubData, setGithubData] = useState(null)
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const [userRes, contributionsRes] = await Promise.all([
+          fetch('https://api.github.com/users/justtnikiyaa'),
+          fetch('https://github-contributions-api.jogruber.de/v4/justtnikiyaa')
+        ])
+
+        const userData = await userRes.json()
+        const contribData = await contributionsRes.json()
+
+        // Calculate Longest Streak
+        let currentStreak = 0
+        let maxStreak = 0
+        const sortedContributions = [...contribData.contributions].sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        )
+
+        for (const day of sortedContributions) {
+          if (day.count > 0) {
+            currentStreak++
+            if (currentStreak > maxStreak) {
+              maxStreak = currentStreak
+            }
+          } else {
+            currentStreak = 0
+          }
+        }
+
+        // Calculate annual contributions for current year
+        const currentYear = new Date().getFullYear().toString()
+        const annualContrib = contribData.total[currentYear] || 0
+
+        // Calculate active weeks (out of the last 52 weeks)
+        const lastYearContribs = sortedContributions.slice(-364)
+        let activeWeeksCount = 0
+        for (let i = 0; i < lastYearContribs.length; i += 7) {
+          const week = lastYearContribs.slice(i, i + 7)
+          const hasContribution = week.some(day => day.count > 0)
+          if (hasContribution) {
+            activeWeeksCount++
+          }
+        }
+
+        setGithubData({
+          publicRepos: userData.public_repos || 0,
+          annualContributions: annualContrib,
+          longestStreak: maxStreak,
+          activeWeeks: `${activeWeeksCount}/52`,
+          contributions: sortedContributions.slice(-252) // 36 columns * 7 days
+        })
+      } catch (err) {
+        console.error('Failed to fetch github stats', err)
+      }
+    }
+
+    fetchStats()
+  }, [])
+
   const columns = 36
-  const cells = Array.from({ length: columns * 7 }, (_, idx) => {
+  const defaultCells = Array.from({ length: columns * 7 }, (_, idx) => {
     return (idx % 3 === 0 || idx % 7 === 0) ? (idx % 4) : 0
   })
 
   const stats = [
-    { label: 'Total Repositories', value: '18+' },
-    { label: 'Annual Contributions', value: '820+' },
-    { label: 'Active Weeks', value: '48/52' },
-    { label: 'Longest Streak', value: '18 Days' }
+    { label: 'Total Repositories', value: githubData ? `${githubData.publicRepos}` : '18+' },
+    { label: 'Annual Contributions', value: githubData ? `${githubData.annualContributions}` : '820+' },
+    { label: 'Active Weeks', value: githubData ? githubData.activeWeeks : '48/52' },
+    { label: 'Longest Streak', value: githubData ? `${githubData.longestStreak} Days` : '18 Days' }
   ]
+
+  const displayCells = githubData 
+    ? githubData.contributions.map(c => c.level)
+    : defaultCells
 
   return (
     <section className="section-padding bg-card/30">
@@ -1080,7 +1145,7 @@ function GithubDashboard() {
                   gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`
                 }}
               >
-                {cells.map((level, idx) => {
+                {displayCells.map((level, idx) => {
                   let bgClass = 'bg-secondary'
                   if (level === 1) bgClass = 'bg-emerald-900/40'
                   if (level === 2) bgClass = 'bg-emerald-700/60'
