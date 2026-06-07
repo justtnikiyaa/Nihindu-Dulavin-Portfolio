@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import {
@@ -906,8 +906,336 @@ function Projects() {
     </section>
   )
 }
+function TerminalConsole() {
+  const [history, setHistory] = useState([
+    { type: 'input', text: 'help' },
+    { type: 'output', text: 'Welcome to Nihindu\'s terminal! Type "help" to see available commands.' }
+  ])
+  const [input, setInput] = useState('')
+  const terminalEndRef = useRef(null)
 
-function Services() {
+  const handleCommand = (e) => {
+    e.preventDefault()
+    const trimmedInput = input.trim().toLowerCase()
+    if (!trimmedInput) return
+
+    const newHistory = [...history, { type: 'input', text: input }]
+
+    let reply = ''
+    switch (trimmedInput) {
+      case 'help':
+        reply = 'Available commands:\n  about    - Brief background introduction\n  skills   - Technical competency matrix\n  projects - Featured engineering works\n  clear    - Flush console lines\n  help     - Show command list'
+        break
+      case 'about':
+        reply = 'Nihindu Dulavin - IT Undergraduate at SLIIT (2024-2028).\nPassionate full-stack programmer focused on crafting reliable services using React, Node.js, and relational databases. Fast learner, dedicated team contributor, and critical problem solver.'
+        break
+      case 'skills':
+        reply = 'Frontend:    HTML, CSS, JavaScript, React\nBackend:     Node.js, Express, Socket.io\nDatabases:   MongoDB, PostgreSQL\nTools:       Git, Figma, VS Code'
+        break
+      case 'projects':
+        reply = 'Featured Projects:\n- Daily Task App: Productive UI/UX Figma Design\n- Shopping Cart: Full Stack MERN system with Google OAuth\n- Smart Campus: Role-based campus operations hub with PostgreSQL\n- AutoRentHub: Vehicle bookings with payment features'
+        break
+      case 'clear':
+        setHistory([])
+        setInput('')
+        return
+      default:
+        reply = `Command not found: "${trimmedInput}". Type "help" for a list of valid commands.`
+    }
+
+    setHistory([...newHistory, { type: 'output', text: reply }])
+    setInput('')
+  }
+
+  useEffect(() => {
+    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [history])
+
+  return (
+    <section className="section-padding bg-background">
+      <div className="container mx-auto max-w-3xl font-sans">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-8 text-center"
+        >
+          <h2 className="mb-3 font-heading text-2xl font-bold md:text-3xl">
+            Interactive <span className="text-gradient">Console</span>
+          </h2>
+          <p className="text-sm text-muted-foreground font-medium">Type commands directly to interact with my portfolio database.</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="overflow-hidden rounded-xl border border-border bg-card shadow-2xl"
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between bg-secondary/80 px-4 py-3 border-b border-border">
+            <div className="flex gap-2">
+              <span className="h-3 w-3 rounded-full bg-rose-500/80" />
+              <span className="h-3 w-3 rounded-full bg-amber-500/80" />
+              <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+            </div>
+            <span className="text-xs font-mono text-muted-foreground">guest@nihindu.dev:~</span>
+            <div className="w-12" /> {/* spacer */}
+          </div>
+
+          {/* Console Area */}
+          <div className="h-64 overflow-y-auto bg-black/40 p-4 font-mono text-sm leading-relaxed text-emerald-400">
+            <div className="space-y-2">
+              {history.map((line, idx) => (
+                <div key={idx} className="whitespace-pre-wrap">
+                  {line.type === 'input' ? (
+                    <span>
+                      <span className="text-primary font-bold">guest@nihindu:~$</span> {line.text}
+                    </span>
+                  ) : (
+                    <span className="text-slate-300">{line.text}</span>
+                  )}
+                </div>
+              ))}
+              <div ref={terminalEndRef} />
+            </div>
+          </div>
+
+          {/* Input Form */}
+          <form onSubmit={handleCommand} className="flex border-t border-border bg-secondary/50">
+            <span className="flex items-center pl-4 pr-2 font-mono text-sm font-bold text-primary">
+              guest@nihindu:~$
+            </span>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="flex-1 bg-transparent py-3 font-mono text-sm text-emerald-400 focus:outline-none"
+              placeholder='Try typing "help" or "about"...'
+            />
+          </form>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function GithubDashboard() {
+  const columns = 36
+  const cells = Array.from({ length: columns * 7 }, (_, idx) => {
+    return (idx % 3 === 0 || idx % 7 === 0) ? (idx % 4) : 0
+  })
+
+  const stats = [
+    { label: 'Total Repositories', value: '18+' },
+    { label: 'Annual Contributions', value: '820+' },
+    { label: 'Active Weeks', value: '48/52' },
+    { label: 'Longest Streak', value: '18 Days' }
+  ]
+
+  return (
+    <section className="section-padding bg-card/30">
+      <div className="container mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center"
+        >
+          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
+            GitHub <span className="text-gradient">Activity</span>
+          </h2>
+          <p className="mx-auto max-w-2xl text-muted-foreground font-medium">Recent contributions and development statistics on GitHub.</p>
+        </motion.div>
+
+        <div className="mx-auto max-w-4xl space-y-8">
+          {/* Heatmap Grid */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="rounded-xl border border-border bg-card p-6"
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm font-semibold text-foreground">justtnikiyaa Contributions</span>
+              <a
+                href="https://github.com/justtnikiyaa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-xs text-primary hover:underline"
+              >
+                <FiGithub size={14} /> Follow on GitHub
+              </a>
+            </div>
+
+            {/* Grid Container */}
+            <div className="overflow-x-auto pb-2">
+              <div 
+                className="grid grid-flow-col gap-1"
+                style={{ 
+                  gridTemplateRows: 'repeat(7, minmax(0, 1fr))',
+                  gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`
+                }}
+              >
+                {cells.map((level, idx) => {
+                  let bgClass = 'bg-secondary'
+                  if (level === 1) bgClass = 'bg-emerald-900/40'
+                  if (level === 2) bgClass = 'bg-emerald-700/60'
+                  if (level === 3) bgClass = 'bg-emerald-500'
+                  return (
+                    <div
+                      key={idx}
+                      className={`h-2.5 w-2.5 rounded-sm transition-colors hover:scale-110 ${bgClass}`}
+                      title={`${level > 0 ? level * 2 + ' contributions' : 'No contributions'}`}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-between text-xs text-muted-foreground">
+              <span>Learn more daily</span>
+              <div className="flex items-center gap-1.5">
+                <span>Less</span>
+                <span className="h-2.5 w-2.5 rounded-sm bg-secondary" />
+                <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/40" />
+                <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700/60" />
+                <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" />
+                <span>More</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {stats.map(({ label, value }) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/30"
+              >
+                <p className="text-2xl font-bold text-foreground mb-1">{value}</p>
+                <p className="text-xs text-muted-foreground font-medium">{label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const recommendations = [
+  {
+    quote: "Nihindu is a standout developer who quickly picks up new frameworks. His integration of Google OAuth and custom dashboard queries for our shopping system was key to our project success.",
+    author: "Project Peer",
+    role: "SLIIT Software Engineering Group",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    quote: "Exceptional dedication to clean code structure. The smart campus routing authentication he designed works flawlessly. Highly reliable contributor who is a pleasure to work with.",
+    author: "Study Colleague",
+    role: "SLIIT IT Development Lead",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    quote: "A fast learner who matches engineering rigor with visual design capabilities. His recent Figma designs show a great appreciation for intuitive user experience and layout.",
+    author: "UI Designer",
+    role: "UX Research Partner",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80"
+  }
+]
+
+function Recommendations() {
+  const [activeIdx, setActiveIdx] = useState(0)
+
+  const nextSlide = () => {
+    setActiveIdx((prev) => (prev + 1) % recommendations.length)
+  }
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 8000)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <section className="section-padding bg-background">
+      <div className="container mx-auto max-w-4xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center"
+        >
+          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
+            Peer <span className="text-gradient">Feedback</span>
+          </h2>
+          <p className="mx-auto max-w-2xl text-muted-foreground font-medium">What colleagues and project teammates say about working with me.</p>
+        </motion.div>
+
+        <div className="relative overflow-hidden rounded-xl border border-border bg-card p-6 md:p-10 shadow-xl">
+          <div className="min-h-[200px] flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIdx}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-6 text-center"
+              >
+                <p className="text-base md:text-lg leading-relaxed text-muted-foreground italic font-medium">
+                  &ldquo;{recommendations[activeIdx].quote}&rdquo;
+                </p>
+
+                <div className="flex items-center justify-center gap-4">
+                  <img
+                    src={recommendations[activeIdx].avatar}
+                    alt={recommendations[activeIdx].author}
+                    className="h-12 w-12 rounded-full object-cover border-2 border-primary/30"
+                  />
+                  <div className="text-left">
+                    <p className="font-heading text-sm font-bold text-foreground">{recommendations[activeIdx].author}</p>
+                    <p className="text-xs text-muted-foreground font-medium">{recommendations[activeIdx].role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Navigation Dots */}
+          <div className="mt-8 flex justify-center gap-2">
+            {recommendations.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveIdx(idx)}
+                className={`h-2 w-2 rounded-full transition-all ${
+                  activeIdx === idx ? 'bg-primary w-4' : 'bg-secondary'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Services({ setInquiryMessage }) {
+  const handleInquiry = (serviceTitle) => {
+    setInquiryMessage(`Hi Nihindu, I am interested in details regarding your "${serviceTitle}" services...`)
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section id="services" className="section-padding bg-card/50">
       <div className="container mx-auto">
@@ -921,7 +1249,7 @@ function Services() {
           <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
             My <span className="text-gradient">Services</span>
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">What I can help you build.</p>
+          <p className="mx-auto max-w-2xl text-muted-foreground font-medium">What I can help you build.</p>
         </motion.div>
 
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
@@ -932,13 +1260,22 @@ function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group rounded-xl border border-border bg-card p-8 transition-colors hover:border-primary/40"
+              className="group rounded-xl border border-border bg-card p-8 transition-colors hover:border-primary/40 flex flex-col justify-between"
             >
-              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                <Icon size={28} className="text-primary" />
+              <div>
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
+                  <Icon size={28} className="text-primary" />
+                </div>
+                <h3 className="mb-3 font-heading text-xl font-semibold text-foreground">{title}</h3>
+                <p className="leading-relaxed text-muted-foreground mb-6">{description}</p>
               </div>
-              <h3 className="mb-3 font-heading text-xl font-semibold text-foreground">{title}</h3>
-              <p className="leading-relaxed text-muted-foreground">{description}</p>
+              <button
+                type="button"
+                onClick={() => handleInquiry(title)}
+                className="mt-2 text-left text-sm font-semibold text-primary hover:text-primary/85 transition-colors inline-flex items-center gap-1.5"
+              >
+                Inquire about this <span className="transition-transform group-hover:translate-x-1">→</span>
+              </button>
             </motion.div>
           ))}
         </div>
@@ -947,10 +1284,16 @@ function Services() {
   )
 }
 
-function Contact() {
+function Contact({ inquiryMessage, setInquiryMessage }) {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [sending, setSending] = useState(false)
   const [submitMessage, setSubmitMessage] = useState('')
+
+  useEffect(() => {
+    if (inquiryMessage) {
+      setForm((prev) => ({ ...prev, message: inquiryMessage }))
+    }
+  }, [inquiryMessage])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -973,6 +1316,7 @@ function Contact() {
       setSubmitMessage('Message sent successfully.')
       setSending(false)
       setForm({ name: '', email: '', message: '' })
+      setInquiryMessage('')
     } catch (error) {
       setSending(false)
       setSubmitMessage('Failed to send message. Please try again.')
@@ -992,7 +1336,7 @@ function Contact() {
           <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
             Get In <span className="text-gradient">Touch</span>
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="mx-auto max-w-2xl text-muted-foreground font-medium font-medium">
             Have a project in mind or just want to say hello? Let&apos;s connect.
           </p>
         </motion.div>
@@ -1126,21 +1470,39 @@ function Footer() {
 }
 
 function App() {
+  const [inquiryMessage, setInquiryMessage] = useState('')
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+      {/* Spotlight cursor glow */}
+      <div 
+        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
+        style={{
+          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, hsl(18 90% 55% / 0.045), transparent 80%)`
+        }}
+      />
       <Navbar />
       <Hero />
       <About />
+      <TerminalConsole />
       <Skills />
+      <GithubDashboard />
       <Projects />
-      <Services />
-      <Contact />
+      <Services setInquiryMessage={setInquiryMessage} />
+      <Recommendations />
+      <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
       <Footer />
     </div>
   )
 }
 
 export default App
-
-
-
