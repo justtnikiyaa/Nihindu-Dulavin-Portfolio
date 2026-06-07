@@ -1,6 +1,20 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
+import Lenis from 'lenis'
+
+export const scrollToTarget = (e, targetId) => {
+  if (e && e.preventDefault) e.preventDefault()
+  if (window.lenis) {
+    window.lenis.scrollTo(targetId)
+  } else {
+    const target = document.querySelector(targetId)
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+}
+
 import {
   FiArrowDown,
   FiCode,
@@ -278,7 +292,11 @@ function Navbar() {
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <a href="#home" className="font-heading text-xl font-bold">
+        <a 
+          href="#home" 
+          onClick={(e) => scrollToTarget(e, '#home')}
+          className="font-heading text-xl font-bold"
+        >
           <span className="text-gradient">ND</span>
           <span className="ml-1 text-foreground">Nihindu</span>
         </a>
@@ -288,6 +306,7 @@ function Navbar() {
             <a
               key={item.href}
               href={item.href}
+              onClick={(e) => scrollToTarget(e, item.href)}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}
@@ -297,6 +316,7 @@ function Navbar() {
 
         <a
           href="#contact"
+          onClick={(e) => scrollToTarget(e, '#contact')}
           className="hidden rounded-lg bg-gradient-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
         >
           Let&apos;s Talk
@@ -319,7 +339,10 @@ function Navbar() {
               key={item.href}
               href={item.href}
               className="block py-2 text-muted-foreground transition-colors hover:text-primary"
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => {
+                setIsOpen(false)
+                scrollToTarget(e, item.href)
+              }}
             >
               {item.label}
             </a>
@@ -327,7 +350,10 @@ function Navbar() {
           <a
             href="#contact"
             className="mt-2 inline-flex rounded-lg bg-gradient-primary px-5 py-2 text-sm font-medium text-primary-foreground"
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => {
+              setIsOpen(false)
+              scrollToTarget(e, '#contact')
+            }}
           >
             Let&apos;s Talk
           </a>
@@ -414,6 +440,7 @@ function Hero() {
             >
               <a
                 href="#projects"
+                onClick={(e) => scrollToTarget(e, '#projects')}
                 className="group flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-primary/30"
               >
                 View Projects
@@ -422,6 +449,7 @@ function Hero() {
 
               <a
                 href="#contact"
+                onClick={(e) => scrollToTarget(e, '#contact')}
                 className="rounded-xl border border-primary/30 px-6 py-3 font-medium text-primary transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/10"
               >
                 Contact Me
@@ -1322,10 +1350,7 @@ function GithubDashboard() {
 function Services({ setInquiryMessage }) {
   const handleInquiry = (serviceTitle) => {
     setInquiryMessage(`Hi Nihindu, I am interested in details regarding your "${serviceTitle}" services...`)
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
+    scrollToTarget(null, '#contact')
   }
 
   return (
@@ -1550,6 +1575,7 @@ function Footer() {
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
+              onClick={(e) => scrollToTarget(e, `#${item.toLowerCase()}`)}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               {item}
@@ -1564,6 +1590,29 @@ function Footer() {
 function App() {
   const [inquiryMessage, setInquiryMessage] = useState('')
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+    })
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+
+    window.lenis = lenis
+
+    return () => {
+      lenis.destroy()
+    }
+  }, [])
 
   useEffect(() => {
     const handleMouseMove = (e) => {
