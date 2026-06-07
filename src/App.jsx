@@ -1319,104 +1319,6 @@ function GithubDashboard() {
   )
 }
 
-const recommendations = [
-  {
-    quote: "Nihindu is a standout developer who quickly picks up new frameworks. His integration of Google OAuth and custom dashboard queries for our shopping system was key to our project success.",
-    author: "Project Peer",
-    role: "SLIIT Software Engineering Group",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80"
-  },
-  {
-    quote: "Exceptional dedication to clean code structure. The smart campus routing authentication he designed works flawlessly. Highly reliable contributor who is a pleasure to work with.",
-    author: "Study Colleague",
-    role: "SLIIT IT Development Lead",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
-  },
-  {
-    quote: "A fast learner who matches engineering rigor with visual design capabilities. His recent Figma designs show a great appreciation for intuitive user experience and layout.",
-    author: "UI Designer",
-    role: "UX Research Partner",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80"
-  }
-]
-
-function Recommendations() {
-  const [activeIdx, setActiveIdx] = useState(0)
-
-  const nextSlide = () => {
-    setActiveIdx((prev) => (prev + 1) % recommendations.length)
-  }
-
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 8000)
-    return () => clearInterval(timer)
-  }, [])
-
-  return (
-    <section className="section-padding bg-background">
-      <div className="container mx-auto max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
-        >
-          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
-            Peer <span className="text-gradient">Feedback</span>
-          </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground font-medium">What colleagues and project teammates say about working with me.</p>
-        </motion.div>
-
-        <div className="relative overflow-hidden rounded-xl border border-border bg-card p-6 md:p-10 shadow-xl">
-          <div className="min-h-[200px] flex flex-col justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIdx}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.4 }}
-                className="space-y-6 text-center"
-              >
-                <p className="text-base md:text-lg leading-relaxed text-muted-foreground italic font-medium">
-                  &ldquo;{recommendations[activeIdx].quote}&rdquo;
-                </p>
-
-                <div className="flex items-center justify-center gap-4">
-                  <img
-                    src={recommendations[activeIdx].avatar}
-                    alt={recommendations[activeIdx].author}
-                    className="h-12 w-12 rounded-full object-cover border-2 border-primary/30"
-                  />
-                  <div className="text-left">
-                    <p className="font-heading text-sm font-bold text-foreground">{recommendations[activeIdx].author}</p>
-                    <p className="text-xs text-muted-foreground font-medium">{recommendations[activeIdx].role}</p>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Dots */}
-          <div className="mt-8 flex justify-center gap-2">
-            {recommendations.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveIdx(idx)}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  activeIdx === idx ? 'bg-primary w-4' : 'bg-secondary'
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function Services({ setInquiryMessage }) {
   const handleInquiry = (serviceTitle) => {
     setInquiryMessage(`Hi Nihindu, I am interested in details regarding your "${serviceTitle}" services...`)
@@ -1688,7 +1590,6 @@ function App() {
       <GithubDashboard />
       <Projects />
       <Services setInquiryMessage={setInquiryMessage} />
-      <Recommendations />
       <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
       <Footer />
     </div>
