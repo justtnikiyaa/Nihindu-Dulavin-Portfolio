@@ -58,6 +58,7 @@ const navItems = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
+  { label: 'Certificates', href: '#certifications' },
   { label: 'Projects', href: '#projects' },
   { label: 'Services', href: '#services' },
   { label: 'Contact', href: '#contact' },
@@ -85,6 +86,45 @@ const skillsData = [
   { name: 'Git', icon: SiGit, color: '#F05032', category: 'Tools' },
   { name: 'Figma', icon: SiFigma, color: '#F24E1E', category: 'Tools' },
   { name: 'Java', icon: FaJava, color: '#007396', category: 'Tools' },
+]
+
+const certifications = [
+  {
+    title: 'MERN Stack Certificate',
+    issuer: 'SLIIT / Self-Directed',
+    image: '/certificate/MERN Stack Certificate.jpg',
+    description: 'Comprehensive training and project delivery utilizing MongoDB, Express, React, and Node.js for modern web services.',
+  },
+  {
+    title: 'Full-Stack Development',
+    issuer: 'Software Engineering Specialization',
+    image: '/certificate/Full-Stack Development.jpg',
+    description: 'End-to-end software engineering focusing on REST API design, database schemas, secure integrations, and deployment cycles.',
+  },
+  {
+    title: 'MongoDB Data Modeling Path',
+    issuer: 'MongoDB Academy',
+    image: '/certificate/MongoDB Data Modeling Path.png',
+    description: 'Schema modeling, relationship representation, performance optimization, and document lifecycle management in MongoDB.',
+  },
+  {
+    title: 'Web Development Microsoft',
+    issuer: 'Microsoft Academic Partner',
+    image: '/certificate/web development microsoft.png',
+    description: 'Validation of professional capabilities in standard web architecture, responsive interfaces, and host platforms.',
+  },
+  {
+    title: 'GitHub 101 – GitHub for Beginners',
+    issuer: 'GitHub Academic Program',
+    image: '/certificate/GitHub 101 – GitHub for Beginners.jpg',
+    description: 'Fundamentals of git version control, team collaboration models, conflict resolution, branching, and pull requests.',
+  },
+  {
+    title: 'AI Fluency',
+    issuer: 'Cognitive Class AI (IBM Partner)',
+    image: '/certificate/Ai fluency.jpg',
+    description: 'Foundations of artificial intelligence, model capabilities, prompting mechanisms, and responsible AI practices.',
+  },
 ]
 
 const projects = [
@@ -888,13 +928,16 @@ function TerminalConsole() {
     let reply = ''
     switch (trimmedInput) {
       case 'help':
-        reply = 'Available commands:\n  about    - Brief background introduction\n  skills   - Technical competency matrix\n  projects - Featured engineering works\n  clear    - Flush console lines\n  help     - Show command list'
+        reply = 'Available commands:\n  about          - Brief background introduction\n  skills         - Technical competency matrix\n  certifications - Earned credentials list\n  projects       - Featured engineering works\n  clear          - Flush console lines\n  help           - Show command list'
         break
       case 'about':
         reply = 'Nihindu Dulavin - IT Undergraduate at SLIIT (2024-2028).\nPassionate full-stack programmer focused on crafting reliable services using React, Node.js, and relational databases. Fast learner, dedicated team contributor, and critical problem solver.'
         break
       case 'skills':
         reply = 'Frontend:    HTML, CSS, JavaScript, React\nBackend:     Node.js, Express, Socket.io\nDatabases:   MongoDB, PostgreSQL\nTools:       Git, Figma, VS Code'
+        break
+      case 'certifications':
+        reply = 'Earned Certifications:\n- MERN Stack Certificate (SLIIT / Self-Directed)\n- Full-Stack Development (Specialization)\n- MongoDB Data Modeling Path (MongoDB Academy)\n- Web Development Microsoft (Academic Partner)\n- GitHub 101 – GitHub for Beginners (GitHub)\n- AI Fluency (Cognitive Class AI)'
         break
       case 'projects':
         reply = 'Featured Projects:\n- Daily Task App: Productive UI/UX Figma Design\n- Shopping Cart: Full Stack MERN system with Google OAuth\n- Smart Campus: Role-based campus operations hub with PostgreSQL\n- AutoRentHub: Vehicle bookings with payment features'
@@ -1368,6 +1411,113 @@ function Skills() {
     </section>
   )
 }
+function Certifications() {
+  const [selectedCert, setSelectedCert] = useState(null)
+
+  return (
+    <section id="certifications" className="section-padding bg-background relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[100px]" />
+      </div>
+
+      <div className="container mx-auto z-10 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 text-center"
+        >
+          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
+            My <span className="text-gradient">Certifications</span>
+          </h2>
+          <p className="mx-auto max-w-2xl text-muted-foreground font-medium">
+            Professional credentials and specialized paths I have completed.
+          </p>
+        </motion.div>
+
+        {/* Certificates Grid */}
+        <div className="mx-auto grid max-w-5xl gap-8 sm:grid-cols-2 md:grid-cols-3">
+          {certifications.map((cert, index) => (
+            <motion.div
+              key={cert.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              onClick={() => setSelectedCert(cert)}
+              className="group flex flex-col p-5 rounded-2xl border border-border bg-card/30 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
+            >
+              <div className="h-44 w-full overflow-hidden rounded-xl bg-muted mb-4 border border-border/50">
+                <img
+                  src={cert.image}
+                  alt={cert.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              <span className="text-[10px] text-primary font-bold font-mono tracking-wider mb-2 uppercase">
+                {cert.issuer}
+              </span>
+              <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300 mb-2 font-heading">
+                {cert.title}
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                {cert.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Certificate Image Lightbox Modal */}
+        <AnimatePresence>
+          {selectedCert && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedCert(null)}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-8 backdrop-blur-md"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: 'spring', duration: 0.5 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative max-h-[95vh] w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
+              >
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedCert(null)}
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary/80 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary z-10"
+                  aria-label="Close lightbox"
+                >
+                  <FiX size={20} />
+                </button>
+
+                <div className="overflow-auto p-4 flex-1 flex items-center justify-center bg-black/20">
+                  <img
+                    src={selectedCert.image}
+                    alt={selectedCert.title}
+                    className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-lg"
+                  />
+                </div>
+
+                <div className="p-4 border-t border-border bg-secondary/35 text-center">
+                  <h3 className="font-heading text-lg font-bold text-foreground">{selectedCert.title}</h3>
+                  <p className="text-xs text-muted-foreground font-medium mt-1">{selectedCert.issuer}</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  )
+}
 
 function Services({ setInquiryMessage }) {
   const handleInquiry = (serviceTitle) => {
@@ -1658,6 +1808,7 @@ function App() {
       <About />
       <TerminalConsole />
       <Skills />
+      <Certifications />
       <GithubDashboard />
       <Projects />
       <Services setInquiryMessage={setInquiryMessage} />
