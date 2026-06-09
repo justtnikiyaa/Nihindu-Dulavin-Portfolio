@@ -271,14 +271,13 @@ const educationTimeline = [
     details: 'Developing responsive client applications, REST APIs, Socket.io architectures, and prototyping interface blueprints in Figma.',
   },
   {
-    year: 'Future Target',
-    title: 'Industry Placement & Advanced Specialization',
-    subtitle: 'Professional Development',
-    institution: 'Software Ecosystem',
-    details: 'Aspiring to merge scalable system design, robust backend testing, and user-centric frontend experiences in real-world scenarios.',
+    year: 'May 2026 - Present',
+    title: 'Frontend Developer Intern',
+    subtitle: '6-Month Internship',
+    institution: 'SLT (Sri Lanka Telecom)',
+    details: 'Developing responsive interfaces, optimizing frontend components, and collaborating on web applications to ensure seamless user experiences.',
   },
 ]
-
 
 const services = [
   {
