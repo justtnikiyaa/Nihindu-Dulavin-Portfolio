@@ -125,6 +125,12 @@ const certifications = [
     image: '/certificate/Ai fluency.jpg',
     description: 'Foundations of artificial intelligence, model capabilities, prompting mechanisms, and responsible AI practices.',
   },
+  {
+    title: 'JavaScript Essentials 1',
+    issuer: 'Cisco',
+    image: '/certificate/javascript-essentials-1.png',
+    description: 'Foundational JavaScript programming, covering variables, data types, control flow, functions, loops, and array manipulation.',
+  },
 ]
 
 const projects = [
@@ -936,7 +942,7 @@ function TerminalConsole() {
         reply = 'Frontend:    HTML, CSS, JavaScript, React\nBackend:     Node.js, Express, Socket.io\nDatabases:   MongoDB, PostgreSQL\nTools:       Git, Figma, VS Code'
         break
       case 'certifications':
-        reply = 'Earned Certifications:\n- MERN Stack Certificate (SLIIT / Self-Directed)\n- Full-Stack Development (Specialization)\n- MongoDB Data Modeling Path (MongoDB Academy)\n- Web Development Microsoft (Academic Partner)\n- GitHub 101 – GitHub for Beginners (GitHub)\n- AI Fluency (Cognitive Class AI)'
+        reply = 'Earned Certifications:\n- MERN Stack Certificate (SLIIT / Self-Directed)\n- Full-Stack Development (Specialization)\n- MongoDB Data Modeling Path (MongoDB Academy)\n- Web Development Microsoft (Academic Partner)\n- GitHub 101 – GitHub for Beginners (GitHub)\n- AI Fluency (Cognitive Class AI)\n- JavaScript Essentials 1 (Cisco)'
         break
       case 'projects':
         reply = 'Featured Projects:\n- Daily Task App: Productive UI/UX Figma Design\n- Shopping Cart: Full Stack MERN system with Google OAuth\n- Smart Campus: Role-based campus operations hub with PostgreSQL\n- AutoRentHub: Vehicle bookings with payment features'
