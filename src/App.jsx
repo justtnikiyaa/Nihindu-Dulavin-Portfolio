@@ -33,7 +33,22 @@ import {
   FiX,
   FiZap,
 } from 'react-icons/fi'
-import { SiFigma } from 'react-icons/si'
+import { 
+  SiHtml5, 
+  SiCss, 
+  SiJavascript, 
+  SiReact, 
+  SiTailwindcss, 
+  SiBootstrap, 
+  SiWebflow, 
+  SiNodedotjs, 
+  SiExpress, 
+  SiMongodb, 
+  SiPostgresql, 
+  SiGit, 
+  SiFigma 
+} from 'react-icons/si'
+import { FaJava } from 'react-icons/fa'
 
 const EMAILJS_PUBLIC_KEY = 'M3iuh6A6Ea0oJZavH'
 const EMAILJS_TEMPLATE_ID = 'template_90o6olm'
@@ -55,34 +70,21 @@ const strengths = [
   { icon: FiMessageSquare, label: 'Dedicated' },
 ]
 
-const skillCategories = [
-  {
-    title: 'Frontend Development',
-    icon: FiCode,
-    skills: [
-      { name: 'HTML', level: 95 },
-      { name: 'CSS', level: 90 },
-      { name: 'JavaScript', level: 85 },
-      { name: 'Web Development', level: 88 },
-    ]
-  },
-  {
-    title: 'Backend & Databases',
-    icon: FiLayers,
-    skills: [
-      { name: 'MERN Stack', level: 80 },
-      { name: 'Full Stack Development', level: 78 },
-      { name: 'Git', level: 80 },
-    ]
-  },
-  {
-    title: 'Languages & Tools',
-    icon: FiZap,
-    skills: [
-      { name: 'Java', level: 75 },
-      { name: 'Figma', level: 80 },
-    ]
-  }
+const skillsData = [
+  { name: 'HTML 5', icon: SiHtml5, color: '#E34F26', category: 'Frontend' },
+  { name: 'CSS 3', icon: SiCss, color: '#1572B6', category: 'Frontend' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', category: 'Frontend' },
+  { name: 'React', icon: SiReact, color: '#61DAFB', category: 'Frontend' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', category: 'Frontend' },
+  { name: 'Bootstrap', icon: SiBootstrap, color: '#7952B3', category: 'Frontend' },
+  { name: 'Webflow', icon: SiWebflow, color: '#4353FF', category: 'Frontend' },
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933', category: 'Backend' },
+  { name: 'Express', icon: SiExpress, color: '#FFFFFF', category: 'Backend' },
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248', category: 'Backend' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1', category: 'Backend' },
+  { name: 'Git', icon: SiGit, color: '#F05032', category: 'Tools' },
+  { name: 'Figma', icon: SiFigma, color: '#F24E1E', category: 'Tools' },
+  { name: 'Java', icon: FaJava, color: '#007396', category: 'Tools' },
 ]
 
 const projects = [
@@ -622,72 +624,6 @@ function About() {
               ))}
             </div>
           </motion.div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Skills() {
-  return (
-    <section id="skills" className="section-padding bg-card/50">
-      <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
-            My <span className="text-gradient">Skills</span>
-          </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
-            Technologies and tools I work with to bring ideas to life.
-          </p>
-        </motion.div>
-
-        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
-          {skillCategories.map((category, catIdx) => {
-            const Icon = category.icon
-            return (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: catIdx * 0.1 }}
-                className="rounded-xl border border-border bg-card p-6 shadow-md hover:border-primary/30 transition-colors"
-              >
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <Icon size={20} className="text-primary" />
-                  </div>
-                  <h3 className="font-heading text-base font-semibold text-foreground">{category.title}</h3>
-                </div>
-
-                <div className="space-y-5">
-                  {category.skills.map((skill, index) => (
-                    <div key={skill.name}>
-                      <div className="mb-2 flex justify-between">
-                        <span className="text-sm font-medium text-muted-foreground">{skill.name}</span>
-                        <span className="text-sm font-semibold text-primary">{skill.level}%</span>
-                      </div>
-                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
-                        <motion.div
-                          className="h-full rounded-full bg-gradient-primary"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.1 + index * 0.05 }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )
-          })}
         </div>
       </div>
     </section>
@@ -1342,6 +1278,92 @@ function GithubDashboard() {
             ))}
           </div>
         </div>
+      </div>
+    </section>
+  )
+}
+
+function Skills() {
+  const [activeCategory, setActiveCategory] = useState('All')
+  
+  const categories = ['All', 'Frontend', 'Backend', 'Tools']
+  
+  const filteredSkills = activeCategory === 'All'
+    ? skillsData
+    : skillsData.filter(skill => skill.category === activeCategory)
+
+  return (
+    <section id="skills" className="section-padding bg-card/20 relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute right-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[120px]" />
+      </div>
+
+      <div className="container mx-auto z-10 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center"
+        >
+          <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
+            My <span className="text-gradient">Skills</span>
+          </h2>
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            Technologies and tools I work with to bring ideas to life.
+          </p>
+        </motion.div>
+
+        {/* Skills Filter Tabs */}
+        <div className="mb-12 flex flex-wrap justify-center gap-3">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${
+                activeCategory === cat
+                  ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
+                  : 'border border-border bg-card/50 text-muted-foreground hover:border-primary/30 hover:text-foreground'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Skills Grid */}
+        <motion.div 
+          layout
+          className="mx-auto grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 max-w-6xl"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill) => {
+              const Icon = skill.icon
+              return (
+                <motion.div
+                  key={skill.name}
+                  layout
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  style={{
+                    '--skill-color': skill.color,
+                    '--skill-glow-color': `${skill.color}22`
+                  }}
+                  className="skill-card flex flex-col items-center justify-center p-5 rounded-2xl bg-card/40 backdrop-blur-sm aspect-square text-center cursor-default"
+                >
+                  <div className="skill-icon-container flex h-14 w-14 items-center justify-center rounded-xl bg-secondary/30 border border-border/40 mb-4">
+                    <Icon size={28} style={{ color: skill.color }} />
+                  </div>
+                  <span className="skill-text text-[11px] font-bold tracking-wider text-muted-foreground font-heading uppercase">
+                    {skill.name}
+                  </span>
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   )

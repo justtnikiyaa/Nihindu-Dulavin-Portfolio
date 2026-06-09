@@ -77,4 +77,34 @@
       padding-bottom: 7rem;
     }
   }
+
+  /* Glowing Skill Cards */
+  .skill-card {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    border: 1px solid hsl(var(--border));
+  }
+
+  .skill-card:hover {
+    border-color: var(--skill-color);
+    box-shadow: 0 10px 30px -10px var(--skill-glow-color);
+    transform: translateY(-6px);
+  }
+
+  .skill-icon-container {
+    transition: all 0.4s ease;
+  }
+
+  .skill-card:hover .skill-icon-container {
+    transform: scale(1.1) translateY(-2px);
+    filter: drop-shadow(0 0 12px var(--skill-color));
+  }
+
+  .skill-text {
+    transition: color 0.4s ease;
+  }
+
+  .skill-card:hover .skill-text {
+    color: hsl(var(--foreground));
+  }
 }
