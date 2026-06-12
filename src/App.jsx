@@ -33,20 +33,20 @@ import {
   FiX,
   FiZap,
 } from 'react-icons/fi'
-import { 
-  SiHtml5, 
-  SiCss, 
-  SiJavascript, 
-  SiReact, 
-  SiTailwindcss, 
-  SiBootstrap, 
-  SiWebflow, 
-  SiNodedotjs, 
-  SiExpress, 
-  SiMongodb, 
-  SiPostgresql, 
-  SiGit, 
-  SiFigma 
+import {
+  SiHtml5,
+  SiCss,
+  SiJavascript,
+  SiReact,
+  SiTailwindcss,
+  SiBootstrap,
+  SiWebflow,
+  SiNodedotjs,
+  SiExpress,
+  SiMongodb,
+  SiPostgresql,
+  SiGit,
+  SiFigma
 } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'
 
@@ -90,6 +90,12 @@ const skillsData = [
 
 const certifications = [
   {
+    title: 'Web Design for Beginners',
+    issuer: 'University of Moratuwa',
+    image: '/certificate/Web Development.png',
+    description: 'Gained practical knowledge in HTML essentials, CSS styling, JavaScript interactivity, and responsive web design.',
+  },
+  {
     title: 'MERN Stack Certificate',
     issuer: 'SLIIT / Self-Directed',
     image: '/certificate/MERN Stack Certificate.jpg',
@@ -130,12 +136,6 @@ const certifications = [
     issuer: 'Cisco',
     image: '/certificate/javascript-essentials-1.png',
     description: 'Foundational JavaScript programming, covering variables, data types, control flow, functions, loops, and array manipulation.',
-  },
-  {
-    title: 'Web Design for Beginners',
-    issuer: 'University of Moratuwa',
-    image: '/certificate/Web Development.png',
-    description: 'Gained practical knowledge in HTML essentials, CSS styling, JavaScript interactivity, and responsive web design.',
   },
 ]
 
@@ -345,8 +345,8 @@ function Navbar() {
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <a 
-          href="#home" 
+        <a
+          href="#home"
           onClick={(e) => scrollToTarget(e, '#home')}
           className="font-heading text-xl font-bold"
         >
@@ -713,11 +713,10 @@ function Projects() {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${
-                filter === cat
+              className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${filter === cat
                   ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
                   : 'border border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground'
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -725,8 +724,8 @@ function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <motion.div 
-          layout 
+        <motion.div
+          layout
           className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2"
         >
           <AnimatePresence mode="popLayout">
@@ -1149,12 +1148,12 @@ function GithubDashboard() {
     }
   })
 
-  const years = githubData 
-    ? Object.keys(githubData.allTotals).sort((a, b) => b - a) 
+  const years = githubData
+    ? Object.keys(githubData.allTotals).sort((a, b) => b - a)
     : [currentYear, '2025', '2024']
 
-  const yearTotal = githubData 
-    ? (githubData.allTotals[selectedYear] || 0) 
+  const yearTotal = githubData
+    ? (githubData.allTotals[selectedYear] || 0)
     : 272
 
   const stats = [
@@ -1214,11 +1213,10 @@ function GithubDashboard() {
                   <button
                     key={y}
                     onClick={() => setSelectedYear(y)}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
-                      selectedYear === y
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${selectedYear === y
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-secondary text-muted-foreground'
-                    }`}
+                      }`}
                   >
                     {y}
                   </button>
@@ -1231,8 +1229,8 @@ function GithubDashboard() {
                   {/* Months Header row */}
                   <div className="relative h-6 w-full text-xs text-muted-foreground mb-1 select-none">
                     {monthsHeader.map((m, idx) => (
-                      <span 
-                        key={idx} 
+                      <span
+                        key={idx}
                         className="absolute font-semibold text-[11px]"
                         style={{ left: `${m.colIndex * 14.2 + 28}px` }} // Aligned offset with labels
                       >
@@ -1269,9 +1267,8 @@ function GithubDashboard() {
                             return (
                               <div
                                 key={rowIdx}
-                                className={`h-2.5 w-2.5 rounded-sm transition-all duration-300 hover:scale-125 ${
-                                  day.count === -1 ? 'opacity-0 pointer-events-none' : bgClass
-                                }`}
+                                className={`h-2.5 w-2.5 rounded-sm transition-all duration-300 hover:scale-125 ${day.count === -1 ? 'opacity-0 pointer-events-none' : bgClass
+                                  }`}
                                 title={day.count > -1 ? `${day.count} contributions on ${day.date || 'unknown'}` : ''}
                               />
                             )
@@ -1303,11 +1300,10 @@ function GithubDashboard() {
                   <button
                     key={y}
                     onClick={() => setSelectedYear(y)}
-                    className={`rounded-lg px-4 py-2 text-xs font-bold transition-all text-left border ${
-                      selectedYear === y
+                    className={`rounded-lg px-4 py-2 text-xs font-bold transition-all text-left border ${selectedYear === y
                         ? 'bg-primary border-primary text-primary-foreground shadow-md shadow-primary/10'
                         : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/40'
-                    }`}
+                      }`}
                   >
                     {y}
                   </button>
@@ -1339,9 +1335,9 @@ function GithubDashboard() {
 
 function Skills() {
   const [activeCategory, setActiveCategory] = useState('All')
-  
+
   const categories = ['All', 'Frontend', 'Backend', 'Tools']
-  
+
   const filteredSkills = activeCategory === 'All'
     ? skillsData
     : skillsData.filter(skill => skill.category === activeCategory)
@@ -1374,11 +1370,10 @@ function Skills() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${
-                activeCategory === cat
+              className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${activeCategory === cat
                   ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
                   : 'border border-border bg-card/50 text-muted-foreground hover:border-primary/30 hover:text-foreground'
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -1386,7 +1381,7 @@ function Skills() {
         </div>
 
         {/* Skills Grid */}
-        <motion.div 
+        <motion.div
           layout
           className="mx-auto grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 max-w-6xl"
         >
@@ -1808,7 +1803,7 @@ function App() {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       {/* Spotlight cursor glow */}
-      <div 
+      <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
           background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, hsl(18 90% 55% / 0.045), transparent 80%)`
