@@ -60,4 +60,4 @@ Continuously update my projects and experience
 📌 Author
 
 Nihindu Dulavin
-IT Undergraduate | Full Stack Developer | Web Developer
+IT Undergraduate | Full Stack Developer | Web Developer |
