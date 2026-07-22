@@ -305,13 +305,23 @@ const educationTimeline = [
     institution: 'SLIIT Modules',
     details: 'Developing responsive client applications, REST APIs, Socket.io architectures, and prototyping interface blueprints in Figma.',
   },
+]
+
+const workExperience = [
   {
-    year: 'May 2026 - Present',
-    title: 'Frontend Developer Intern',
-    subtitle: '6-Month Internship',
-    institution: 'SLT (Sri Lanka Telecom)',
-    details: 'Developing responsive interfaces, optimizing frontend components, and collaborating on web applications to ensure seamless user experiences.',
-  },
+    role: 'Frontend Developer Intern',
+    company: 'Sri Lanka Telecom (SLT-MOBITEL)',
+    period: 'May 2026 – Present',
+    description:
+      'Developing and enhancing enterprise-level React.js web interfaces for the SOCO platform across Officer Management, Crime Scene, Vehicle Configuration, and Promotion Management modules.',
+    highlights: [
+      'Engineered responsive React components & RESTful API integrations for dynamic data flow',
+      'Performed UI/UX usability enhancements, layout optimizations, and frontend bug fixes',
+      'Conducted web vulnerability testing with OWASP ZAP and code quality metrics via SonarQube',
+      'Collaborated in Agile sprint planning, requirement reviews, and deployment testing'
+    ],
+    skills: ['React.js', 'REST APIs', 'OWASP ZAP', 'SonarQube', 'Agile']
+  }
 ]
 
 const services = [
@@ -699,20 +709,62 @@ function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="space-y-8"
           >
-            <h3 className="mb-6 font-heading text-xl font-semibold text-foreground">My Strengths</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {strengths.map(({ icon: Icon, label }) => (
+            {/* Work Experience */}
+            <div>
+              <h3 className="mb-6 font-heading text-xl font-semibold text-foreground flex items-center justify-between">
+                Work Experience
+              </h3>
+              {workExperience.map((job, idx) => (
                 <div
-                  key={label}
-                  className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/50"
+                  key={idx}
+                  className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/40 transition-colors"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                    <Icon size={22} className="text-primary" />
+                  <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                    <div>
+                      <h4 className="font-heading text-base font-bold text-foreground">{job.role}</h4>
+                      <p className="text-xs font-semibold text-primary">{job.company}</p>
+                    </div>
+                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-semibold text-primary">
+                      {job.period}
+                    </span>
                   </div>
-                  <span className="text-sm font-medium text-foreground">{label}</span>
+                  <p className="text-xs leading-relaxed text-muted-foreground mb-3">
+                    {job.description}
+                  </p>
+                  <ul className="mb-4 space-y-1.5 text-xs text-muted-foreground list-disc list-inside">
+                    {job.highlights.map((point, pIdx) => (
+                      <li key={pIdx}>{point}</li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border/60">
+                    {job.skills.map((s) => (
+                      <span key={s} className="rounded-md bg-secondary px-2.5 py-0.5 text-[11px] font-medium text-secondary-foreground border border-border/50">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               ))}
+            </div>
+
+            {/* My Strengths */}
+            <div>
+              <h3 className="mb-6 font-heading text-xl font-semibold text-foreground">My Strengths</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {strengths.map(({ icon: Icon, label }) => (
+                  <div
+                    key={label}
+                    className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/50"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                      <Icon size={22} className="text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
