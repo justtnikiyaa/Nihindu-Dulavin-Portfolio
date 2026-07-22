@@ -2157,8 +2157,8 @@ function App() {
       <TerminalConsole />
       <Skills />
       <Projects />
-      <Certifications />
       <GithubDashboard />
+      <Certifications />
       <Services setInquiryMessage={setInquiryMessage} />
       <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
       <Footer />
