@@ -30,7 +30,9 @@ import {
   FiMaximize2,
   FiMenu,
   FiMessageSquare,
+  FiMoon,
   FiPhone,
+  FiSun,
   FiTarget,
   FiUsers,
   FiX,
@@ -354,7 +356,7 @@ const socialLinks = [
   { icon: FiMail, href: 'mailto:nihindudulavin02@gmail.com', label: 'Email' },
 ]
 
-function Navbar() {
+function Navbar({ theme, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false)
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -364,7 +366,7 @@ function Navbar() {
   })
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
+    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg transition-colors duration-300">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <a
           href="#home"
@@ -381,29 +383,46 @@ function Navbar() {
               key={item.href}
               href={item.href}
               onClick={(e) => scrollToTarget(e, item.href)}
-              className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}
             </a>
           ))}
         </div>
 
-        <a
-          href="#contact"
-          onClick={(e) => scrollToTarget(e, '#contact')}
-          className="hidden rounded-lg bg-gradient-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
-        >
-          Let&apos;s Talk
-        </a>
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle Button */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-foreground transition-all hover:border-primary/50 hover:text-primary hover:scale-105 active:scale-95 shadow-sm"
+            aria-label="Toggle dark/light theme"
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+          >
+            {theme === 'dark' ? (
+              <FiSun size={18} className="text-amber-400 transition-transform duration-300 hover:rotate-45" />
+            ) : (
+              <FiMoon size={18} className="text-slate-700 transition-transform duration-300 hover:-rotate-12" />
+            )}
+          </button>
 
-        <button
-          type="button"
-          className="text-foreground md:hidden"
-          onClick={() => setIsOpen((prev) => !prev)}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-        </button>
+          <a
+            href="#contact"
+            onClick={(e) => scrollToTarget(e, '#contact')}
+            className="hidden rounded-lg bg-gradient-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+          >
+            Let&apos;s Talk
+          </a>
+
+          <button
+            type="button"
+            className="text-foreground md:hidden ml-1"
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
+        </div>
       </div>
 
       {isOpen && (
@@ -412,7 +431,7 @@ function Navbar() {
             <a
               key={item.href}
               href={item.href}
-              className="block py-2 text-muted-foreground transition-colors hover:text-primary"
+              className="block py-2 font-medium text-muted-foreground transition-colors hover:text-primary"
               onClick={(e) => {
                 setIsOpen(false)
                 scrollToTarget(e, item.href)
@@ -2046,6 +2065,23 @@ function App() {
     }
   }, [])
 
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark'
+  })
+
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light')
+    } else {
+      document.documentElement.classList.remove('light')
+    }
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+  }
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY })
@@ -2055,15 +2091,15 @@ function App() {
   }, [])
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground transition-colors duration-300">
       {/* Spotlight cursor glow */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
-          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, hsl(18 90% 55% / 0.045), transparent 80%)`
+          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, hsl(18 90% 55% / ${theme === 'light' ? 0.07 : 0.045}), transparent 80%)`
         }}
       />
-      <Navbar />
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Hero />
       <About />
       <TerminalConsole />
