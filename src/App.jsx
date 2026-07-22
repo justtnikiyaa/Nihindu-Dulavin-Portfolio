@@ -141,6 +141,24 @@ const certifications = [
 
 const projects = [
   {
+    title: 'KonceptHive',
+    category: 'Full Stack',
+    description:
+      'A comprehensive full-stack web application featuring dynamic frontend components, RESTful backend APIs, and seamless database integration.',
+    longDescription:
+      'A modern full-stack web platform built for KonceptHive. Features a highly responsive user interface, secure backend endpoint services, interactive data management, and smooth client-side navigation.',
+    features: [
+      'Interactive and responsive dashboard with modern UI/UX design',
+      'Full-stack RESTful API endpoints for dynamic data management',
+      'Secure backend integrations with real-time state handling',
+      'Optimized performance and cross-platform responsiveness'
+    ],
+    tech: ['React', 'Node.js', 'Express', 'MongoDB'],
+    image: '/images/project-koncepthive.png',
+    github: 'https://github.com/justtnikiyaa/koncepthive-Project',
+    preview: 'https://koncepthive-frontend-779x.onrender.com/',
+  },
+  {
     title: 'Daily Task App',
     category: 'UI/UX',
     description:
