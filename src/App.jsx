@@ -61,8 +61,8 @@ const navItems = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Certificates', href: '#certifications' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Certificates', href: '#certifications' },
   { label: 'Services', href: '#services' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -2061,9 +2061,9 @@ function App() {
       <About />
       <TerminalConsole />
       <Skills />
+      <Projects />
       <Certifications />
       <GithubDashboard />
-      <Projects />
       <Services setInquiryMessage={setInquiryMessage} />
       <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
       <Footer />
