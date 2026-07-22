@@ -17,6 +17,8 @@ export const scrollToTarget = (e, targetId) => {
 
 import {
   FiArrowDown,
+  FiChevronLeft,
+  FiChevronRight,
   FiCode,
   FiDownload,
   FiExternalLink,
@@ -25,6 +27,7 @@ import {
   FiLinkedin,
   FiMail,
   FiMapPin,
+  FiMaximize2,
   FiMenu,
   FiMessageSquare,
   FiPhone,
@@ -699,9 +702,226 @@ function About() {
   )
 }
 
+function ProjectImageGallery({ images, image, title, preview, onOpenLightbox }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const imageList = (Array.isArray(images) && images.length > 0)
+    ? images
+    : (image ? [image] : [])
+
+  const nextSlide = (e) => {
+    e.stopPropagation()
+    setCurrentIndex((prev) => (prev + 1) % imageList.length)
+  }
+
+  const prevSlide = (e) => {
+    e.stopPropagation()
+    setCurrentIndex((prev) => (prev - 1 + imageList.length) % imageList.length)
+  }
+
+  let displayDomain = title
+  if (preview) {
+    try {
+      const urlObj = new URL(preview.startsWith('http') ? preview : `https://${preview}`)
+      displayDomain = urlObj.hostname + (urlObj.pathname !== '/' ? urlObj.pathname : '')
+    } catch {
+      displayDomain = preview
+    }
+  }
+
+  return (
+    <div className="group relative overflow-hidden rounded-xl border border-border/80 bg-card shadow-md transition-all hover:border-primary/40 hover:shadow-xl">
+      {/* Mac Browser Frame Header */}
+      <div className="flex items-center justify-between border-b border-border/60 bg-secondary/90 px-3.5 py-2 backdrop-blur-sm select-none">
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-rose-500/80" />
+          <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+        </div>
+        <div className="flex flex-1 items-center justify-center px-3">
+          <div className="w-full max-w-[170px] sm:max-w-[240px] truncate rounded-md border border-border/50 bg-background/60 px-2.5 py-0.5 text-center font-mono text-[10px] sm:text-[11px] text-muted-foreground">
+            {displayDomain}
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
+          }}
+          className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:bg-background hover:text-primary transition-colors"
+          title="Full Screen View"
+        >
+          <FiMaximize2 size={13} />
+        </button>
+      </div>
+
+      {/* Main Image View */}
+      <div className="relative aspect-video w-full overflow-hidden bg-black/20">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={imageList[currentIndex]}
+            alt={`${title} screenshot ${currentIndex + 1}`}
+            initial={{ opacity: 0.4, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0.4, scale: 0.98 }}
+            transition={{ duration: 0.25 }}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
+            }}
+            className="h-full w-full object-cover object-top cursor-zoom-in transition-transform duration-500 group-hover:scale-105"
+          />
+        </AnimatePresence>
+
+        {/* Hover overlay hint */}
+        <div
+          onClick={(e) => {
+            e.stopPropagation()
+            if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
+          }}
+          className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        >
+          <span className="flex items-center gap-1.5 rounded-full bg-black/80 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md border border-white/20 shadow-xl">
+            <FiMaximize2 size={13} /> Click to Expand Photo
+          </span>
+        </div>
+
+        {/* Navigation Arrows (if multiple images) */}
+        {imageList.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={prevSlide}
+              className="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md hover:bg-primary transition-all opacity-0 group-hover:opacity-100 z-10"
+              aria-label="Previous photo"
+            >
+              <FiChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={nextSlide}
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md hover:bg-primary transition-all opacity-0 group-hover:opacity-100 z-10"
+              aria-label="Next photo"
+            >
+              <FiChevronRight size={18} />
+            </button>
+
+            {/* Pagination Dots */}
+            <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/60 px-2.5 py-1 backdrop-blur-md z-10">
+              {imageList.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setCurrentIndex(idx)
+                  }}
+                  className={`h-1.5 rounded-full transition-all ${
+                    idx === currentIndex ? 'w-4 bg-primary' : 'w-1.5 bg-white/50 hover:bg-white'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function LightboxModal({ images, initialIndex = 0, title, onClose }) {
+  const [index, setIndex] = useState(initialIndex)
+  const imageList = Array.isArray(images) && images.length > 0 ? images : []
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowRight' && imageList.length > 1) {
+        setIndex((prev) => (prev + 1) % imageList.length)
+      }
+      if (e.key === 'ArrowLeft' && imageList.length > 1) {
+        setIndex((prev) => (prev - 1 + imageList.length) % imageList.length)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [imageList.length, onClose])
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-xl"
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-6 top-6 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md hover:bg-rose-600 transition-all z-20"
+          aria-label="Close full view"
+        >
+          <FiX size={22} />
+        </button>
+
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative max-h-[92vh] max-w-[95vw] flex flex-col items-center justify-center"
+        >
+          <motion.img
+            key={index}
+            src={imageList[index]}
+            alt={`${title} full screenshot`}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="max-h-[84vh] max-w-[92vw] rounded-xl object-contain shadow-2xl border border-white/10"
+          />
+
+          {/* Navigation Controls */}
+          {imageList.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => setIndex((prev) => (prev - 1 + imageList.length) % imageList.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md hover:bg-primary transition-all"
+              >
+                <FiChevronLeft size={26} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIndex((prev) => (prev + 1) % imageList.length)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white backdrop-blur-md hover:bg-primary transition-all"
+              >
+                <FiChevronRight size={26} />
+              </button>
+            </>
+          )}
+
+          <div className="mt-4 flex items-center gap-3">
+            <span className="text-sm font-medium text-white/90">{title}</span>
+            {imageList.length > 1 && (
+              <span className="rounded-full bg-white/15 px-3 py-0.5 text-xs text-white/80 font-mono">
+                {index + 1} / {imageList.length}
+              </span>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
 function Projects() {
   const [filter, setFilter] = useState('All')
   const [selectedProject, setSelectedProject] = useState(null)
+  const [lightboxState, setLightboxState] = useState(null)
+
+  const handleOpenLightbox = (images, index, title) => {
+    setLightboxState({ images, index, title })
+  }
 
   const categories = ['All', 'Full Stack', 'Frontend', 'UI/UX']
 
@@ -758,14 +978,13 @@ function Projects() {
                 onClick={() => setSelectedProject(project)}
                 className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 md:col-span-1"
               >
-                <div className="h-48 overflow-hidden bg-muted">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    width={768}
-                    height={512}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                <div onClick={(e) => e.stopPropagation()}>
+                  <ProjectImageGallery
+                    images={project.images}
+                    image={project.image}
+                    title={project.title}
+                    preview={project.preview}
+                    onOpenLightbox={handleOpenLightbox}
                   />
                 </div>
 
@@ -848,7 +1067,7 @@ function Projects() {
                 <button
                   type="button"
                   onClick={() => setSelectedProject(null)}
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary/80 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary/80 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary z-20"
                   aria-label="Close modal"
                 >
                   <FiX size={20} />
@@ -856,13 +1075,13 @@ function Projects() {
 
                 <div className="grid gap-6 md:grid-cols-12">
                   <div className="md:col-span-5">
-                    <div className="overflow-hidden rounded-xl border border-border bg-muted aspect-video md:aspect-square">
-                      <img
-                        src={selectedProject.image}
-                        alt={selectedProject.title}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
+                    <ProjectImageGallery
+                      images={selectedProject.images}
+                      image={selectedProject.image}
+                      title={selectedProject.title}
+                      preview={selectedProject.preview}
+                      onOpenLightbox={handleOpenLightbox}
+                    />
                   </div>
 
                   <div className="flex flex-col justify-between md:col-span-7">
@@ -934,6 +1153,16 @@ function Projects() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Full-Screen Lightbox Modal */}
+        {lightboxState && (
+          <LightboxModal
+            images={lightboxState.images}
+            initialIndex={lightboxState.index}
+            title={lightboxState.title}
+            onClose={() => setLightboxState(null)}
+          />
+        )}
       </div>
     </section>
   )
