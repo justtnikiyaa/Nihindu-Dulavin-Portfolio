@@ -1504,12 +1504,19 @@ function GithubDashboard() {
                       {weeksList.map((week, colIdx) => (
                         <div key={colIdx} className="grid grid-rows-7 gap-1">
                           {week.map((day, rowIdx) => {
-                            let bgClass = 'bg-secondary/40' // placeholder background
-                            if (day.level === 0) bgClass = 'bg-secondary/80'
-                            if (day.level === 1) bgClass = 'bg-emerald-900/40'
-                            if (day.level === 2) bgClass = 'bg-emerald-700/60'
-                            if (day.level === 3) bgClass = 'bg-emerald-500/80'
-                            if (day.level === 4) bgClass = 'bg-emerald-500'
+                            let level = day.level
+                            if (day.count > 0 && (!level || level === 0)) {
+                              if (day.count >= 10) level = 4
+                              else if (day.count >= 6) level = 3
+                              else if (day.count >= 3) level = 2
+                              else level = 1
+                            }
+
+                            let bgClass = 'bg-slate-800/80 border border-slate-700/40' // no contributions
+                            if (level === 1) bgClass = 'bg-emerald-700 border border-emerald-600'
+                            if (level === 2) bgClass = 'bg-emerald-500 border border-emerald-400 shadow-[0_0_5px_rgba(16,185,129,0.4)]'
+                            if (level === 3) bgClass = 'bg-green-400 border border-green-300 shadow-[0_0_8px_rgba(74,222,128,0.6)]'
+                            if (level === 4) bgClass = 'bg-emerald-300 border border-emerald-200 shadow-[0_0_10px_rgba(110,231,183,0.9)]'
 
                             return (
                               <div
@@ -1530,11 +1537,11 @@ function GithubDashboard() {
                     <span>Learn how we count contributions</span>
                     <div className="flex items-center gap-1.5 select-none">
                       <span>Less</span>
-                      <span className="h-2.5 w-2.5 rounded-sm bg-secondary/80" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/40" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700/60" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500/80" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-slate-800/80 border border-slate-700/40" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700 border border-emerald-600" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500 border border-emerald-400" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-green-400 border border-green-300" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-300 border border-emerald-200" />
                       <span>More</span>
                     </div>
                   </div>
