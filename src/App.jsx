@@ -964,7 +964,7 @@ function Projects() {
         {/* Projects Grid */}
         <motion.div
           layout
-          className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2"
+          className="mx-auto grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
@@ -976,7 +976,7 @@ function Projects() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 onClick={() => setSelectedProject(project)}
-                className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 md:col-span-1"
+                className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
               >
                 <div onClick={(e) => e.stopPropagation()}>
                   <ProjectImageGallery
