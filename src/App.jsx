@@ -294,18 +294,32 @@ const projects = [
 
 const educationTimeline = [
   {
-    year: '2023 - Present',
-    title: 'BSc (Hons) in Information Technology',
+    year: 'Oct 2023 – Oct 2027',
+    title: 'B.Sc (Hons.) in Information Technology',
     subtitle: 'Specialising in Information Technology',
     institution: 'SLIIT',
-    details: 'Pursuing core computer science theory, web application frameworks, networking, and databases.',
+    details: 'Pursuing core computer science theory, web application frameworks, software engineering, networking, and databases.',
   },
   {
-    year: '2023 - Present',
-    title: 'Full Stack & UI/UX Specialization',
-    subtitle: 'Self-Directed & Academic Projects',
-    institution: 'SLIIT Modules',
-    details: 'Developing responsive client applications, REST APIs, Socket.io architectures, and prototyping interface blueprints in Figma.',
+    year: 'Jul 2024 – Nov 2024',
+    title: 'English Language & Literature',
+    subtitle: 'Higher Studies Program',
+    institution: 'Aquinas College of Higher Studies',
+    details: 'Focused on advanced English language skills, literary analysis, and professional communication.',
+  },
+  {
+    year: 'Jun 2023 – Aug 2023',
+    title: 'Digital Marketing',
+    subtitle: 'Skill Development Course',
+    institution: 'NIBM (National Institute of Business Management)',
+    details: 'Gained foundational skills in marketing strategies, digital marketing concepts, and business operations.',
+  },
+  {
+    year: '2013 – 2021',
+    title: 'Primary & Secondary Education',
+    subtitle: 'G.C.E. Advanced Level & Ordinary Level',
+    institution: 'Ananda Sastralaya Kotte',
+    details: 'Completed primary and secondary schooling, building foundational knowledge in technology, science, and mathematics.',
   },
 ]
 
