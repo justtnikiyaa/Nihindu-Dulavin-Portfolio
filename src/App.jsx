@@ -17,6 +17,8 @@ export const scrollToTarget = (e, targetId) => {
 
 import {
   FiArrowDown,
+  FiBookOpen,
+  FiBriefcase,
   FiChevronLeft,
   FiChevronRight,
   FiCode,
@@ -659,125 +661,154 @@ function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-14 text-center"
         >
           <h2 className="mb-4 font-heading text-3xl font-bold md:text-4xl">
             About <span className="text-gradient">Me</span>
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">Get to know me, my background, and what drives me.</p>
+          <p className="mx-auto max-w-2xl text-muted-foreground font-medium">
+            IT Undergraduate & Developer with hands-on enterprise internship experience.
+          </p>
         </motion.div>
 
-        <div className="grid items-start gap-12 md:grid-cols-2">
+        <div className="grid items-start gap-8 lg:grid-cols-12">
+          {/* Left Column: Bio, Education & Strengths (6 cols on lg screens) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="space-y-6 lg:col-span-6"
           >
-            <h3 className="mb-4 font-heading text-xl font-semibold text-foreground">Who I Am</h3>
-            <p className="mb-4 leading-relaxed text-muted-foreground">
-              I&apos;m Nihindu Dulavin, a passionate IT undergraduate specializing in Information Technology at the Sri
-              Lanka Institute of Information Technology (SLIIT). I&apos;m currently pursuing my BSc (Hons) in Information
-              Technology (2023-Present).
-            </p>
-            <p className="mb-6 leading-relaxed text-muted-foreground">
-              My goal is to gain meaningful industry experience and grow into a skilled full stack developer. I&apos;m
-              passionate about learning new technologies, building real-world projects, and working collaboratively in
-              teams to improve both my technical and communication skills.
-            </p>
-
-            <h3 className="mb-6 mt-8 font-heading text-xl font-semibold text-foreground">My Education & Journey</h3>
-            <div className="relative border-l border-border pl-6 ml-2 space-y-8">
-              {educationTimeline.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative"
-                >
-                  <span className="absolute -left-6 top-1.5 flex h-3.5 w-3.5 -translate-x-1/2 items-center justify-center rounded-full bg-background border border-primary">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  </span>
-
-                  <span className="mb-1 block text-xs font-semibold uppercase tracking-wider text-primary">
-                    {item.year}
-                  </span>
-                  <h4 className="font-heading text-sm font-bold text-foreground">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs font-medium text-muted-foreground">
-                    {item.subtitle} • <span className="text-foreground/80">{item.institution}</span>
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.details}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
-            {/* Work Experience */}
-            <div>
-              <h3 className="mb-6 font-heading text-xl font-semibold text-foreground flex items-center justify-between">
-                Work Experience
+            {/* Who I Am Card */}
+            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+              <h3 className="mb-4 font-heading text-xl font-bold text-foreground flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-primary" /> Who I Am
               </h3>
-              <div className="space-y-4">
-                {workExperience.map((job, idx) => (
-                  <div
-                    key={idx}
-                    className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/40 transition-colors"
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-                      <div>
-                        <h4 className="font-heading text-base font-bold text-foreground">{job.role}</h4>
-                        <p className="text-xs font-semibold text-primary">{job.company}</p>
-                      </div>
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-semibold text-primary">
-                        {job.period}
-                      </span>
-                    </div>
-                    <p className="text-xs leading-relaxed text-muted-foreground mb-3">
-                      {job.description}
+              <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
+                I&apos;m <strong className="text-foreground font-semibold">Nihindu Dulavin</strong>, an IT undergraduate specializing in Information Technology at the Sri Lanka Institute of Information Technology (SLIIT), pursuing my BSc (Hons) in IT (2023–Present).
+              </p>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+                My goal is to gain real-world industry experience and grow into a skilled full stack developer. I thrive on learning new technologies, building production-ready applications, and solving complex engineering challenges.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-3 border-t border-border/60 text-xs">
+                <span className="rounded-lg bg-primary/10 border border-primary/20 px-3 py-1 font-medium text-primary">
+                  📍 Colombo, Sri Lanka
+                </span>
+                <span className="rounded-lg bg-secondary border border-border px-3 py-1 font-medium text-secondary-foreground">
+                  🎓 SLIIT Undergraduate
+                </span>
+                <span className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 font-medium text-emerald-400">
+                  ⚡ Open for Opportunities
+                </span>
+              </div>
+            </div>
+
+            {/* My Education & Journey */}
+            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+              <h3 className="mb-6 font-heading text-xl font-bold text-foreground flex items-center gap-2">
+                <FiBookOpen className="text-primary" size={20} /> My Education & Journey
+              </h3>
+              <div className="relative border-l border-border/80 pl-5 ml-2 space-y-6">
+                {educationTimeline.map((item, index) => (
+                  <div key={index} className="relative">
+                    <span className="absolute -left-[27px] top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-card border-2 border-primary">
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                    </span>
+                    <span className="mb-1 inline-block rounded-md bg-primary/10 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-primary">
+                      {item.year}
+                    </span>
+                    <h4 className="font-heading text-base font-bold text-foreground mt-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs font-semibold text-muted-foreground mb-2">
+                      {item.subtitle} • <span className="text-foreground">{item.institution}</span>
                     </p>
-                    <ul className="mb-4 space-y-1.5 text-xs text-muted-foreground list-disc list-inside">
-                      {job.highlights.map((point, pIdx) => (
-                        <li key={pIdx}>{point}</li>
-                      ))}
-                    </ul>
-                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border/60">
-                      {job.skills.map((s) => (
-                        <span key={s} className="rounded-md bg-secondary px-2.5 py-0.5 text-[11px] font-medium text-secondary-foreground border border-border/50">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      {item.details}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* My Strengths */}
-            <div>
-              <h3 className="mb-6 font-heading text-xl font-semibold text-foreground">My Strengths</h3>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+              <h3 className="mb-5 font-heading text-xl font-bold text-foreground flex items-center gap-2">
+                <FiZap className="text-primary" size={20} /> Key Strengths
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
                 {strengths.map(({ icon: Icon, label }) => (
                   <div
                     key={label}
-                    className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/50"
+                    className="flex items-center gap-3 rounded-xl border border-border/80 bg-secondary/40 p-3.5 transition-all hover:border-primary/40 hover:bg-secondary/80"
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <Icon size={22} className="text-primary" />
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Icon size={18} />
                     </div>
-                    <span className="text-sm font-medium text-foreground">{label}</span>
+                    <span className="text-xs font-semibold text-foreground">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Work Experience (6 cols on lg screens) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6 space-y-6"
+          >
+            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+              <div className="mb-6 flex items-center justify-between">
+                <h3 className="font-heading text-xl font-bold text-foreground flex items-center gap-2">
+                  <FiBriefcase className="text-primary" size={20} /> Work Experience
+                </h3>
+                <span className="rounded-full bg-emerald-500/10 px-3 py-1 font-mono text-xs font-bold text-emerald-400 border border-emerald-500/20">
+                  {workExperience.length} Internships
+                </span>
+              </div>
+
+              <div className="space-y-6">
+                {workExperience.map((job, idx) => (
+                  <div
+                    key={idx}
+                    className="group rounded-xl border border-border/80 bg-background/50 p-5 sm:p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h4 className="font-heading text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                          {job.role}
+                        </h4>
+                        <p className="text-xs font-bold text-primary">{job.company}</p>
+                      </div>
+                      <span className="rounded-full bg-primary/10 px-3 py-1 font-mono text-[11px] font-semibold text-primary border border-primary/20">
+                        {job.period}
+                      </span>
+                    </div>
+
+                    <p className="text-xs leading-relaxed text-muted-foreground my-3">
+                      {job.description}
+                    </p>
+
+                    <ul className="mb-4 space-y-2 text-xs text-muted-foreground">
+                      {job.highlights.map((point, pIdx) => (
+                        <li key={pIdx} className="flex items-start gap-2">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border/60">
+                      {job.skills.map((s) => (
+                        <span key={s} className="rounded-md bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground border border-border/60">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
