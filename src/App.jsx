@@ -309,6 +309,20 @@ const educationTimeline = [
 
 const workExperience = [
   {
+    role: 'IT Infrastructure Intern',
+    company: 'Road Development Authority (RDA)',
+    period: 'July 2026 – Present',
+    description:
+      'Supporting the Information Systems & Network Management Division by assisting with IT infrastructure maintenance, hardware troubleshooting, operating system deployment, and contributing to the planning and development of an internal Letter Management System.',
+    highlights: [
+      'Diagnosed and resolved desktop hardware and software issues to ensure smooth system operation',
+      'Assisted with Windows installation, system configuration, and troubleshooting for organizational computers',
+      'Performed routine hardware inspections, maintenance, and component replacements where required',
+      'Collaborated with the development team during initial planning and task allocation for the Letter Management System'
+    ],
+    skills: ['Windows', 'Hardware Troubleshooting', 'Desktop Support', 'System Maintenance', 'IT Support']
+  },
+  {
     role: 'Frontend Developer Intern',
     company: 'Sri Lanka Telecom (SLT-MOBITEL)',
     period: 'May 2026 – Present',
@@ -716,37 +730,39 @@ function About() {
               <h3 className="mb-6 font-heading text-xl font-semibold text-foreground flex items-center justify-between">
                 Work Experience
               </h3>
-              {workExperience.map((job, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/40 transition-colors"
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-                    <div>
-                      <h4 className="font-heading text-base font-bold text-foreground">{job.role}</h4>
-                      <p className="text-xs font-semibold text-primary">{job.company}</p>
-                    </div>
-                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-semibold text-primary">
-                      {job.period}
-                    </span>
-                  </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground mb-3">
-                    {job.description}
-                  </p>
-                  <ul className="mb-4 space-y-1.5 text-xs text-muted-foreground list-disc list-inside">
-                    {job.highlights.map((point, pIdx) => (
-                      <li key={pIdx}>{point}</li>
-                    ))}
-                  </ul>
-                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border/60">
-                    {job.skills.map((s) => (
-                      <span key={s} className="rounded-md bg-secondary px-2.5 py-0.5 text-[11px] font-medium text-secondary-foreground border border-border/50">
-                        {s}
+              <div className="space-y-4">
+                {workExperience.map((job, idx) => (
+                  <div
+                    key={idx}
+                    className="rounded-xl border border-border bg-card p-6 shadow-sm hover:border-primary/40 transition-colors"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h4 className="font-heading text-base font-bold text-foreground">{job.role}</h4>
+                        <p className="text-xs font-semibold text-primary">{job.company}</p>
+                      </div>
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-semibold text-primary">
+                        {job.period}
                       </span>
-                    ))}
+                    </div>
+                    <p className="text-xs leading-relaxed text-muted-foreground mb-3">
+                      {job.description}
+                    </p>
+                    <ul className="mb-4 space-y-1.5 text-xs text-muted-foreground list-disc list-inside">
+                      {job.highlights.map((point, pIdx) => (
+                        <li key={pIdx}>{point}</li>
+                      ))}
+                    </ul>
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border/60">
+                      {job.skills.map((s) => (
+                        <span key={s} className="rounded-md bg-secondary px-2.5 py-0.5 text-[11px] font-medium text-secondary-foreground border border-border/50">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             {/* My Strengths */}
