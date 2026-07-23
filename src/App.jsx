@@ -1644,11 +1644,11 @@ function GithubDashboard() {
                               else level = 1
                             }
 
-                            let bgClass = 'bg-slate-800/80 border border-slate-700/40' // no contributions
-                            if (level === 1) bgClass = 'bg-emerald-700 border border-emerald-600'
-                            if (level === 2) bgClass = 'bg-emerald-500 border border-emerald-400 shadow-[0_0_5px_rgba(16,185,129,0.4)]'
-                            if (level === 3) bgClass = 'bg-green-400 border border-green-300 shadow-[0_0_8px_rgba(74,222,128,0.6)]'
-                            if (level === 4) bgClass = 'bg-emerald-300 border border-emerald-200 shadow-[0_0_10px_rgba(110,231,183,0.9)]'
+                            let bgClass = 'bg-slate-800/80 border border-slate-700/50 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80' // no contributions
+                            if (level === 1) bgClass = 'bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300'
+                            if (level === 2) bgClass = 'bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500'
+                            if (level === 3) bgClass = 'bg-emerald-500 border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)] [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700 [.light_&]:shadow-none'
+                            if (level === 4) bgClass = 'bg-emerald-300 border border-emerald-200 shadow-[0_0_10px_rgba(110,231,183,0.8)] [.light_&]:bg-emerald-800 [.light_&]:border-emerald-900 [.light_&]:shadow-none'
 
                             return (
                               <div
@@ -1669,11 +1669,11 @@ function GithubDashboard() {
                     <span>Learn how we count contributions</span>
                     <div className="flex items-center gap-1.5 select-none">
                       <span>Less</span>
-                      <span className="h-2.5 w-2.5 rounded-sm bg-slate-800/80 border border-slate-700/40" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700 border border-emerald-600" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500 border border-emerald-400" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-green-400 border border-green-300" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-300 border border-emerald-200" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-slate-800/80 border border-slate-700/50 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500 border border-emerald-400 [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-300 border border-emerald-200 [.light_&]:bg-emerald-800 [.light_&]:border-emerald-900" />
                       <span>More</span>
                     </div>
                   </div>
@@ -2179,7 +2179,8 @@ function App() {
   }, [])
 
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'dark'
+    const savedTheme = localStorage.getItem('theme')
+    return savedTheme === 'light' ? 'light' : 'dark'
   })
 
   useEffect(() => {
