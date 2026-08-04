@@ -144,6 +144,12 @@ const certifications = [
     image: '/certificate/javascript-essentials-1.png',
     description: 'Foundational JavaScript programming, covering variables, data types, control flow, functions, loops, and array manipulation.',
   },
+  {
+    title: 'AI for Beginners',
+    issuer: 'HP LIFE',
+    image: '/certificate/AI for Beginners - hp.png',
+    description: 'Foundational training in Artificial Intelligence principles, exploring practical application of AI concepts, machine learning fundamentals, and smart automation workflows.',
+  },
 ]
 
 const projects = [
