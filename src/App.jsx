@@ -333,7 +333,7 @@ const workExperience = [
   {
     role: 'Frontend Developer Intern',
     company: 'Sri Lanka Telecom (SLT-MOBITEL)',
-    period: 'May 2026 – Present',
+    period: '6 months',
     description:
       'Developing and enhancing enterprise-level React.js web interfaces for the SOCO platform across Officer Management, Crime Scene, Vehicle Configuration, and Promotion Management modules.',
     highlights: [
