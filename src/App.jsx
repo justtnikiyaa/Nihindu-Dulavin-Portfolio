@@ -331,20 +331,6 @@ const educationTimeline = [
 
 const workExperience = [
   {
-    role: 'IT Infrastructure Intern',
-    company: 'Road Development Authority (RDA)',
-    period: 'July 2026 – Present',
-    description:
-      'Supporting the Information Systems & Network Management Division by assisting with IT infrastructure maintenance, hardware troubleshooting, operating system deployment, and contributing to the planning and development of an internal Letter Management System.',
-    highlights: [
-      'Diagnosed and resolved desktop hardware and software issues to ensure smooth system operation',
-      'Assisted with Windows installation, system configuration, and troubleshooting for organizational computers',
-      'Performed routine hardware inspections, maintenance, and component replacements where required',
-      'Collaborated with the development team during initial planning and task allocation for the Letter Management System'
-    ],
-    skills: ['Windows', 'Hardware Troubleshooting', 'Desktop Support', 'System Maintenance', 'IT Support']
-  },
-  {
     role: 'Frontend Developer Intern',
     company: 'Sri Lanka Telecom (SLT-MOBITEL)',
     period: 'May 2026 – Present',
@@ -787,7 +773,7 @@ function About() {
                   <FiBriefcase className="text-primary" size={20} /> Work Experience
                 </h3>
                 <span className="rounded-full bg-emerald-500/10 px-3 py-1 font-mono text-xs font-bold text-emerald-400 border border-emerald-500/20">
-                  {workExperience.length} Internships
+                  {workExperience.length} {workExperience.length === 1 ? 'Internship' : 'Internships'}
                 </span>
               </div>
 
