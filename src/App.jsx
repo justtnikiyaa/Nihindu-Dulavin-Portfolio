@@ -399,7 +399,7 @@ function Navbar({ theme, toggleTheme }) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none">
-      <div className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-4 sm:gap-6 rounded-full border border-[#9D86FF]/25 bg-[#1C152E]/75 px-5 sm:px-7 py-2.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.45)] transition-all duration-300">
+      <div className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-4 sm:gap-6 rounded-full border border-border/80 bg-card/85 px-5 sm:px-7 py-2.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition-all duration-300">
         {/* Brand Logo */}
         <a
           href="#home"
@@ -407,7 +407,7 @@ function Navbar({ theme, toggleTheme }) {
           className="font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0"
         >
           <span className="text-[#9D86FF] text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
-          <span className="text-white font-extrabold tracking-tight">Nihindu.</span>
+          <span className="text-foreground font-extrabold tracking-tight">Nihindu.</span>
         </a>
 
         {/* Center Nav Links */}
@@ -417,7 +417,7 @@ function Navbar({ theme, toggleTheme }) {
               key={item.href}
               href={item.href}
               onClick={(e) => scrollToTarget(e, item.href)}
-              className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#D0CFD3] transition-all hover:bg-white/10 hover:text-white"
+              className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-all hover:bg-primary/10 hover:text-foreground"
             >
               {item.label}
             </a>
@@ -430,28 +430,28 @@ function Navbar({ theme, toggleTheme }) {
           <button
             type="button"
             onClick={toggleTheme}
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-[#9D86FF]/20 bg-white/5 text-[#D0CFD3] transition-all hover:border-[#9D86FF]/50 hover:text-white hover:scale-105 active:scale-95 shadow-sm"
+            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-border/80 bg-secondary/80 text-foreground transition-all hover:border-primary/50 hover:scale-105 active:scale-95 shadow-sm"
             aria-label="Toggle dark/light theme"
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
           >
             {theme === 'dark' ? (
               <FiSun size={16} className="text-amber-300 transition-transform duration-300 hover:rotate-45" />
             ) : (
-              <FiMoon size={16} className="text-purple-300 transition-transform duration-300 hover:-rotate-12" />
+              <FiMoon size={16} className="text-purple-600 transition-transform duration-300 hover:-rotate-12" />
             )}
           </button>
 
           <a
             href="#contact"
             onClick={(e) => scrollToTarget(e, '#contact')}
-            className="hidden rounded-full bg-white px-5 py-2 text-xs font-bold uppercase tracking-wider text-[#151022] shadow-[0_2px_15px_rgba(255,255,255,0.25)] transition-all hover:bg-[#D0CFD3] hover:scale-105 md:inline-flex"
+            className="hidden rounded-full bg-foreground px-5 py-2 text-xs font-bold uppercase tracking-wider text-background shadow-md transition-all hover:opacity-90 hover:scale-105 md:inline-flex"
           >
             Hire Me
           </a>
 
           <button
             type="button"
-            className="text-white md:hidden p-1 rounded-full hover:bg-white/10 transition-colors"
+            className="text-foreground md:hidden p-1 rounded-full hover:bg-secondary transition-colors"
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label="Toggle menu"
           >
@@ -473,14 +473,14 @@ function Navbar({ theme, toggleTheme }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute left-0 right-0 top-full mt-3 rounded-2xl border border-[#9D86FF]/25 bg-[#1C152E]/95 p-4 backdrop-blur-2xl shadow-2xl md:hidden"
+              className="absolute left-0 right-0 top-full mt-3 rounded-2xl border border-border bg-card/95 p-4 backdrop-blur-2xl shadow-2xl md:hidden"
             >
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
-                    className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#D0CFD3] transition-colors hover:bg-white/10 hover:text-white"
+                    className="block py-2.5 px-3 rounded-xl text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground"
                     onClick={(e) => {
                       setIsOpen(false)
                       scrollToTarget(e, item.href)
@@ -491,7 +491,7 @@ function Navbar({ theme, toggleTheme }) {
                 ))}
                 <a
                   href="#contact"
-                  className="mt-2 inline-flex justify-center rounded-full bg-white py-2.5 text-xs font-bold uppercase tracking-wider text-[#151022] shadow-md"
+                  className="mt-2 inline-flex justify-center rounded-full bg-foreground py-2.5 text-xs font-bold uppercase tracking-wider text-background shadow-md"
                   onClick={(e) => {
                     setIsOpen(false)
                     scrollToTarget(e, '#contact')
@@ -524,10 +524,10 @@ function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#9D86FF]/30 bg-[#1C152E]/90 px-4 py-1.5 shadow-[0_0_15px_rgba(125,82,253,0.2)] backdrop-blur-sm"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card/80 px-4 py-1.5 shadow-[0_0_15px_rgba(125,82,253,0.15)] backdrop-blur-sm"
             >
               <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-              <span className="text-sm font-medium text-[#D0CFD3]">Available for opportunities</span>
+              <span className="text-sm font-medium text-foreground">Available for opportunities</span>
             </motion.div>
 
             {/* Name Heading */}
@@ -557,7 +557,7 @@ function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mb-8 max-w-lg text-base leading-relaxed text-[#D0CFD3]"
+              className="mb-8 max-w-lg text-base leading-relaxed text-muted-foreground"
             >
               A motivated IT undergraduate at SLIIT, passionate about web development, building modern applications,
               and continuously learning new technologies to solve real-world problems.
@@ -573,7 +573,7 @@ function Hero() {
               <a
                 href="#projects"
                 onClick={(e) => scrollToTarget(e, '#projects')}
-                className="group flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-white shadow-lg shadow-[#7D52FD]/25 transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[#7D52FD]/40"
+                className="group flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-primary/40"
               >
                 View Projects
                 <FiArrowDown size={16} className="transition-transform group-hover:translate-y-0.5" />
@@ -582,7 +582,7 @@ function Hero() {
               <a
                 href="#contact"
                 onClick={(e) => scrollToTarget(e, '#contact')}
-                className="rounded-xl border border-[#9D86FF]/30 bg-[#1C152E]/60 px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:border-[#9D86FF] hover:bg-[#281E48]"
+                className="rounded-xl border border-border/80 bg-card/80 px-6 py-3 font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/10"
               >
                 Contact Me
               </a>
@@ -590,9 +590,9 @@ function Hero() {
               <a
                 href="/Nihindu_Dulavin_CV.pdf"
                 download="Nihindu_Dulavin_CV.pdf"
-                className="flex items-center gap-2 rounded-xl border border-border/80 bg-[#1C152E]/60 px-6 py-3 font-medium text-[#D0CFD3] transition-all hover:-translate-y-0.5 hover:border-[#9D86FF]/40 hover:text-white"
+                className="flex items-center gap-2 rounded-xl border border-border/80 bg-card/80 px-6 py-3 font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:text-foreground"
               >
-                <FiDownload size={16} className="text-[#9D86FF]" /> CV
+                <FiDownload size={16} className="text-primary" /> CV
               </a>
             </motion.div>
 
@@ -603,14 +603,14 @@ function Hero() {
               transition={{ delay: 0.8, duration: 0.5 }}
               className="flex items-center gap-3"
             >
-              <span className="mr-1 text-xs uppercase tracking-widest text-[#D0CFD3]/70 font-semibold">Find me</span>
+              <span className="mr-1 text-xs uppercase tracking-widest text-muted-foreground font-semibold">Find me</span>
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/50 text-[#D0CFD3] transition-all hover:-translate-y-0.5 hover:border-[#9D86FF]/60 hover:text-white hover:shadow-[0_0_12px_rgba(125,82,253,0.3)]"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-card/80 text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:text-foreground hover:shadow-[0_0_12px_rgba(125,82,253,0.2)]"
                   aria-label={label}
                 >
                   <Icon size={16} />
@@ -1407,7 +1407,7 @@ function TerminalConsole() {
           </div>
 
           {/* Input Form */}
-          <form onSubmit={handleCommand} className="flex border-t border-border bg-secondary/50">
+          <form onSubmit={handleCommand} className="flex border-t border-border/80 bg-[#0F0B18]/95">
             <span className="flex items-center pl-4 pr-2 font-mono text-sm font-bold text-[#9D86FF]">
               guest@nihindu:~$
             </span>
@@ -1415,7 +1415,7 @@ function TerminalConsole() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-transparent py-3 font-mono text-sm text-[#FFFFFF] focus:outline-none placeholder:text-muted-foreground/50"
+              className="flex-1 bg-transparent py-3 font-mono text-sm text-white focus:outline-none placeholder:text-gray-400"
               placeholder='Try typing "help" or "about"...'
             />
           </form>

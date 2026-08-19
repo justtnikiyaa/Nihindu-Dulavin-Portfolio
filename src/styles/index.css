@@ -158,6 +158,19 @@
     z-index: 0;
   }
 
+  /* Light mode spotlight adjustments for soft, legible illumination */
+  .light .spotlight-beam-left,
+  .light .spotlight-beam-right {
+    opacity: 0.35;
+    filter: blur(65px);
+  }
+
+  .light .spotlight-center-glow,
+  .light .spotlight-bottom-ambient {
+    opacity: 0.25;
+    filter: blur(75px);
+  }
+
   /* Glowing Skill Cards */
   .skill-card {
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
