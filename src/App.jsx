@@ -398,139 +398,144 @@ function Navbar({ theme, toggleTheme }) {
   })
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg transition-colors duration-300">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none">
+      <div className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-4 sm:gap-6 rounded-full border border-[#9D86FF]/25 bg-[#1C152E]/75 px-5 sm:px-7 py-2.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.45)] transition-all duration-300">
+        {/* Brand Logo */}
         <a
           href="#home"
           onClick={(e) => scrollToTarget(e, '#home')}
-          className="font-heading text-xl font-bold"
+          className="font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0"
         >
-          <span className="text-gradient">ND</span>
-          <span className="ml-1 text-foreground">Nihindu</span>
+          <span className="text-[#9D86FF] text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
+          <span className="text-white font-extrabold tracking-tight">Nihindu.</span>
         </a>
 
-        <div className="hidden items-center gap-8 md:flex">
+        {/* Center Nav Links */}
+        <div className="hidden items-center gap-1 lg:gap-1.5 md:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={(e) => scrollToTarget(e, item.href)}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#D0CFD3] transition-all hover:bg-white/10 hover:text-white"
             >
               {item.label}
             </a>
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Right CTA & Theme Toggle */}
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
           {/* Theme Toggle Button */}
           <button
             type="button"
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-foreground transition-all hover:border-primary/50 hover:text-primary hover:scale-105 active:scale-95 shadow-sm"
+            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-[#9D86FF]/20 bg-white/5 text-[#D0CFD3] transition-all hover:border-[#9D86FF]/50 hover:text-white hover:scale-105 active:scale-95 shadow-sm"
             aria-label="Toggle dark/light theme"
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
           >
             {theme === 'dark' ? (
-              <FiSun size={18} className="text-amber-400 transition-transform duration-300 hover:rotate-45" />
+              <FiSun size={16} className="text-amber-300 transition-transform duration-300 hover:rotate-45" />
             ) : (
-              <FiMoon size={18} className="text-slate-700 transition-transform duration-300 hover:-rotate-12" />
+              <FiMoon size={16} className="text-purple-300 transition-transform duration-300 hover:-rotate-12" />
             )}
           </button>
 
           <a
             href="#contact"
             onClick={(e) => scrollToTarget(e, '#contact')}
-            className="hidden rounded-lg bg-gradient-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+            className="hidden rounded-full bg-white px-5 py-2 text-xs font-bold uppercase tracking-wider text-[#151022] shadow-[0_2px_15px_rgba(255,255,255,0.25)] transition-all hover:bg-[#D0CFD3] hover:scale-105 md:inline-flex"
           >
-            Let&apos;s Talk
+            Hire Me
           </a>
 
           <button
             type="button"
-            className="text-foreground md:hidden ml-1"
+            className="text-white md:hidden p-1 rounded-full hover:bg-white/10 transition-colors"
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
           </button>
         </div>
-      </div>
 
-      {isOpen && (
-        <div className="border-b border-border bg-card px-4 pb-4 md:hidden">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="block py-2 font-medium text-muted-foreground transition-colors hover:text-primary"
-              onClick={(e) => {
-                setIsOpen(false)
-                scrollToTarget(e, item.href)
-              }}
+        {/* Scroll Progress Glow Line */}
+        <motion.div
+          className="absolute -bottom-[1px] left-6 right-6 h-[2px] bg-gradient-primary rounded-full origin-[0%]"
+          style={{ scaleX }}
+        />
+
+        {/* Mobile Dropdown Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="absolute left-0 right-0 top-full mt-3 rounded-2xl border border-[#9D86FF]/25 bg-[#1C152E]/95 p-4 backdrop-blur-2xl shadow-2xl md:hidden"
             >
-              {item.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            className="mt-2 inline-flex rounded-lg bg-gradient-primary px-5 py-2 text-sm font-medium text-primary-foreground"
-            onClick={(e) => {
-              setIsOpen(false)
-              scrollToTarget(e, '#contact')
-            }}
-          >
-            Let&apos;s Talk
-          </a>
-        </div>
-      )}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-primary origin-[0%]"
-        style={{ scaleX }}
-      />
-    </nav>
+              <div className="flex flex-col gap-1">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="block py-2.5 px-3 rounded-xl text-sm font-medium text-[#D0CFD3] transition-colors hover:bg-white/10 hover:text-white"
+                    onClick={(e) => {
+                      setIsOpen(false)
+                      scrollToTarget(e, item.href)
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href="#contact"
+                  className="mt-2 inline-flex justify-center rounded-full bg-white py-2.5 text-xs font-bold uppercase tracking-wider text-[#151022] shadow-md"
+                  onClick={(e) => {
+                    setIsOpen(false)
+                    scrollToTarget(e, '#contact')
+                  }}
+                >
+                  Hire Me
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </header>
   )
 }
 
 function Hero() {
   return (
-    <section id="home" className="section-padding relative flex min-h-screen items-center overflow-hidden pt-32">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute -right-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-primary/10 blur-[100px]" />
-        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[150px]" />
-      </div>
-
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            'linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
-
+    <section id="home" className="section-padding relative flex min-h-screen items-center pt-32">
       <div className="container relative z-10 mx-auto">
         <div className="grid items-center gap-16 md:grid-cols-2">
+          {/* Left Column: Text & CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
+            {/* Status Badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#9D86FF]/30 bg-[#1C152E]/90 px-4 py-1.5 shadow-[0_0_15px_rgba(125,82,253,0.2)] backdrop-blur-sm"
             >
               <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-              <span className="text-sm font-medium text-muted-foreground">Available for opportunities</span>
+              <span className="text-sm font-medium text-[#D0CFD3]">Available for opportunities</span>
             </motion.div>
 
+            {/* Name Heading */}
             <h1 className="mb-3 font-heading text-5xl font-bold leading-[1.1] tracking-tight md:text-7xl">
               Nihindu <span className="text-gradient">Dulavin</span>
             </h1>
 
+            {/* Role Badges */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -540,23 +545,25 @@ function Hero() {
               {['IT Undergraduate', 'Full Stack Developer', 'Web Developer'].map((item) => (
                 <span
                   key={item}
-                  className="rounded-md border border-border bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground"
+                  className="rounded-md border border-border/80 bg-secondary/80 px-3 py-1 text-sm font-medium text-secondary-foreground"
                 >
                   {item}
                 </span>
               ))}
             </motion.div>
 
+            {/* Bio */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mb-8 max-w-lg text-base leading-relaxed text-muted-foreground"
+              className="mb-8 max-w-lg text-base leading-relaxed text-[#D0CFD3]"
             >
               A motivated IT undergraduate at SLIIT, passionate about web development, building modern applications,
               and continuously learning new technologies to solve real-world problems.
             </motion.p>
 
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -566,7 +573,7 @@ function Hero() {
               <a
                 href="#projects"
                 onClick={(e) => scrollToTarget(e, '#projects')}
-                className="group flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-primary/30"
+                className="group flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-white shadow-lg shadow-[#7D52FD]/25 transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[#7D52FD]/40"
               >
                 View Projects
                 <FiArrowDown size={16} className="transition-transform group-hover:translate-y-0.5" />
@@ -575,7 +582,7 @@ function Hero() {
               <a
                 href="#contact"
                 onClick={(e) => scrollToTarget(e, '#contact')}
-                className="rounded-xl border border-primary/30 px-6 py-3 font-medium text-primary transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/10"
+                className="rounded-xl border border-[#9D86FF]/30 bg-[#1C152E]/60 px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:border-[#9D86FF] hover:bg-[#281E48]"
               >
                 Contact Me
               </a>
@@ -583,26 +590,27 @@ function Hero() {
               <a
                 href="/Nihindu_Dulavin_CV.pdf"
                 download="Nihindu_Dulavin_CV.pdf"
-                className="flex items-center gap-2 rounded-xl border border-border px-6 py-3 font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
+                className="flex items-center gap-2 rounded-xl border border-border/80 bg-[#1C152E]/60 px-6 py-3 font-medium text-[#D0CFD3] transition-all hover:-translate-y-0.5 hover:border-[#9D86FF]/40 hover:text-white"
               >
-                <FiDownload size={16} /> CV
+                <FiDownload size={16} className="text-[#9D86FF]" /> CV
               </a>
             </motion.div>
 
+            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}
               className="flex items-center gap-3"
             >
-              <span className="mr-1 text-xs uppercase tracking-widest text-muted-foreground">Find me</span>
+              <span className="mr-1 text-xs uppercase tracking-widest text-[#D0CFD3]/70 font-semibold">Find me</span>
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-secondary/50 text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/80 bg-secondary/50 text-[#D0CFD3] transition-all hover:-translate-y-0.5 hover:border-[#9D86FF]/60 hover:text-white hover:shadow-[0_0_12px_rgba(125,82,253,0.3)]"
                   aria-label={label}
                 >
                   <Icon size={16} />
@@ -611,6 +619,7 @@ function Hero() {
             </motion.div>
           </motion.div>
 
+          {/* Right Column: Circular Profile Showcase */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -618,35 +627,41 @@ function Hero() {
             className="flex justify-center"
           >
             <div className="relative">
+              {/* Rotating Dashed Outer Ring */}
               <motion.div
-                className="absolute inset-[-12px] rounded-full border border-dashed border-primary/20"
+                className="absolute inset-[-14px] rounded-full border border-dashed border-[#9D86FF]/30"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
               />
 
-              <div className="glow-shadow relative my-[15px] h-72 w-72 overflow-hidden rounded-full border-4 border-primary/30 md:h-96 md:w-96">
-                <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/10 via-transparent to-primary/5" />
+              {/* Ambient Glow */}
+              <div className="absolute -inset-6 rounded-full bg-[#7D52FD]/20 blur-2xl pointer-events-none" />
+
+              {/* Rounded Circular Profile Image Container */}
+              <div className="glow-shadow relative my-[15px] h-72 w-72 overflow-hidden rounded-full border-4 border-[#7D52FD]/40 md:h-96 md:w-96 shadow-[0_0_40px_rgba(125,82,253,0.3)]">
+                <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#7D52FD]/10 via-transparent to-[#7D52FD]/10" />
                 <img
                   src="/images/profile-photo.png"
                   alt="Nihindu Dulavin"
                   width={512}
                   height={512}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover scale-105 transition-transform duration-700 hover:scale-110"
                 />
               </div>
 
+              {/* Floating Decorative Shapes */}
               <motion.div
                 className="absolute -bottom-3 -right-3 h-16 w-16 rounded-2xl bg-gradient-primary opacity-80 blur-sm"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               />
               <motion.div
-                className="absolute -left-4 -top-4 h-10 w-10 rounded-full border-2 border-primary/30"
+                className="absolute -left-4 -top-4 h-10 w-10 rounded-full border-2 border-[#9D86FF]/40"
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               />
               <motion.div
-                className="absolute -right-6 top-1/2 h-3 w-3 rounded-full bg-primary"
+                className="absolute -right-6 top-1/2 h-3.5 w-3.5 rounded-full bg-[#9D86FF] shadow-[0_0_10px_#9D86FF]"
                 animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
               />
@@ -1342,7 +1357,7 @@ function TerminalConsole() {
   }, [history])
 
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-transparent">
       <div className="container mx-auto max-w-3xl font-sans">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -1375,16 +1390,16 @@ function TerminalConsole() {
           </div>
 
           {/* Console Area */}
-          <div ref={terminalBodyRef} className="h-64 overflow-y-auto bg-black/40 p-4 font-mono text-sm leading-relaxed text-emerald-400">
+          <div ref={terminalBodyRef} className="h-64 overflow-y-auto bg-[#0F0B18]/90 p-4 font-mono text-sm leading-relaxed text-[#D0CFD3]">
             <div className="space-y-2">
               {history.map((line, idx) => (
                 <div key={idx} className="whitespace-pre-wrap">
                   {line.type === 'input' ? (
                     <span>
-                      <span className="text-primary font-bold">guest@nihindu:~$</span> {line.text}
+                      <span className="text-[#9D86FF] font-bold">guest@nihindu:~$</span> {line.text}
                     </span>
                   ) : (
-                    <span className="text-slate-300">{line.text}</span>
+                    <span className="text-[#D0CFD3]">{line.text}</span>
                   )}
                 </div>
               ))}
@@ -1393,14 +1408,14 @@ function TerminalConsole() {
 
           {/* Input Form */}
           <form onSubmit={handleCommand} className="flex border-t border-border bg-secondary/50">
-            <span className="flex items-center pl-4 pr-2 font-mono text-sm font-bold text-primary">
+            <span className="flex items-center pl-4 pr-2 font-mono text-sm font-bold text-[#9D86FF]">
               guest@nihindu:~$
             </span>
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-transparent py-3 font-mono text-sm text-emerald-400 focus:outline-none"
+              className="flex-1 bg-transparent py-3 font-mono text-sm text-[#FFFFFF] focus:outline-none placeholder:text-muted-foreground/50"
               placeholder='Try typing "help" or "about"...'
             />
           </form>
@@ -1535,7 +1550,7 @@ function GithubDashboard() {
   ]
 
   return (
-    <section className="section-padding bg-card/30">
+    <section className="section-padding bg-transparent">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -1636,7 +1651,7 @@ function GithubDashboard() {
                               else level = 1
                             }
 
-                            let bgClass = 'bg-slate-800/80 border border-slate-700/50 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80' // no contributions
+                            let bgClass = 'bg-[#1C152E] border border-[#9D86FF]/15 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80' // no contributions
                             if (level === 1) bgClass = 'bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300'
                             if (level === 2) bgClass = 'bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500'
                             if (level === 3) bgClass = 'bg-emerald-500 border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)] [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700 [.light_&]:shadow-none'
@@ -1661,7 +1676,7 @@ function GithubDashboard() {
                     <span>Learn how we count contributions</span>
                     <div className="flex items-center gap-1.5 select-none">
                       <span>Less</span>
-                      <span className="h-2.5 w-2.5 rounded-sm bg-slate-800/80 border border-slate-700/50 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80" />
+                      <span className="h-2.5 w-2.5 rounded-sm bg-[#1C152E] border border-[#9D86FF]/15 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80" />
                       <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300" />
                       <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500" />
                       <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500 border border-emerald-400 [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700" />
@@ -1721,11 +1736,7 @@ function Skills() {
     : skillsData.filter(skill => skill.category === activeCategory)
 
   return (
-    <section id="skills" className="section-padding bg-card/20 relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute right-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[120px]" />
-      </div>
-
+    <section id="skills" className="section-padding bg-transparent relative">
       <div className="container mx-auto z-10 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -1799,11 +1810,7 @@ function Certifications() {
   const [selectedCert, setSelectedCert] = useState(null)
 
   return (
-    <section id="certifications" className="section-padding bg-background relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[100px]" />
-      </div>
-
+    <section id="certifications" className="section-padding bg-transparent relative">
       <div className="container mx-auto z-10 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -1910,7 +1917,7 @@ function Services({ setInquiryMessage }) {
   }
 
   return (
-    <section id="services" className="section-padding bg-card/50">
+    <section id="services" className="section-padding bg-transparent">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -2198,24 +2205,38 @@ function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground transition-colors duration-300">
+      {/* Global Stage Spotlight Lighting Background (Whole Site) */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {/* Left Angled Volumetric Spotlight */}
+        <div className="spotlight-beam-left" />
+        {/* Right Angled Volumetric Spotlight */}
+        <div className="spotlight-beam-right" />
+        {/* Top Center Stage Ambient Glow */}
+        <div className="spotlight-center-glow" />
+        {/* Bottom Atmospheric Stage Ambient */}
+        <div className="spotlight-bottom-ambient" />
+      </div>
+
       {/* Spotlight cursor glow */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
-          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, hsl(18 90% 55% / ${theme === 'light' ? 0.07 : 0.045}), transparent 80%)`
+          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(125, 82, 253, ${theme === 'light' ? 0.09 : 0.07}), transparent 80%)`
         }}
       />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <Hero />
-      <About />
-      <TerminalConsole />
-      <Skills />
-      <Projects />
-      <GithubDashboard />
-      <Certifications />
-      <Services setInquiryMessage={setInquiryMessage} />
-      <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
-      <Footer />
+      <div className="relative z-10">
+        <Hero />
+        <About />
+        <TerminalConsole />
+        <Skills />
+        <Projects />
+        <GithubDashboard />
+        <Certifications />
+        <Services setInquiryMessage={setInquiryMessage} />
+        <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
+        <Footer />
+      </div>
     </div>
   )
 }

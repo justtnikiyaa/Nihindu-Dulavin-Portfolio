@@ -6,39 +6,43 @@
 
 @layer base {
   :root {
-    --background: 220 20% 7%;
-    --foreground: 220 10% 92%;
-    --card: 220 18% 11%;
-    --card-foreground: 220 10% 92%;
-    --primary: 18 90% 55%;
+    --background: 257 36% 10%;
+    --foreground: 0 0% 100%;
+    --card: 257 37% 13%;
+    --card-foreground: 0 0% 100%;
+    --primary: 255 98% 66%;
+    --primary-accent: 251 100% 76%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 16% 16%;
-    --secondary-foreground: 220 10% 85%;
-    --muted: 220 14% 14%;
-    --muted-foreground: 220 10% 55%;
-    --border: 220 14% 18%;
-    --input: 220 14% 18%;
-    --ring: 18 90% 55%;
-    --gradient-primary: linear-gradient(135deg, hsl(18 90% 55%), hsl(30 95% 60%));
-    --shadow-glow: 0 0 30px hsl(18 90% 55% / 0.15);
+    --secondary: 257 35% 18%;
+    --secondary-foreground: 255 4% 82%;
+    --muted: 257 33% 16%;
+    --muted-foreground: 255 4% 76%;
+    --border: 257 30% 22%;
+    --input: 257 30% 20%;
+    --ring: 255 98% 66%;
+    --gradient-primary: linear-gradient(135deg, #7D52FD 0%, #9D86FF 100%);
+    --gradient-glow: linear-gradient(180deg, rgba(125, 82, 253, 0.35) 0%, rgba(157, 134, 255, 0.1) 60%, transparent 100%);
+    --shadow-glow: 0 0 35px rgba(125, 82, 253, 0.35);
   }
 
   .light {
-    --background: 220 20% 97%;
-    --foreground: 220 25% 10%;
+    --background: 255 30% 98%;
+    --foreground: 257 40% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
-    --primary: 18 90% 55%;
+    --card-foreground: 257 40% 12%;
+    --primary: 255 98% 64%;
+    --primary-accent: 251 100% 70%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 92%;
-    --secondary-foreground: 220 20% 20%;
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 12% 40%;
-    --border: 220 14% 86%;
-    --input: 220 14% 86%;
-    --ring: 18 90% 55%;
-    --gradient-primary: linear-gradient(135deg, hsl(18 90% 55%), hsl(30 95% 58%));
-    --shadow-glow: 0 0 30px hsl(18 90% 55% / 0.18);
+    --secondary: 255 25% 93%;
+    --secondary-foreground: 257 30% 20%;
+    --muted: 255 20% 93%;
+    --muted-foreground: 257 15% 42%;
+    --border: 255 20% 86%;
+    --input: 255 20% 86%;
+    --ring: 255 98% 64%;
+    --gradient-primary: linear-gradient(135deg, #7D52FD 0%, #9D86FF 100%);
+    --gradient-glow: linear-gradient(180deg, rgba(125, 82, 253, 0.2) 0%, rgba(157, 134, 255, 0.05) 60%, transparent 100%);
+    --shadow-glow: 0 0 30px rgba(125, 82, 253, 0.22);
   }
 
   * {
@@ -62,6 +66,11 @@
     font-family: Inter, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #151022;
+  }
+
+  .light body {
+    background-color: hsl(var(--background));
   }
 
   a {
@@ -94,6 +103,59 @@
       padding-top: 7rem;
       padding-bottom: 7rem;
     }
+  }
+
+  /* Stage Spotlight Background System */
+  .spotlight-beam-left {
+    position: fixed;
+    top: -150px;
+    left: -160px;
+    width: 700px;
+    height: 1100px;
+    transform: rotate(34deg);
+    background: radial-gradient(ellipse 48% 80% at 25% 15%, rgba(157, 134, 255, 0.65) 0%, rgba(125, 82, 253, 0.45) 30%, rgba(125, 82, 253, 0.12) 65%, transparent 85%);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .spotlight-beam-right {
+    position: fixed;
+    top: -150px;
+    right: -160px;
+    width: 700px;
+    height: 1100px;
+    transform: rotate(-34deg);
+    background: radial-gradient(ellipse 48% 80% at 75% 15%, rgba(157, 134, 255, 0.65) 0%, rgba(125, 82, 253, 0.45) 30%, rgba(125, 82, 253, 0.12) 65%, transparent 85%);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .spotlight-center-glow {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 650px;
+    background: radial-gradient(circle at 50% 25%, rgba(125, 82, 253, 0.32) 0%, rgba(157, 134, 255, 0.12) 45%, transparent 75%);
+    filter: blur(65px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .spotlight-bottom-ambient {
+    position: fixed;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 600px;
+    background: radial-gradient(ellipse at 50% 100%, rgba(125, 82, 253, 0.2) 0%, rgba(157, 134, 255, 0.06) 50%, transparent 80%);
+    filter: blur(75px);
+    pointer-events: none;
+    z-index: 0;
   }
 
   /* Glowing Skill Cards */
