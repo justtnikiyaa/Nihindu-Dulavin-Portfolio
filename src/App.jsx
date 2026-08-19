@@ -24,6 +24,8 @@ import {
   FiCode,
   FiDownload,
   FiExternalLink,
+  FiEye,
+  FiFileText,
   FiGithub,
   FiLayers,
   FiLinkedin,
@@ -508,7 +510,7 @@ function Navbar({ theme, toggleTheme }) {
   )
 }
 
-function Hero() {
+function Hero({ onOpenCv }) {
   return (
     <section id="home" className="section-padding relative flex min-h-screen items-center pt-32">
       <div className="container relative z-10 mx-auto">
@@ -568,7 +570,7 @@ function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="mb-8 flex flex-wrap gap-3"
+              className="mb-8 flex flex-wrap items-center gap-3"
             >
               <a
                 href="#projects"
@@ -587,13 +589,26 @@ function Hero() {
                 Contact Me
               </a>
 
-              <a
-                href="/Nihindu_Dulavin_CV.pdf"
-                download="Nihindu_Dulavin_CV.pdf"
-                className="flex items-center gap-2 rounded-xl border border-border/80 bg-card/80 px-6 py-3 font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:text-foreground"
-              >
-                <FiDownload size={16} className="text-primary" /> CV
-              </a>
+              {/* CV Button Group: Preview & Direct Download */}
+              <div className="inline-flex rounded-xl border border-border/80 bg-card/80 p-1 shadow-sm transition-all hover:border-primary/50">
+                <button
+                  type="button"
+                  onClick={onOpenCv}
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 font-medium text-sm text-foreground transition-all hover:bg-primary/15 hover:text-primary active:scale-95"
+                  title="Preview CV in interactive viewer"
+                >
+                  <FiEye size={16} className="text-primary" /> Preview CV
+                </button>
+                <div className="w-[1px] bg-border my-1" />
+                <a
+                  href="/Nihindu_Dulavin_CV.pdf"
+                  download="Nihindu_Dulavin_CV.pdf"
+                  className="flex items-center justify-center rounded-lg px-2.5 py-2 text-muted-foreground transition-all hover:bg-primary/15 hover:text-primary active:scale-95"
+                  title="Download CV (PDF)"
+                >
+                  <FiDownload size={15} />
+                </a>
+              </div>
             </motion.div>
 
             {/* Social Links */}
@@ -673,7 +688,7 @@ function Hero() {
   )
 }
 
-function About() {
+function About({ onOpenCv }) {
   return (
     <section id="about" className="section-padding">
       <div className="container mx-auto">
@@ -712,16 +727,28 @@ function About() {
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
                 My goal is to gain real-world industry experience and grow into a skilled full stack developer. I thrive on learning new technologies, building production-ready applications, and solving complex engineering challenges.
               </p>
-              <div className="flex flex-wrap gap-2 pt-3 border-t border-border/60 text-xs">
-                <span className="rounded-lg bg-primary/10 border border-primary/20 px-3 py-1 font-medium text-primary">
-                  📍 Colombo, Sri Lanka
-                </span>
-                <span className="rounded-lg bg-secondary border border-border px-3 py-1 font-medium text-secondary-foreground">
-                  🎓 SLIIT Undergraduate
-                </span>
-                <span className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 font-medium text-emerald-400">
-                  ⚡ Open for Opportunities
-                </span>
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-border/60 text-xs">
+                <div className="flex flex-wrap gap-2">
+                  <span className="rounded-lg bg-primary/10 border border-primary/20 px-3 py-1 font-medium text-primary">
+                    📍 Colombo, Sri Lanka
+                  </span>
+                  <span className="rounded-lg bg-secondary border border-border px-3 py-1 font-medium text-secondary-foreground">
+                    🎓 SLIIT Undergraduate
+                  </span>
+                  <span className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 font-medium text-emerald-400">
+                    ⚡ Open for Opportunities
+                  </span>
+                </div>
+                {onOpenCv && (
+                  <button
+                    type="button"
+                    onClick={onOpenCv}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-3 py-1 font-medium text-primary hover:bg-primary/20 transition-all hover:scale-105"
+                    title="Open interactive CV preview"
+                  >
+                    <FiEye size={13} /> View CV
+                  </button>
+                )}
               </div>
             </div>
 
@@ -2150,8 +2177,100 @@ function Footer() {
   )
 }
 
+function CVModal({ isOpen, onClose }) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose()
+    }
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-3 sm:p-6 backdrop-blur-md"
+      >
+        <motion.div
+          initial={{ scale: 0.95, y: 20, opacity: 0 }}
+          animate={{ scale: 1, y: 0, opacity: 1 }}
+          exit={{ scale: 0.95, y: 20, opacity: 0 }}
+          transition={{ type: 'spring', duration: 0.5, bounce: 0.15 }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative flex flex-col w-full max-w-5xl h-[88vh] overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+        >
+          {/* Modal Header */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-secondary/60 px-5 py-3.5">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <FiFileText size={18} />
+              </div>
+              <div>
+                <h3 className="font-heading text-base font-bold text-foreground flex items-center gap-2">
+                  Nihindu Dulavin — Curriculum Vitae
+                </h3>
+                <span className="text-xs text-muted-foreground">PDF Document • 4.2 MB</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <a
+                href="/Nihindu_Dulavin_CV.pdf"
+                download="Nihindu_Dulavin_CV.pdf"
+                className="flex items-center gap-1.5 rounded-lg bg-gradient-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground transition-all hover:opacity-90 shadow-sm"
+              >
+                <FiDownload size={14} /> Download
+              </a>
+
+              <a
+                href="/Nihindu_Dulavin_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3.5 py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+              >
+                <FiExternalLink size={14} /> New Tab
+              </a>
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-secondary text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+                aria-label="Close CV Preview"
+              >
+                <FiX size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* Embedded PDF Viewer */}
+          <div className="flex-1 w-full h-full bg-muted/30 p-2 sm:p-3">
+            <iframe
+              src="/Nihindu_Dulavin_CV.pdf#view=FitH"
+              className="w-full h-full rounded-xl border border-border bg-white shadow-inner"
+              title="Nihindu Dulavin CV Preview"
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
 function App() {
   const [inquiryMessage, setInquiryMessage] = useState('')
+  const [isCvOpen, setIsCvOpen] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -2226,8 +2345,8 @@ function App() {
       />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <div className="relative z-10">
-        <Hero />
-        <About />
+        <Hero onOpenCv={() => setIsCvOpen(true)} />
+        <About onOpenCv={() => setIsCvOpen(true)} />
         <TerminalConsole />
         <Skills />
         <Projects />
@@ -2237,6 +2356,9 @@ function App() {
         <Contact inquiryMessage={inquiryMessage} setInquiryMessage={setInquiryMessage} />
         <Footer />
       </div>
+
+      {/* CV Interactive Preview Modal */}
+      <CVModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
     </div>
   )
 }
