@@ -4,6 +4,7 @@ import emailjs from '@emailjs/browser'
 import Lenis from 'lenis'
 import { IntroSplash } from './components/IntroSplash'
 import FluidGlassNav from './components/FluidGlassNav'
+import BorderGlow from './components/BorderGlow'
 
 export const scrollToTarget = (e, targetId) => {
   if (e && e.preventDefault) e.preventDefault()
@@ -775,7 +776,7 @@ function About({ onOpenCv }) {
             className="space-y-6 lg:col-span-6"
           >
             {/* Who I Am Card */}
-            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+            <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
               <h3 className="mb-4 font-heading text-xl font-bold text-foreground flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-primary" /> Who I Am
               </h3>
@@ -808,10 +809,10 @@ function About({ onOpenCv }) {
                   </button>
                 )}
               </div>
-            </div>
+            </BorderGlow>
 
             {/* My Education & Journey */}
-            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+            <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
               <h3 className="mb-6 font-heading text-xl font-bold text-foreground flex items-center gap-2">
                 <FiBookOpen className="text-primary" size={20} /> My Education & Journey
               </h3>
@@ -836,10 +837,10 @@ function About({ onOpenCv }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </BorderGlow>
 
             {/* My Strengths */}
-            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+            <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
               <h3 className="mb-5 font-heading text-xl font-bold text-foreground flex items-center gap-2">
                 <FiZap className="text-primary" size={20} /> Key Strengths
               </h3>
@@ -856,7 +857,7 @@ function About({ onOpenCv }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </BorderGlow>
           </motion.div>
 
           {/* Right Column: Work Experience (6 cols on lg screens) */}
@@ -867,7 +868,7 @@ function About({ onOpenCv }) {
             transition={{ duration: 0.6 }}
             className="lg:col-span-6 space-y-6"
           >
-            <div className="rounded-2xl border border-border bg-card/60 p-6 sm:p-7 shadow-sm">
+            <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="font-heading text-xl font-bold text-foreground flex items-center gap-2">
                   <FiBriefcase className="text-primary" size={20} /> Work Experience
@@ -918,7 +919,7 @@ function About({ onOpenCv }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </BorderGlow>
           </motion.div>
         </div>
       </div>
@@ -1200,70 +1201,74 @@ function Projects() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 onClick={() => setSelectedProject(project)}
-                className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                className="h-full"
               >
-                <div onClick={(e) => e.stopPropagation()}>
-                  <ProjectImageGallery
-                    images={project.images}
-                    image={project.image}
-                    title={project.title}
-                    preview={project.preview}
-                    onOpenLightbox={handleOpenLightbox}
-                  />
-                </div>
-
-                <div className="p-6">
-                  <span className="mb-2 inline-block rounded-md bg-secondary px-2.5 py-0.5 text-xs font-semibold text-primary">
-                    {project.category}
-                  </span>
-                  <h3 className="mb-2 font-heading text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
-                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-2">{project.description}</p>
-
-                  <div className="mb-5 flex flex-wrap gap-2">
-                    {project.tech.slice(0, 3).map((item) => (
-                      <span key={item} className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
-                        {item}
-                      </span>
-                    ))}
-                    {project.tech.length > 3 && (
-                      <span className="rounded-full bg-secondary px-2 py-1 text-xs text-muted-foreground">
-                        +{project.tech.length - 3} more
-                      </span>
-                    )}
+                <BorderGlow borderRadius={20} className="h-full group cursor-pointer overflow-hidden transition-transform duration-300 hover:-translate-y-1">
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ProjectImageGallery
+                      images={project.images}
+                      image={project.image}
+                      title={project.title}
+                      preview={project.preview}
+                      onOpenLightbox={handleOpenLightbox}
+                    />
                   </div>
 
-                  <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-                      >
-                        <FiGithub size={16} /> GitHub
-                      </a>
-                    )}
+                  <div className="p-6 flex flex-col flex-1 justify-between">
+                    <div>
+                      <span className="mb-2 inline-block rounded-md bg-secondary px-2.5 py-0.5 text-xs font-semibold text-primary">
+                        {project.category}
+                      </span>
+                      <h3 className="mb-2 font-heading text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
+                      <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-2">{project.description}</p>
 
-                    {project.preview && (
-                      <a
-                        href={project.preview}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
-                      >
-                        {project.preview.includes('figma.com') ? (
-                          <>
-                            <SiFigma size={16} /> Figma
-                          </>
-                        ) : (
-                          <>
-                            <FiExternalLink size={16} /> Preview
-                          </>
+                      <div className="mb-5 flex flex-wrap gap-2">
+                        {project.tech.slice(0, 3).map((item) => (
+                          <span key={item} className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
+                            {item}
+                          </span>
+                        ))}
+                        {project.tech.length > 3 && (
+                          <span className="rounded-full bg-secondary px-2 py-1 text-xs text-muted-foreground">
+                            +{project.tech.length - 3} more
+                          </span>
                         )}
-                      </a>
-                    )}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 pt-2 border-t border-border/60" onClick={(e) => e.stopPropagation()}>
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                        >
+                          <FiGithub size={16} /> GitHub
+                        </a>
+                      )}
+
+                      {project.preview && (
+                        <a
+                          href={project.preview}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+                        >
+                          {project.preview.includes('figma.com') ? (
+                            <>
+                              <SiFigma size={16} /> Figma
+                            </>
+                          ) : (
+                            <>
+                              <FiExternalLink size={16} /> Preview
+                            </>
+                          )}
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </BorderGlow>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -1461,49 +1466,50 @@ function TerminalConsole() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="overflow-hidden rounded-xl border border-border bg-card shadow-2xl"
         >
-          {/* Header */}
-          <div className="flex items-center justify-between bg-secondary/80 px-4 py-3 border-b border-border">
-            <div className="flex gap-2">
-              <span className="h-3 w-3 rounded-full bg-rose-500/80" />
-              <span className="h-3 w-3 rounded-full bg-amber-500/80" />
-              <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+          <BorderGlow borderRadius={18} className="overflow-hidden shadow-2xl">
+            {/* Header */}
+            <div className="flex items-center justify-between bg-secondary/80 px-4 py-3 border-b border-border">
+              <div className="flex gap-2">
+                <span className="h-3 w-3 rounded-full bg-rose-500/80" />
+                <span className="h-3 w-3 rounded-full bg-amber-500/80" />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+              </div>
+              <span className="text-xs font-mono text-muted-foreground">guest@nihindu.dev:~</span>
+              <div className="w-12" /> {/* spacer */}
             </div>
-            <span className="text-xs font-mono text-muted-foreground">guest@nihindu.dev:~</span>
-            <div className="w-12" /> {/* spacer */}
-          </div>
 
-          {/* Console Area */}
-          <div ref={terminalBodyRef} className="h-64 overflow-y-auto bg-[#0F0B18]/90 p-4 font-mono text-sm leading-relaxed text-[#D0CFD3]">
-            <div className="space-y-2">
-              {history.map((line, idx) => (
-                <div key={idx} className="whitespace-pre-wrap">
-                  {line.type === 'input' ? (
-                    <span>
-                      <span className="text-[#9D86FF] font-bold">guest@nihindu:~$</span> {line.text}
-                    </span>
-                  ) : (
-                    <span className="text-[#D0CFD3]">{line.text}</span>
-                  )}
-                </div>
-              ))}
+            {/* Console Area */}
+            <div ref={terminalBodyRef} className="h-64 overflow-y-auto bg-[#0F0B18]/90 p-4 font-mono text-sm leading-relaxed text-[#D0CFD3]">
+              <div className="space-y-2">
+                {history.map((line, idx) => (
+                  <div key={idx} className="whitespace-pre-wrap">
+                    {line.type === 'input' ? (
+                      <span>
+                        <span className="text-[#9D86FF] font-bold">guest@nihindu:~$</span> {line.text}
+                      </span>
+                    ) : (
+                      <span className="text-[#D0CFD3]">{line.text}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Input Form */}
-          <form onSubmit={handleCommand} className="flex border-t border-border/80 bg-[#0F0B18]/95">
-            <span className="flex items-center pl-4 pr-2 font-mono text-sm font-bold text-[#9D86FF]">
-              guest@nihindu:~$
-            </span>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-transparent py-3 font-mono text-sm text-white focus:outline-none placeholder:text-gray-400"
-              placeholder='Try typing "help" or "about"...'
-            />
-          </form>
+            {/* Input Form */}
+            <form onSubmit={handleCommand} className="flex border-t border-border/80 bg-[#0F0B18]/95">
+              <span className="flex items-center pl-4 pr-2 font-mono text-sm font-bold text-[#9D86FF]">
+                guest@nihindu:~$
+              </span>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="flex-1 bg-transparent py-3 font-mono text-sm text-white focus:outline-none placeholder:text-gray-400"
+                placeholder='Try typing "help" or "about"...'
+              />
+            </form>
+          </BorderGlow>
         </motion.div>
       </div>
     </section>
@@ -1656,138 +1662,139 @@ function GithubDashboard() {
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="rounded-xl border border-border bg-card p-6 shadow-md"
           >
-            {/* Header info */}
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <h3 className="text-lg font-bold text-foreground">
-                  {yearTotal} contributions in {selectedYear === currentYear ? 'the last year' : selectedYear}
-                </h3>
-                <p className="text-xs text-muted-foreground">Account: @justtnikiyaa</p>
-              </div>
-              <a
-                href="https://github.com/justtnikiyaa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3.5 py-1.5 text-xs font-semibold text-muted-foreground hover:border-primary/45 hover:text-primary transition-all"
-              >
-                <FiGithub size={14} /> View GitHub Profile
-              </a>
-            </div>
-
-            {/* Layout Flexbox */}
-            <div className="flex flex-col gap-6 md:flex-row md:items-start justify-between">
-              {/* Year Selectors on mobile (top of calendar) */}
-              <div className="flex flex-wrap gap-2 md:hidden">
-                {years.map(y => (
-                  <button
-                    key={y}
-                    onClick={() => setSelectedYear(y)}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${selectedYear === y
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary text-muted-foreground'
-                      }`}
-                  >
-                    {y}
-                  </button>
-                ))}
+            <BorderGlow borderRadius={20} className="p-6 shadow-md">
+              {/* Header info */}
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-foreground">
+                    {yearTotal} contributions in {selectedYear === currentYear ? 'the last year' : selectedYear}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">Account: @justtnikiyaa</p>
+                </div>
+                <a
+                  href="https://github.com/justtnikiyaa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3.5 py-1.5 text-xs font-semibold text-muted-foreground hover:border-primary/45 hover:text-primary transition-all"
+                >
+                  <FiGithub size={14} /> View GitHub Profile
+                </a>
               </div>
 
-              {/* Grid Wrapper */}
-              <div className="flex-1 overflow-x-auto pb-4">
-                <div className="min-w-[760px] flex flex-col">
-                  {/* Months Header row */}
-                  <div className="relative h-6 w-full text-xs text-muted-foreground mb-1 select-none">
-                    {monthsHeader.map((m, idx) => (
-                      <span
-                        key={idx}
-                        className="absolute font-semibold text-[11px]"
-                        style={{ left: `${m.colIndex * 14.2 + 28}px` }} // Aligned offset with labels
-                      >
-                        {m.label}
-                      </span>
-                    ))}
-                  </div>
+              {/* Layout Flexbox */}
+              <div className="flex flex-col gap-6 md:flex-row md:items-start justify-between">
+                {/* Year Selectors on mobile (top of calendar) */}
+                <div className="flex flex-wrap gap-2 md:hidden">
+                  {years.map(y => (
+                    <button
+                      key={y}
+                      onClick={() => setSelectedYear(y)}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${selectedYear === y
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-secondary text-muted-foreground'
+                        }`}
+                    >
+                      {y}
+                    </button>
+                  ))}
+                </div>
 
-                  {/* Day labels + Heatmap */}
-                  <div className="flex gap-2.5">
-                    {/* Y-axis days */}
-                    <div className="grid grid-rows-7 gap-1 text-[10px] text-muted-foreground select-none h-[77px] w-6 pr-1.5 font-medium leading-none justify-between items-center py-[1px]">
-                      <span></span>
-                      <span>Mon</span>
-                      <span></span>
-                      <span>Wed</span>
-                      <span></span>
-                      <span>Fri</span>
-                      <span></span>
-                    </div>
-
-                    {/* Columns grid */}
-                    <div className="grid grid-flow-col gap-1 select-none">
-                      {weeksList.map((week, colIdx) => (
-                        <div key={colIdx} className="grid grid-rows-7 gap-1">
-                          {week.map((day, rowIdx) => {
-                            let level = day.level
-                            if (day.count > 0 && (!level || level === 0)) {
-                              if (day.count >= 10) level = 4
-                              else if (day.count >= 6) level = 3
-                              else if (day.count >= 3) level = 2
-                              else level = 1
-                            }
-
-                            let bgClass = 'bg-[#1C152E] border border-[#9D86FF]/15 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80' // no contributions
-                            if (level === 1) bgClass = 'bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300'
-                            if (level === 2) bgClass = 'bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500'
-                            if (level === 3) bgClass = 'bg-emerald-500 border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)] [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700 [.light_&]:shadow-none'
-                            if (level === 4) bgClass = 'bg-emerald-300 border border-emerald-200 shadow-[0_0_10px_rgba(110,231,183,0.8)] [.light_&]:bg-emerald-800 [.light_&]:border-emerald-900 [.light_&]:shadow-none'
-
-                            return (
-                              <div
-                                key={rowIdx}
-                                className={`h-2.5 w-2.5 rounded-sm transition-all duration-300 hover:scale-125 ${day.count === -1 ? 'opacity-0 pointer-events-none' : bgClass
-                                  }`}
-                                title={day.count > -1 ? `${day.count} contributions on ${day.date || 'unknown'}` : ''}
-                              />
-                            )
-                          })}
-                        </div>
+                {/* Grid Wrapper */}
+                <div className="flex-1 overflow-x-auto pb-4">
+                  <div className="min-w-[760px] flex flex-col">
+                    {/* Months Header row */}
+                    <div className="relative h-6 w-full text-xs text-muted-foreground mb-1 select-none">
+                      {monthsHeader.map((m, idx) => (
+                        <span
+                          key={idx}
+                          className="absolute font-semibold text-[11px]"
+                          style={{ left: `${m.colIndex * 14.2 + 28}px` }} // Aligned offset with labels
+                        >
+                          {m.label}
+                        </span>
                       ))}
                     </div>
-                  </div>
 
-                  {/* Legend footer */}
-                  <div className="mt-4 flex justify-between items-center text-[10px] text-muted-foreground pl-7">
-                    <span>Learn how we count contributions</span>
-                    <div className="flex items-center gap-1.5 select-none">
-                      <span>Less</span>
-                      <span className="h-2.5 w-2.5 rounded-sm bg-[#1C152E] border border-[#9D86FF]/15 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500 border border-emerald-400 [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700" />
-                      <span className="h-2.5 w-2.5 rounded-sm bg-emerald-300 border border-emerald-200 [.light_&]:bg-emerald-800 [.light_&]:border-emerald-900" />
-                      <span>More</span>
+                    {/* Day labels + Heatmap */}
+                    <div className="flex gap-2.5">
+                      {/* Y-axis days */}
+                      <div className="grid grid-rows-7 gap-1 text-[10px] text-muted-foreground select-none h-[77px] w-6 pr-1.5 font-medium leading-none justify-between items-center py-[1px]">
+                        <span></span>
+                        <span>Mon</span>
+                        <span></span>
+                        <span>Wed</span>
+                        <span></span>
+                        <span>Fri</span>
+                        <span></span>
+                      </div>
+
+                      {/* Columns grid */}
+                      <div className="grid grid-flow-col gap-1 select-none">
+                        {weeksList.map((week, colIdx) => (
+                          <div key={colIdx} className="grid grid-rows-7 gap-1">
+                            {week.map((day, rowIdx) => {
+                              let level = day.level
+                              if (day.count > 0 && (!level || level === 0)) {
+                                if (day.count >= 10) level = 4
+                                else if (day.count >= 6) level = 3
+                                else if (day.count >= 3) level = 2
+                                else level = 1
+                              }
+
+                              let bgClass = 'bg-[#1C152E] border border-[#9D86FF]/15 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80' // no contributions
+                              if (level === 1) bgClass = 'bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300'
+                              if (level === 2) bgClass = 'bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500'
+                              if (level === 3) bgClass = 'bg-emerald-500 border border-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)] [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700 [.light_&]:shadow-none'
+                              if (level === 4) bgClass = 'bg-emerald-300 border border-emerald-200 shadow-[0_0_10px_rgba(110,231,183,0.8)] [.light_&]:bg-emerald-800 [.light_&]:border-emerald-900 [.light_&]:shadow-none'
+
+                              return (
+                                <div
+                                  key={rowIdx}
+                                  className={`h-2.5 w-2.5 rounded-sm transition-all duration-300 hover:scale-125 ${day.count === -1 ? 'opacity-0 pointer-events-none' : bgClass
+                                    }`}
+                                  title={day.count > -1 ? `${day.count} contributions on ${day.date || 'unknown'}` : ''}
+                                />
+                              )
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Legend footer */}
+                    <div className="mt-4 flex justify-between items-center text-[10px] text-muted-foreground pl-7">
+                      <span>Learn how we count contributions</span>
+                      <div className="flex items-center gap-1.5 select-none">
+                        <span>Less</span>
+                        <span className="h-2.5 w-2.5 rounded-sm bg-[#1C152E] border border-[#9D86FF]/15 [.light_&]:bg-slate-200/90 [.light_&]:border-slate-300/80" />
+                        <span className="h-2.5 w-2.5 rounded-sm bg-emerald-900/80 border border-emerald-800/80 [.light_&]:bg-emerald-200 [.light_&]:border-emerald-300" />
+                        <span className="h-2.5 w-2.5 rounded-sm bg-emerald-700 border border-emerald-600 [.light_&]:bg-emerald-400 [.light_&]:border-emerald-500" />
+                        <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500 border border-emerald-400 [.light_&]:bg-emerald-600 [.light_&]:border-emerald-700" />
+                        <span className="h-2.5 w-2.5 rounded-sm bg-emerald-300 border border-emerald-200 [.light_&]:bg-emerald-800 [.light_&]:border-emerald-900" />
+                        <span>More</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Year Selectors on Desktop (Right side list) */}
-              <div className="hidden md:flex flex-col gap-1.5 border-l border-border pl-6 pr-2 min-w-[90px]">
-                {years.map(y => (
-                  <button
-                    key={y}
-                    onClick={() => setSelectedYear(y)}
-                    className={`rounded-lg px-4 py-2 text-xs font-bold transition-all text-left border ${selectedYear === y
-                        ? 'bg-primary border-primary text-primary-foreground shadow-md shadow-primary/10'
-                        : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/40'
-                      }`}
-                  >
-                    {y}
-                  </button>
-                ))}
+                {/* Year Selectors on Desktop (Right side list) */}
+                <div className="hidden md:flex flex-col gap-1.5 border-l border-border pl-6 pr-2 min-w-[90px]">
+                  {years.map(y => (
+                    <button
+                      key={y}
+                      onClick={() => setSelectedYear(y)}
+                      className={`rounded-lg px-4 py-2 text-xs font-bold transition-all text-left border ${selectedYear === y
+                          ? 'bg-primary border-primary text-primary-foreground shadow-md shadow-primary/10'
+                          : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/40'
+                        }`}
+                    >
+                      {y}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            </BorderGlow>
           </motion.div>
 
           {/* Stats Cards */}
@@ -1798,10 +1805,11 @@ function GithubDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-primary/30 shadow-sm"
               >
-                <p className="text-2xl font-bold text-foreground mb-1">{value}</p>
-                <p className="text-xs text-muted-foreground font-medium">{label}</p>
+                <BorderGlow borderRadius={16} className="p-5 text-center shadow-sm">
+                  <p className="text-2xl font-bold text-foreground mb-1">{value}</p>
+                  <p className="text-xs text-muted-foreground font-medium">{label}</p>
+                </BorderGlow>
               </motion.div>
             ))}
           </div>
@@ -1870,18 +1878,21 @@ function Skills() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.35, ease: 'easeOut' }}
-                  style={{
-                    '--skill-color': skill.color,
-                    '--skill-glow-color': `${skill.color}22`
-                  }}
-                  className="skill-card flex flex-col items-center justify-center p-5 rounded-2xl bg-card/40 backdrop-blur-sm aspect-square text-center cursor-default"
+                  className="h-full"
                 >
-                  <div className="skill-icon-container flex h-14 w-14 items-center justify-center rounded-xl bg-secondary/30 border border-border/40 mb-4">
-                    <Icon size={28} style={{ color: skill.color }} />
-                  </div>
-                  <span className="skill-text text-[11px] font-bold tracking-wider text-muted-foreground font-heading uppercase">
-                    {skill.name}
-                  </span>
+                  <BorderGlow
+                    borderRadius={18}
+                    glowRadius={25}
+                    edgeSensitivity={35}
+                    className="h-full p-4 flex flex-col items-center justify-center text-center cursor-default aspect-square"
+                  >
+                    <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/40 border border-border/40 mb-3 transition-transform group-hover:scale-110">
+                      <Icon size={28} style={{ color: skill.color }} />
+                    </div>
+                    <span className="text-[11px] font-bold tracking-wider text-muted-foreground font-heading uppercase">
+                      {skill.name}
+                    </span>
+                  </BorderGlow>
                 </motion.div>
               )
             })}
@@ -1922,26 +1933,33 @@ function Certifications() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               onClick={() => setSelectedCert(cert)}
-              className="group flex flex-col p-5 rounded-2xl border border-border bg-card/30 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer"
+              className="h-full"
             >
-              <div className="h-44 w-full overflow-hidden rounded-xl bg-muted mb-4 border border-border/50">
-                <img
-                  src={cert.image}
-                  alt={cert.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
+              <BorderGlow
+                borderRadius={20}
+                className="h-full p-5 cursor-pointer flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1 group"
+              >
+                <div>
+                  <div className="h-44 w-full overflow-hidden rounded-xl bg-muted mb-4 border border-border/50">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
 
-              <span className="text-[10px] text-primary font-bold font-mono tracking-wider mb-2 uppercase">
-                {cert.issuer}
-              </span>
-              <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300 mb-2 font-heading">
-                {cert.title}
-              </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                {cert.description}
-              </p>
+                  <span className="text-[10px] text-primary font-bold font-mono tracking-wider mb-2 uppercase">
+                    {cert.issuer}
+                  </span>
+                  <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300 mb-2 font-heading">
+                    {cert.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                    {cert.description}
+                  </p>
+                </div>
+              </BorderGlow>
             </motion.div>
           ))}
         </div>
@@ -2025,22 +2043,27 @@ function Services({ setInquiryMessage }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group rounded-xl border border-border bg-card p-8 transition-colors hover:border-primary/40 flex flex-col justify-between"
+              className="h-full"
             >
-              <div>
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                  <Icon size={28} className="text-primary" />
-                </div>
-                <h3 className="mb-3 font-heading text-xl font-semibold text-foreground">{title}</h3>
-                <p className="leading-relaxed text-muted-foreground mb-6">{description}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => handleInquiry(title)}
-                className="mt-2 text-left text-sm font-semibold text-primary hover:text-primary/85 transition-colors inline-flex items-center gap-1.5"
+              <BorderGlow
+                borderRadius={22}
+                className="h-full p-8 flex flex-col justify-between group transition-transform duration-300 hover:-translate-y-1"
               >
-                Inquire about this <span className="transition-transform group-hover:translate-x-1">→</span>
-              </button>
+                <div>
+                  <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
+                    <Icon size={28} className="text-primary" />
+                  </div>
+                  <h3 className="mb-3 font-heading text-xl font-semibold text-foreground">{title}</h3>
+                  <p className="leading-relaxed text-muted-foreground mb-6">{description}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleInquiry(title)}
+                  className="mt-2 text-left text-sm font-semibold text-primary hover:text-primary/85 transition-colors inline-flex items-center gap-1.5"
+                >
+                  Inquire about this <span className="transition-transform group-hover:translate-x-1">→</span>
+                </button>
+              </BorderGlow>
             </motion.div>
           ))}
         </div>
@@ -2106,107 +2129,115 @@ function Contact({ inquiryMessage, setInquiryMessage }) {
           </p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="mb-6 font-heading text-xl font-semibold text-foreground">Contact Info</h3>
+            <BorderGlow borderRadius={24} className="p-7 sm:p-8 h-full flex flex-col justify-between">
+              <div>
+                <h3 className="mb-6 font-heading text-xl font-semibold text-foreground">Contact Info</h3>
 
-            <div className="mb-8 space-y-5">
-              {contactItems.map(({ icon: Icon, label, value, href }) => (
-                <a key={label} href={href} className="group flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <Icon size={18} className="text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">{label}</p>
-                    <p className="text-sm text-foreground transition-colors group-hover:text-primary">{value}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+                <div className="mb-8 space-y-5">
+                  {contactItems.map(({ icon: Icon, label, value, href }) => (
+                    <a key={label} href={href} className="group flex items-start gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                        <Icon size={18} className="text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">{label}</p>
+                        <p className="text-sm text-foreground transition-colors group-hover:text-primary">{value}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
 
-            <h3 className="mb-4 font-heading text-lg font-semibold text-foreground">Follow Me</h3>
-            <div className="flex gap-3">
-              {socialLinks.map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
-            </div>
+              <div>
+                <h3 className="mb-4 font-heading text-lg font-semibold text-foreground">Follow Me</h3>
+                <div className="flex gap-3">
+                  {socialLinks.map(({ icon: Icon, href, label }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                    >
+                      <Icon size={18} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </BorderGlow>
           </motion.div>
 
-          <motion.form
-            onSubmit={handleSubmit}
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-5"
           >
-            <div>
-              <label className="mb-1.5 block text-sm text-muted-foreground" htmlFor="name">
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                required
-                value={form.name}
-                onChange={(event) => setForm({ ...form, name: event.target.value })}
-                className="w-full rounded-lg border border-border bg-card px-4 py-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none"
-                placeholder="Your name"
-              />
-            </div>
+            <BorderGlow borderRadius={24} className="p-7 sm:p-8">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="mb-1.5 block text-sm text-muted-foreground" htmlFor="name">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(event) => setForm({ ...form, name: event.target.value })}
+                    className="w-full rounded-lg border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none"
+                    placeholder="Your name"
+                  />
+                </div>
 
-            <div>
-              <label className="mb-1.5 block text-sm text-muted-foreground" htmlFor="email">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={form.email}
-                onChange={(event) => setForm({ ...form, email: event.target.value })}
-                className="w-full rounded-lg border border-border bg-card px-4 py-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none"
-                placeholder="Your email"
-              />
-            </div>
+                <div>
+                  <label className="mb-1.5 block text-sm text-muted-foreground" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(event) => setForm({ ...form, email: event.target.value })}
+                    className="w-full rounded-lg border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none"
+                    placeholder="Your email"
+                  />
+                </div>
 
-            <div>
-              <label className="mb-1.5 block text-sm text-muted-foreground" htmlFor="message">
-                Message
-              </label>
-              <textarea
-                id="message"
-                required
-                rows={5}
-                value={form.message}
-                onChange={(event) => setForm({ ...form, message: event.target.value })}
-                className="w-full resize-none rounded-lg border border-border bg-card px-4 py-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none"
-                placeholder="Your message..."
-              />
-            </div>
+                <div>
+                  <label className="mb-1.5 block text-sm text-muted-foreground" htmlFor="message">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={5}
+                    value={form.message}
+                    onChange={(event) => setForm({ ...form, message: event.target.value })}
+                    className="w-full resize-none rounded-lg border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground transition-colors focus:border-primary focus:outline-none"
+                    placeholder="Your message..."
+                  />
+                </div>
 
-            <button
-              type="submit"
-              disabled={sending}
-              className="flex items-center gap-2 rounded-lg bg-gradient-primary px-6 py-3 font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-            >
-              {sending ? 'Sending...' : 'Send Message'}
-            </button>
-            {submitMessage && <p className="text-sm text-muted-foreground">{submitMessage}</p>}
-          </motion.form>
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="flex items-center gap-2 rounded-lg bg-gradient-primary px-6 py-3 font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+                >
+                  {sending ? 'Sending...' : 'Send Message'}
+                </button>
+                {submitMessage && <p className="text-sm text-muted-foreground">{submitMessage}</p>}
+              </form>
+            </BorderGlow>
+          </motion.div>
         </div>
       </div>
     </section>
