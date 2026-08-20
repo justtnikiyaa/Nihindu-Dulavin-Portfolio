@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import Lenis from 'lenis'
+import { IntroSplash } from './components/IntroSplash'
 
 export const scrollToTarget = (e, targetId) => {
   if (e && e.preventDefault) e.preventDefault()
@@ -2271,6 +2272,7 @@ function CVModal({ isOpen, onClose }) {
 function App() {
   const [inquiryMessage, setInquiryMessage] = useState('')
   const [isCvOpen, setIsCvOpen] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -2324,6 +2326,9 @@ function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground transition-colors duration-300">
+      {/* ReactBits Stroke Text Entrance Intro Splash */}
+      {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
+
       {/* Global Stage Spotlight Lighting Background (Whole Site) */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         {/* Left Angled Volumetric Spotlight */}
