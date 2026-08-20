@@ -3,6 +3,7 @@ import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import Lenis from 'lenis'
 import { IntroSplash } from './components/IntroSplash'
+import FluidGlassNav from './components/FluidGlassNav'
 
 export const scrollToTarget = (e, targetId) => {
   if (e && e.preventDefault) e.preventDefault()
@@ -393,6 +394,9 @@ const socialLinks = [
 
 function Navbar({ theme, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [activeHover, setActiveHover] = useState(null)
+  const [activeSection, setActiveSection] = useState('#home')
+  const navRef = useRef(null)
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -400,27 +404,73 @@ function Navbar({ theme, toggleTheme }) {
     restDelta: 0.001
   })
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'skills', 'projects', 'certifications', 'services', 'contact']
+      const scrollPos = window.scrollY + 250
+      for (const section of sections) {
+        const el = document.getElementById(section)
+        if (el) {
+          const top = el.offsetTop
+          const height = el.offsetHeight
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(`#${section}`)
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none">
-      <div className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-4 sm:gap-6 rounded-full border border-border/80 bg-card/85 px-5 sm:px-7 py-2.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition-all duration-300">
+      <div
+        ref={navRef}
+        className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-4 sm:gap-6 rounded-full border border-black/10 dark:border-white/20 bg-white/80 dark:bg-[#151022]/75 px-5 sm:px-7 py-2.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-all duration-300 overflow-hidden"
+      >
+        {/* Interactive Liquid Glass Lens Refraction */}
+        <FluidGlassNav
+          containerRef={navRef}
+          activeTarget={activeHover || navRef.current?.querySelector(`a[href="${activeSection}"]`)}
+        />
+
         {/* Brand Logo */}
         <a
           href="#home"
-          onClick={(e) => scrollToTarget(e, '#home')}
-          className="font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0"
+          data-nav-active={activeSection === '#home'}
+          onClick={(e) => {
+            setActiveSection('#home')
+            scrollToTarget(e, '#home')
+          }}
+          onMouseEnter={(e) => setActiveHover(e.currentTarget)}
+          onMouseLeave={() => setActiveHover(null)}
+          className="relative z-10 font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors"
         >
           <span className="text-[#9D86FF] text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
           <span className="text-foreground font-extrabold tracking-tight">Nihindu.</span>
         </a>
 
         {/* Center Nav Links */}
-        <div className="hidden items-center gap-1 lg:gap-1.5 md:flex">
+        <div className="relative z-10 hidden items-center gap-1 lg:gap-1.5 md:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              onClick={(e) => scrollToTarget(e, item.href)}
-              className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-all hover:bg-primary/10 hover:text-foreground"
+              data-nav-active={activeSection === item.href}
+              onClick={(e) => {
+                setActiveSection(item.href)
+                scrollToTarget(e, item.href)
+              }}
+              onMouseEnter={(e) => setActiveHover(e.currentTarget)}
+              onMouseLeave={() => setActiveHover(null)}
+              className={`relative z-10 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                activeSection === item.href
+                  ? 'text-primary dark:text-white font-bold drop-shadow-[0_0_8px_rgba(125,82,253,0.3)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]'
+                  : 'text-slate-600 dark:text-muted-foreground hover:text-foreground'
+              }`}
             >
               {item.label}
             </a>
@@ -428,11 +478,13 @@ function Navbar({ theme, toggleTheme }) {
         </div>
 
         {/* Right CTA & Theme Toggle */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <div className="relative z-10 flex items-center gap-2.5 sm:gap-3 shrink-0">
           {/* Theme Toggle Button */}
           <button
             type="button"
             onClick={toggleTheme}
+            onMouseEnter={(e) => setActiveHover(e.currentTarget)}
+            onMouseLeave={() => setActiveHover(null)}
             className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-border/80 bg-secondary/80 text-foreground transition-all hover:border-primary/50 hover:scale-105 active:scale-95 shadow-sm"
             aria-label="Toggle dark/light theme"
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
@@ -446,8 +498,13 @@ function Navbar({ theme, toggleTheme }) {
 
           <a
             href="#contact"
-            onClick={(e) => scrollToTarget(e, '#contact')}
-            className="hidden rounded-full bg-foreground px-5 py-2 text-xs font-bold uppercase tracking-wider text-background shadow-md transition-all hover:opacity-90 hover:scale-105 md:inline-flex"
+            onClick={(e) => {
+              setActiveSection('#contact')
+              scrollToTarget(e, '#contact')
+            }}
+            onMouseEnter={(e) => setActiveHover(e.currentTarget)}
+            onMouseLeave={() => setActiveHover(null)}
+            className="hidden rounded-full bg-primary text-white dark:bg-foreground dark:text-background px-5 py-2 text-xs font-bold uppercase tracking-wider shadow-md transition-all hover:opacity-90 hover:scale-105 md:inline-flex"
           >
             Hire Me
           </a>
@@ -464,7 +521,7 @@ function Navbar({ theme, toggleTheme }) {
 
         {/* Scroll Progress Glow Line */}
         <motion.div
-          className="absolute -bottom-[1px] left-6 right-6 h-[2px] bg-gradient-primary rounded-full origin-[0%]"
+          className="absolute -bottom-[1px] left-6 right-6 h-[2px] bg-gradient-primary rounded-full origin-[0%] z-10"
           style={{ scaleX }}
         />
 
