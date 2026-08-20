@@ -1,4 +1,5 @@
 .border-glow-card {
+  --card-bg: #1C152E;
   --edge-proximity: 0;
   --cursor-angle: 45deg;
   --edge-sensitivity: 30;
@@ -17,20 +18,21 @@
   background: var(--card-bg, #1C152E);
   overflow: visible;
   box-shadow:
-    rgba(0, 0, 0, 0.1) 0px 1px 2px,
-    rgba(0, 0, 0, 0.1) 0px 2px 4px,
-    rgba(0, 0, 0, 0.1) 0px 4px 8px,
-    rgba(0, 0, 0, 0.1) 0px 8px 16px,
-    rgba(0, 0, 0, 0.1) 0px 16px 32px,
-    rgba(0, 0, 0, 0.1) 0px 32px 64px;
+    rgba(0, 0, 0, 0.2) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 8px 24px;
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
 }
 
-.light .border-glow-card {
+/* Light Mode Overrides */
+html.light .border-glow-card,
+.light .border-glow-card,
+[data-theme="light"] .border-glow-card {
+  --card-bg: #FFFFFF;
+  background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow:
     rgba(0, 0, 0, 0.04) 0px 2px 8px,
-    rgba(0, 0, 0, 0.06) 0px 8px 24px;
+    rgba(125, 82, 253, 0.08) 0px 10px 30px;
 }
 
 .border-glow-card::before,

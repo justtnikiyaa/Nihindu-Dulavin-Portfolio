@@ -398,6 +398,7 @@ function Navbar({ theme, toggleTheme }) {
   const [activeHover, setActiveHover] = useState(null)
   const [activeSection, setActiveSection] = useState('#home')
   const navRef = useRef(null)
+  const isDark = theme === 'dark'
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -430,12 +431,17 @@ function Navbar({ theme, toggleTheme }) {
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none">
       <div
         ref={navRef}
-        className="pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-4 sm:gap-6 rounded-full border border-black/10 dark:border-white/20 bg-white/80 dark:bg-[#151022]/75 px-5 sm:px-7 py-2.5 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-all duration-300 overflow-hidden"
+        className={`pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-3 sm:gap-6 rounded-full px-4 sm:px-7 py-2.5 backdrop-blur-2xl transition-all duration-300 overflow-hidden ${
+          isDark
+            ? 'bg-[#151022]/85 border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.15)] text-white'
+            : 'bg-white/90 border border-black/10 shadow-[0_8px_30px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.8)] text-slate-900'
+        }`}
       >
         {/* Interactive Liquid Glass Lens Refraction */}
         <FluidGlassNav
           containerRef={navRef}
           activeTarget={activeHover || navRef.current?.querySelector(`a[href="${activeSection}"]`)}
+          isDark={isDark}
         />
 
         {/* Brand Logo */}
@@ -448,10 +454,12 @@ function Navbar({ theme, toggleTheme }) {
           }}
           onMouseEnter={(e) => setActiveHover(e.currentTarget)}
           onMouseLeave={() => setActiveHover(null)}
-          className="relative z-10 font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors"
+          className={`relative z-10 font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors ${
+            isDark ? 'text-white' : 'text-slate-900'
+          }`}
         >
           <span className="text-[#9D86FF] text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
-          <span className="text-foreground font-extrabold tracking-tight">Nihindu.</span>
+          <span className="font-extrabold tracking-tight">Nihindu.</span>
         </a>
 
         {/* Center Nav Links */}
@@ -469,8 +477,12 @@ function Navbar({ theme, toggleTheme }) {
               onMouseLeave={() => setActiveHover(null)}
               className={`relative z-10 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                 activeSection === item.href
-                  ? 'text-primary dark:text-white font-bold drop-shadow-[0_0_8px_rgba(125,82,253,0.3)] dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]'
-                  : 'text-slate-600 dark:text-muted-foreground hover:text-foreground'
+                  ? (isDark
+                      ? 'text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]'
+                      : 'text-[#7D52FD] font-bold drop-shadow-[0_0_6px_rgba(125,82,253,0.3)]')
+                  : (isDark
+                      ? 'text-[#D0CFD3]/80 hover:text-white'
+                      : 'text-slate-600 hover:text-slate-900')
               }`}
             >
               {item.label}
@@ -486,11 +498,15 @@ function Navbar({ theme, toggleTheme }) {
             onClick={toggleTheme}
             onMouseEnter={(e) => setActiveHover(e.currentTarget)}
             onMouseLeave={() => setActiveHover(null)}
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-border/80 bg-secondary/80 text-foreground transition-all hover:border-primary/50 hover:scale-105 active:scale-95 shadow-sm"
+            className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-all hover:scale-105 active:scale-95 shadow-sm ${
+              isDark
+                ? 'border-white/20 bg-white/10 text-amber-300'
+                : 'border-black/10 bg-black/5 text-purple-600'
+            }`}
             aria-label="Toggle dark/light theme"
-            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+            title={`Switch to ${isDark ? 'Light' : 'Dark'} mode`}
           >
-            {theme === 'dark' ? (
+            {isDark ? (
               <FiSun size={16} className="text-amber-300 transition-transform duration-300 hover:rotate-45" />
             ) : (
               <FiMoon size={16} className="text-purple-600 transition-transform duration-300 hover:-rotate-12" />
@@ -505,14 +521,20 @@ function Navbar({ theme, toggleTheme }) {
             }}
             onMouseEnter={(e) => setActiveHover(e.currentTarget)}
             onMouseLeave={() => setActiveHover(null)}
-            className="hidden rounded-full bg-primary text-white dark:bg-foreground dark:text-background px-5 py-2 text-xs font-bold uppercase tracking-wider shadow-md transition-all hover:opacity-90 hover:scale-105 md:inline-flex"
+            className={`hidden rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider shadow-md transition-all hover:scale-105 md:inline-flex ${
+              isDark
+                ? 'bg-white text-black hover:bg-white/90'
+                : 'bg-primary text-white hover:opacity-90'
+            }`}
           >
             Hire Me
           </a>
 
           <button
             type="button"
-            className="text-foreground md:hidden p-1 rounded-full hover:bg-secondary transition-colors"
+            className={`p-1 rounded-full md:hidden transition-colors ${
+              isDark ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-black/5'
+            }`}
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label="Toggle menu"
           >
@@ -534,14 +556,22 @@ function Navbar({ theme, toggleTheme }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute left-0 right-0 top-full mt-3 rounded-2xl border border-border bg-card/95 p-4 backdrop-blur-2xl shadow-2xl md:hidden"
+              className={`absolute left-0 right-0 top-full mt-3 rounded-2xl border p-4 backdrop-blur-2xl shadow-2xl md:hidden ${
+                isDark
+                  ? 'bg-[#151022]/95 border-white/15 text-white'
+                  : 'bg-white/95 border-black/10 text-slate-900'
+              }`}
             >
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
-                    className="block py-2.5 px-3 rounded-xl text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground"
+                    className={`block py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
+                      isDark
+                        ? 'text-[#D0CFD3] hover:bg-white/10 hover:text-white'
+                        : 'text-slate-600 hover:bg-black/5 hover:text-slate-900'
+                    }`}
                     onClick={(e) => {
                       setIsOpen(false)
                       scrollToTarget(e, item.href)
@@ -552,7 +582,11 @@ function Navbar({ theme, toggleTheme }) {
                 ))}
                 <a
                   href="#contact"
-                  className="mt-2 inline-flex justify-center rounded-full bg-foreground py-2.5 text-xs font-bold uppercase tracking-wider text-background shadow-md"
+                  className={`mt-2 inline-flex justify-center rounded-full py-2.5 text-xs font-bold uppercase tracking-wider shadow-md ${
+                    isDark
+                      ? 'bg-white text-black'
+                      : 'bg-primary text-white'
+                  }`}
                   onClick={(e) => {
                     setIsOpen(false)
                     scrollToTarget(e, '#contact')
@@ -2394,7 +2428,9 @@ function App() {
   useEffect(() => {
     if (theme === 'light') {
       document.documentElement.classList.add('light')
+      document.documentElement.classList.remove('dark')
     } else {
+      document.documentElement.classList.add('dark')
       document.documentElement.classList.remove('light')
     }
     localStorage.setItem('theme', theme)
