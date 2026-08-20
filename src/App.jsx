@@ -5,6 +5,7 @@ import Lenis from 'lenis'
 import { IntroSplash } from './components/IntroSplash'
 import FluidGlassNav from './components/FluidGlassNav'
 import BorderGlow from './components/BorderGlow'
+import MoltenMetal from './components/MoltenMetal'
 
 export const scrollToTarget = (e, targetId) => {
   if (e && e.preventDefault) e.preventDefault()
@@ -2452,6 +2453,31 @@ function App() {
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground transition-colors duration-300">
       {/* ReactBits Stroke Text Entrance Intro Splash */}
       {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
+
+      {/* Global Molten Metal Liquid Background Canvas */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-40 dark:opacity-80 transition-opacity duration-500">
+        <MoltenMetal
+          color1="#ba27ff"
+          color2="#7324ea"
+          color3="#FFFFFF"
+          speed={0.35}
+          scale={4}
+          detail={3}
+          glow={1.6}
+          coreSize={0.1}
+          swirl={1}
+          fold={-0.2}
+          blackPoint={0.05}
+          brightness={1.3}
+          colorMode="molten"
+          grain
+          grainIntensity={0.05}
+          mouseInteraction
+          mouseStrength={0.3}
+          opacity={theme === 'dark' ? 1.0 : 0.45}
+          className="h-full w-full"
+        />
+      </div>
 
       {/* Global Stage Spotlight Lighting Background (Whole Site) */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
