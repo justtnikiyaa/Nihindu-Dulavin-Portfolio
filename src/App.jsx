@@ -337,18 +337,48 @@ const educationTimeline = [
 
 const workExperience = [
   {
-    role: 'Frontend Developer Intern',
-    company: 'Sri Lanka Telecom (SLT-MOBITEL)',
-    period: '6 months',
+    role: 'IT Support & POS Systems Associate',
+    company: 'The Fashion Store (TFS)',
+    period: '07th September 2026 – Present (On-site)',
     description:
-      'Developing and enhancing enterprise-level React.js web interfaces for the SOCO platform across Officer Management, Crime Scene, Vehicle Configuration, and Promotion Management modules.',
+      'Configuring, deploying, and maintaining 40+ POS laptop workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations while managing database synchronization and operational hardware support.',
     highlights: [
-      'Engineered responsive React components & RESTful API integrations for dynamic data flow',
-      'Performed UI/UX usability enhancements, layout optimizations, and frontend bug fixes',
-      'Conducted web vulnerability testing with OWASP ZAP and code quality metrics via SonarQube',
-      'Collaborated in Agile sprint planning, requirement reviews, and deployment testing'
+      'Configured, deployed, and maintained 40+ POS laptop workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations.',
+      'Managed large-scale stock take workflows using Sphere POS, ensuring seamless synchronization with central Microsoft Azure SQL databases.',
+      'Troubleshooted local hardware, OS, and network connectivity issues, including Azure DB latency/disconnects, TCP/IP configurations, and peripheral setup.',
+      'Conducted operational support for handheld PDT/Android barcode terminals (C65), evaluating wireless keyboard emulation (HID) and batch export workflows for inventory reconciliation.',
+      'Coordinated directly with vendor technical support teams to resolve software patches, database inconsistencies, and terminal configuration bugs.'
     ],
-    skills: ['React.js', 'REST APIs', 'OWASP ZAP', 'SonarQube', 'Agile']
+    skills: ['Sphere POS', 'Microsoft Azure SQL', 'Hardware & Peripherals', 'Network Troubleshooting', 'TCP/IP', 'Technical Support']
+  },
+  {
+    role: 'IT Intern',
+    company: 'Road Development Authority (RDA) – Information Systems & Network Management Division',
+    period: '20th July 2026 – 04th September 2026',
+    description:
+      'Developed internal management systems including a Letter Management System and Web-Based Tax Invoice System, assisted with RDA website maintenance, and supported network, database, and digitalization workshop operations.',
+    highlights: [
+      'Developed a Letter Management System, including search UI and filters, backend search queries, results listing, detailed view, and integrated file viewer features.',
+      'Developed a Web-Based Tax Invoice System.',
+      'Assisted in updating and maintaining the official RDA website.',
+      'Provided assistance in the coordination and implementation of RDA Digitalization Workshops.',
+      'Supported software development, testing, technical documentation, network management, and database-related tasks assigned by the division.'
+    ],
+    skills: ['System Development', 'Web Development', 'UI/UX Design', 'Database Management', 'Technical Documentation', 'Network Management']
+  },
+  {
+    role: 'Frontend Developer Intern',
+    company: 'Sri Lanka Telecom (SLT)',
+    period: '06th May – 06th November (6 Months)',
+    description:
+      'Developed and enhanced responsive web interfaces using React.js for enterprise applications, integrating REST APIs, implementing UI/UX enhancements, and participating in code quality reviews and security testing.',
+    highlights: [
+      'Developed and enhanced responsive web interfaces using React.js for the project.',
+      'Integrated REST APIs and collaborated with backend services to implement application functionalities.',
+      'Performed UI/UX improvements, bug fixes, and responsive design enhancements across multiple modules.',
+      'Participated in project discussions, security testing using OWASP ZAP, and code quality reviews with SonarQube.'
+    ],
+    skills: ['React.js', 'REST APIs', 'UI/UX Enhancements', 'OWASP ZAP', 'SonarQube', 'Agile']
   }
 ]
 
@@ -655,8 +685,7 @@ function Hero({ onOpenCv }) {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="mb-8 max-w-lg text-base leading-relaxed text-muted-foreground"
             >
-              A motivated IT undergraduate at SLIIT, passionate about web development, building modern applications,
-              and continuously learning new technologies to solve real-world problems.
+              A motivated IT undergraduate at SLIIT with hands-on experience in full-stack development, IT support &amp; POS systems, and enterprise internships. Passionate about building modern applications and solving real-world challenges.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -797,7 +826,7 @@ function About({ onOpenCv }) {
             About <span className="text-gradient">Me</span>
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground font-medium">
-            IT Undergraduate & Developer with hands-on enterprise internship experience.
+            IT Undergraduate & Developer with hands-on enterprise & IT support experience.
           </p>
         </motion.div>
 
@@ -819,7 +848,7 @@ function About({ onOpenCv }) {
                 I&apos;m <strong className="text-foreground font-semibold">Nihindu Dulavin</strong>, an IT undergraduate specializing in Information Technology at the Sri Lanka Institute of Information Technology (SLIIT), pursuing my BSc (Hons) in IT (2023–Present).
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                My goal is to gain real-world industry experience and grow into a skilled full stack developer. I thrive on learning new technologies, building production-ready applications, and solving complex engineering challenges.
+                Experienced in full-stack development (MERN, Java, Spring Boot) and practical IT operations through roles at The Fashion Store (TFS), Road Development Authority (RDA), and Sri Lanka Telecom (SLT). Skilled in building responsive web applications, REST APIs, POS workflows, and database synchronization.
               </p>
               <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-border/60 text-xs">
                 <div className="flex flex-wrap gap-2">
@@ -909,7 +938,7 @@ function About({ onOpenCv }) {
                   <FiBriefcase className="text-primary" size={20} /> Work Experience
                 </h3>
                 <span className="rounded-full bg-emerald-500/10 px-3 py-1 font-mono text-xs font-bold text-emerald-400 border border-emerald-500/20">
-                  {workExperience.length} {workExperience.length === 1 ? 'Internship' : 'Internships'}
+                  {workExperience.length} {workExperience.length === 1 ? 'Role' : 'Roles'}
                 </span>
               </div>
 
@@ -1449,10 +1478,13 @@ function TerminalConsole() {
     let reply = ''
     switch (trimmedInput) {
       case 'help':
-        reply = 'Available commands:\n  about          - Brief background introduction\n  skills         - Technical competency matrix\n  certifications - Earned credentials list\n  projects       - Featured engineering works\n  clear          - Flush console lines\n  help           - Show command list'
+        reply = 'Available commands:\n  about          - Brief background introduction\n  experience     - Work & internship history\n  skills         - Technical competency matrix\n  certifications - Earned credentials list\n  projects       - Featured engineering works\n  clear          - Flush console lines\n  help           - Show command list'
         break
       case 'about':
-        reply = 'Nihindu Dulavin - IT Undergraduate at SLIIT (2024-2028).\nPassionate full-stack programmer focused on crafting reliable services using React, Node.js, and relational databases. Fast learner, dedicated team contributor, and critical problem solver.'
+        reply = 'Nihindu Dulavin - IT Undergraduate at SLIIT.\nFull-stack developer with experience at Sri Lanka Telecom (SLT), IT support at The Fashion Store (TFS), and systems development at RDA. Fast learner and critical problem solver.'
+        break
+      case 'experience':
+        reply = 'Work Experience:\n1. IT Support & POS Systems Associate | The Fashion Store (TFS) [Sep 2026 - Present]\n2. IT Intern | Road Development Authority (RDA) [Jul 2026 - Sep 2026]\n3. Frontend Developer Intern | Sri Lanka Telecom (SLT) [06th May - 06th Nov]'
         break
       case 'skills':
         reply = 'Frontend:    HTML, CSS, JavaScript, React\nBackend:     Node.js, Express, Socket.io\nDatabases:   MongoDB, PostgreSQL\nTools:       Git, Figma, VS Code'
