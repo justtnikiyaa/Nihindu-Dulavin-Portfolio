@@ -224,7 +224,15 @@ const projects = [
       'Premium dark mode aesthetics with glowing color accents'
     ],
     tech: ['Figma', 'UI/UX Design', 'Mobile App'],
-    image: '/images/dailytask.png',
+    images: [
+      '/images/project-dailytask.png',
+      '/images/dailytask-dashboard.png',
+      '/images/dailytask-timeline.png',
+      '/images/dailytask-details.png',
+      '/images/dailytask-create.png',
+      '/images/dailytask-onboarding.png'
+    ],
+    image: '/images/project-dailytask.png',
     preview: 'https://www.figma.com/design/w3fSTue9lJuhDKdE8jAcaH/Daily-task-app?node-id=0-1&t=XtXbWgYSRGAqLAOZ-1',
   },
   {
