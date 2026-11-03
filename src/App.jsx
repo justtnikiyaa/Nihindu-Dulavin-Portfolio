@@ -59,7 +59,9 @@ import {
   SiMongodb,
   SiPostgresql,
   SiGit,
-  SiFigma
+  SiFigma,
+  SiFlutter,
+  SiFirebase
 } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'
 
@@ -98,6 +100,8 @@ const skillsData = [
   { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1', category: 'Backend' },
   { name: 'Git', icon: SiGit, color: '#F05032', category: 'Tools' },
   { name: 'Figma', icon: SiFigma, color: '#F24E1E', category: 'Tools' },
+  { name: 'Flutter', icon: SiFlutter, color: '#02569B', category: 'Frontend' },
+  { name: 'Firebase', icon: SiFirebase, color: '#FFCA28', category: 'Backend' },
   { name: 'Java', icon: FaJava, color: '#007396', category: 'Tools' },
 ]
 
@@ -159,6 +163,35 @@ const certifications = [
 ]
 
 const projects = [
+  {
+    title: 'Family Budget App',
+    category: 'Mobile App',
+    description:
+      'A collaborative household financial management and expense tracking application with real-time Firestore synchronization, budget limits, and recurring bill tracking.',
+    longDescription:
+      'A modern cross-platform household finance application designed to help families track daily expenses, monitor savings goals, manage recurring bills, and maintain financial transparency together in real-time. Built with Flutter following Clean Architecture, it integrates Firebase Authentication (Google OAuth 2.0), Cloud Firestore for instantaneous multi-device data synchronization, dynamic category budget limits with threshold warnings, and bilingual English/Sinhala localization.',
+    features: [
+      'Multi-user household collaboration with invite codes and role-based permissions (Admin, Member, Viewer)',
+      'Real-time Cloud Firestore synchronization across Android, Web, and iOS devices',
+      'Expense & income tracking with quick-add custom numeric keypad bottom sheet and smart categorization',
+      'Category budget thresholds with dynamic visual progress bars and alert notifications approaching caps',
+      'Target savings goal planner and recurring bill reminders with paid/pending status tracking',
+      'Bilingual localization (English & Sinhala) with dynamic font scaling for accessibility',
+      'Dual authentication with Google OAuth 2.0 Sign-In and secure Email/Password credentials'
+    ],
+    tech: ['Flutter', 'Dart', 'Firebase', 'Cloud Firestore', 'Google OAuth'],
+    images: [
+      '/images/project-familybudget.png',
+      '/images/familybudget-dashboard.png',
+      '/images/familybudget-limits.png',
+      '/images/familybudget-join.png',
+      '/images/familybudget-profile.png',
+      '/images/familybudget-login.png'
+    ],
+    image: '/images/project-familybudget.png',
+    github: 'https://github.com/justtnikiyaa/family_budget_app.git',
+    preview: 'https://family-budget-app-we105.web.app/',
+  },
   {
     title: 'KonceptHive',
     category: 'Full Stack',
@@ -1212,11 +1245,16 @@ function Projects() {
     setLightboxState({ images, index, title })
   }
 
-  const categories = ['All', 'Full Stack', 'Frontend', 'UI/UX']
+  const categories = ['All', 'Full Stack', 'Mobile App', 'Frontend', 'UI/UX']
 
   const filteredProjects = filter === 'All'
     ? projects
-    : projects.filter(p => p.category === filter)
+    : projects.filter(p => {
+        if (filter === 'Mobile App') {
+          return p.category === 'Mobile App' || p.tech?.includes('Mobile App')
+        }
+        return p.category === filter
+      })
 
   return (
     <section id="projects" className="section-padding">
@@ -1487,13 +1525,13 @@ function TerminalConsole() {
         reply = 'Work Experience:\n1. IT Support & POS Systems Associate | The Fashion Store (TFS) [Sep 2026 - Present]\n2. IT Intern | Road Development Authority (RDA) [Jul 2026 - Sep 2026]\n3. Frontend Developer Intern | Sri Lanka Telecom (SLT) [06th May - 06th Nov]'
         break
       case 'skills':
-        reply = 'Frontend:    HTML, CSS, JavaScript, React\nBackend:     Node.js, Express, Socket.io\nDatabases:   MongoDB, PostgreSQL\nTools:       Git, Figma, VS Code'
+        reply = 'Frontend:    HTML, CSS, JavaScript, React, Flutter\nBackend:     Node.js, Express, Firebase, Socket.io\nDatabases:   MongoDB, PostgreSQL, Cloud Firestore\nTools:       Git, Figma, VS Code'
         break
       case 'certifications':
         reply = 'Earned Certifications:\n- MERN Stack Certificate (SLIIT / Self-Directed)\n- Full-Stack Development (Specialization)\n- MongoDB Data Modeling Path (MongoDB Academy)\n- Web Development Microsoft (Academic Partner)\n- GitHub 101 – GitHub for Beginners (GitHub)\n- AI Fluency (Cognitive Class AI)\n- JavaScript Essentials 1 (Cisco)\n- Web Design for Beginners (University of Moratuwa)'
         break
       case 'projects':
-        reply = 'Featured Projects:\n- Daily Task App: Productive UI/UX Figma Design\n- Shopping Cart: Full Stack MERN system with Google OAuth\n- Smart Campus: Role-based campus operations hub with PostgreSQL\n- AutoRentHub: Vehicle bookings with payment features'
+        reply = 'Featured Projects:\n- Family Budget App: Collaborative household expense tracker with Flutter & Firebase\n- KonceptHive: Modern full-stack platform with dynamic data management\n- Daily Task App: Productive UI/UX Figma Design\n- Shopping Cart: Full Stack MERN system with Google OAuth\n- Smart Campus: Role-based campus operations hub with PostgreSQL\n- AutoRentHub: Vehicle bookings with payment features'
         break
       case 'clear':
         setHistory([])
