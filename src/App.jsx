@@ -227,9 +227,10 @@ const projects = [
     images: [
       '/images/project-dailytask.png',
       '/images/dailytask-dashboard.png',
-      '/images/dailytask-timeline.png',
-      '/images/dailytask-details.png',
-      '/images/dailytask-create.png',
+      '/images/dailytask-calendar.png',
+      '/images/dailytask-addtask.png',
+      '/images/dailytask-reminders.png',
+      '/images/dailytask-profile.png',
       '/images/dailytask-onboarding.png'
     ],
     image: '/images/project-dailytask.png',
