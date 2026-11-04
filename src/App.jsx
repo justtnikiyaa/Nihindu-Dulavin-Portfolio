@@ -200,12 +200,20 @@ const projects = [
     longDescription:
       'A modern full-stack web platform built for KonceptHive. Features a highly responsive user interface, secure backend endpoint services, interactive data management, and smooth client-side navigation.',
     features: [
-      'Interactive and responsive dashboard with modern UI/UX design',
-      'Full-stack RESTful API endpoints for dynamic data management',
-      'Secure backend integrations with real-time state handling',
-      'Optimized performance and cross-platform responsiveness'
+      'Interactive and responsive dashboard with real-time analytical metrics and counters',
+      'Full-stack RESTful API endpoints with Zod schema validation and JWT authentication',
+      'Multi-attribute search, status filters (Pending, In Progress, Completed), and priority sorting',
+      'Prisma ORM integration with relational PostgreSQL database persistence'
     ],
-    tech: ['React', 'Node.js', 'Express', 'MongoDB'],
+    tech: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Prisma'],
+    images: [
+      '/images/project-koncepthive.png',
+      '/images/koncepthive-tasks.png',
+      '/images/koncepthive-modal.png',
+      '/images/koncepthive-history.png',
+      '/images/koncepthive-overdue.png',
+      '/images/koncepthive-login.png'
+    ],
     image: '/images/project-koncepthive.png',
     github: 'https://github.com/justtnikiyaa/koncepthive-Project',
     preview: 'https://koncepthive-frontend-779x.onrender.com/',
