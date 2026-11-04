@@ -250,14 +250,27 @@ const projects = [
     description:
       'A full-stack e-commerce shopping cart platform featuring Google OAuth, dynamic cart operations, and an administrative dashboard for managing products, categories, and orders.',
     longDescription:
-      'A robust e-commerce application built on the MERN stack. It includes security measures like Google OAuth, a dynamic and responsive shopping cart context, inventory checking, and a dedicated admin interface for managing the system.',
+      'A robust e-commerce application built on the MERN stack with modern luxury atelier styling. It features Google OAuth 2.0 and JWT dual-authentication, a dynamic client-side shopping cart context with real-time tax calculation, inventory stock management, Cloudinary media handling, and a dedicated admin interface for store operations.',
     features: [
-      'Google OAuth 2.0 integration for secure and quick login',
-      'Real-time dynamic cart adjustments and instant price calculations',
-      'Admin dashboard with product creation, update, and deletion',
-      'Fully responsive product catalog and search filtering'
+      'Google OAuth 2.0 and JWT authentication with role-based admin security',
+      'Real-time dynamic cart adjustments, stock checks, and instant checkout calculations',
+      'Interactive catalog with multi-category filters, keyword search, and product details',
+      'Customer order history portal with live status updates and historical tracking',
+      'Admin operations dashboard to manage product inventory, categories, and order fulfillment'
     ],
-    tech: ['MERN Stack', 'Google OAuth', 'TailwindCSS'],
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Cloudinary', 'Google OAuth', 'TailwindCSS'],
+    images: [
+      '/images/project-shoppingcart.png',
+      '/images/shoppingcart-home.png',
+      '/images/shoppingcart-catalog.png',
+      '/images/shoppingcart-cart.png',
+      '/images/shoppingcart-orders.png',
+      '/images/shoppingcart-admin.png',
+      '/images/shoppingcart-inventory.png',
+      '/images/shoppingcart-categories.png',
+      '/images/shoppingcart-fulfillment.png',
+      '/images/shoppingcart-login.png'
+    ],
     image: '/images/project-shoppingcart.png',
     github: 'https://github.com/justtnikiyaa/Shopping-Cart-System.git',
     preview: 'https://shopping-cart-fdy3.onrender.com',
