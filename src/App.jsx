@@ -6,6 +6,7 @@ import { IntroSplash } from './components/IntroSplash'
 import FluidGlassNav from './components/FluidGlassNav'
 import BorderGlow from './components/BorderGlow'
 import MoltenMetal from './components/MoltenMetal'
+import { Experience } from './components/Experience'
 
 export const scrollToTarget = (e, targetId) => {
   if (e && e.preventDefault) e.preventDefault()
@@ -72,6 +73,7 @@ const EMAILJS_SERVICE_ID = 'service_sa9ob7e'
 const navItems = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Certificates', href: '#certifications' },
@@ -505,7 +507,7 @@ function Navbar({ theme, toggleTheme }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'projects', 'certifications', 'services', 'contact']
+      const sections = ['home', 'about', 'experience', 'skills', 'projects', 'certifications', 'services', 'contact']
       const scrollPos = window.scrollY + 250
       for (const section of sections) {
         const el = document.getElementById(section)
@@ -962,7 +964,7 @@ function About({ onOpenCv }) {
         </motion.div>
 
         <div className="grid items-start gap-8 lg:grid-cols-12">
-          {/* Left Column: Bio, Education & Strengths (6 cols on lg screens) */}
+          {/* Left Column: Who I Am & Key Strengths (6 cols on lg screens) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -1006,6 +1008,35 @@ function About({ onOpenCv }) {
               </div>
             </BorderGlow>
 
+            {/* My Strengths */}
+            <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
+              <h3 className="mb-5 font-heading text-xl font-bold text-foreground flex items-center gap-2">
+                <FiZap className="text-primary" size={20} /> Key Strengths
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {strengths.map(({ icon: Icon, label }) => (
+                  <div
+                    key={label}
+                    className="flex items-center gap-3 rounded-xl border border-border/80 bg-secondary/40 p-3.5 transition-all hover:border-primary/40 hover:bg-secondary/80"
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Icon size={18} />
+                    </div>
+                    <span className="text-xs font-semibold text-foreground">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </BorderGlow>
+          </motion.div>
+
+          {/* Right Column: Education & Journey + Career Timeline Link (6 cols on lg screens) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6 lg:col-span-6"
+          >
             {/* My Education & Journey */}
             <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
               <h3 className="mb-6 font-heading text-xl font-bold text-foreground flex items-center gap-2">
@@ -1034,86 +1065,27 @@ function About({ onOpenCv }) {
               </div>
             </BorderGlow>
 
-            {/* My Strengths */}
+            {/* Quick Experience Link Banner */}
             <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
-              <h3 className="mb-5 font-heading text-xl font-bold text-foreground flex items-center gap-2">
-                <FiZap className="text-primary" size={20} /> Key Strengths
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {strengths.map(({ icon: Icon, label }) => (
-                  <div
-                    key={label}
-                    className="flex items-center gap-3 rounded-xl border border-border/80 bg-secondary/40 p-3.5 transition-all hover:border-primary/40 hover:bg-secondary/80"
-                  >
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <Icon size={18} />
-                    </div>
-                    <span className="text-xs font-semibold text-foreground">{label}</span>
-                  </div>
-                ))}
-              </div>
-            </BorderGlow>
-          </motion.div>
-
-          {/* Right Column: Work Experience (6 cols on lg screens) */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-6 space-y-6"
-          >
-            <BorderGlow borderRadius={20} className="p-6 sm:p-7 shadow-sm">
-              <div className="mb-6 flex items-center justify-between">
-                <h3 className="font-heading text-xl font-bold text-foreground flex items-center gap-2">
-                  <FiBriefcase className="text-primary" size={20} /> Work Experience
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="font-heading text-lg font-bold text-foreground flex items-center gap-2">
+                  <FiBriefcase className="text-primary" size={18} /> Career & Industry Roles
                 </h3>
-                <span className="rounded-full bg-emerald-500/10 px-3 py-1 font-mono text-xs font-bold text-emerald-400 border border-emerald-500/20">
-                  {workExperience.length} {workExperience.length === 1 ? 'Role' : 'Roles'}
+                <span className="rounded-full bg-emerald-500/10 px-3 py-0.5 font-mono text-xs font-bold text-emerald-400 border border-emerald-500/20">
+                  3 Positions
                 </span>
               </div>
-
-              <div className="space-y-6">
-                {workExperience.map((job, idx) => (
-                  <div
-                    key={idx}
-                    className="group rounded-xl border border-border/80 bg-background/40 backdrop-blur-md p-5 sm:p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-                      <div>
-                        <h4 className="font-heading text-base font-bold text-foreground group-hover:text-primary transition-colors">
-                          {job.role}
-                        </h4>
-                        <p className="text-xs font-bold text-primary">{job.company}</p>
-                      </div>
-                      <span className="rounded-full bg-primary/10 px-3 py-1 font-mono text-[11px] font-semibold text-primary border border-primary/20">
-                        {job.period}
-                      </span>
-                    </div>
-
-                    <p className="text-xs leading-relaxed text-muted-foreground my-3">
-                      {job.description}
-                    </p>
-
-                    <ul className="mb-4 space-y-2 text-xs text-muted-foreground">
-                      {job.highlights.map((point, pIdx) => (
-                        <li key={pIdx} className="flex items-start gap-2">
-                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                          <span>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-border/60">
-                      {job.skills.map((s) => (
-                        <span key={s} className="rounded-md bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground border border-border/60">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p className="text-xs leading-relaxed text-muted-foreground mb-4">
+                Explore my full interactive career showcase across The Fashion Store (TFS), Road Development Authority (RDA), and Sri Lanka Telecom (SLT Mobitel).
+              </p>
+              <a
+                href="#experience"
+                onClick={(e) => scrollToTarget(e, '#experience')}
+                className="group flex items-center justify-between w-full rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-primary hover:bg-primary/20 transition-all hover:scale-[1.01]"
+              >
+                <span>View Full Experience Timeline</span>
+                <FiArrowDown className="text-base group-hover:translate-y-1 transition-transform" />
+              </a>
             </BorderGlow>
           </motion.div>
         </div>
@@ -2737,6 +2709,7 @@ function App() {
       <div className="relative z-10">
         <Hero onOpenCv={() => setIsCvOpen(true)} />
         <About onOpenCv={() => setIsCvOpen(true)} />
+        <Experience />
         <TerminalConsole />
         <Skills />
         <Projects />
