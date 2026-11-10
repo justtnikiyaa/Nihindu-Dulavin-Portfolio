@@ -699,37 +699,87 @@ function Navbar({ theme, toggleTheme }) {
 
 function Hero({ onOpenCv }) {
   return (
-    <section id="home" className="section-padding relative flex min-h-screen items-center pt-32">
-      <div className="container relative z-10 mx-auto">
-        <div className="grid items-center gap-16 md:grid-cols-2">
-          {/* Left Column: Text & CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {/* Status Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card/80 px-4 py-1.5 shadow-[0_0_15px_rgba(125,82,253,0.15)] backdrop-blur-sm"
-            >
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-              <span className="text-sm font-medium text-foreground">Available for opportunities</span>
-            </motion.div>
+    <section id="home" className="section-padding relative flex min-h-screen items-center justify-center pt-32 pb-20 overflow-hidden">
+      {/* Subtle Background Grid Accent (matching modern developer hero aesthetic) */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(125,82,253,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,82,253,0.06)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]" />
 
-            {/* Name Heading */}
-            <h1 className="mb-3 font-heading text-5xl font-bold leading-[1.1] tracking-tight md:text-7xl">
-              Nihindu <span className="text-gradient">Dulavin</span>
+      <div className="container relative z-10 mx-auto max-w-5xl">
+        <div className="flex flex-col items-center text-center">
+          {/* Status Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card/80 px-4 py-1.5 shadow-[0_0_15px_rgba(125,82,253,0.15)] backdrop-blur-sm"
+          >
+            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+            <span className="text-sm font-medium text-foreground">Available for opportunities</span>
+          </motion.div>
+
+          {/* Arched Profile Showcase (Dome window matching reference) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
+          >
+            {/* Ambient Glow behind the arch */}
+            <div className="absolute -inset-8 rounded-t-full bg-[#7D52FD]/20 blur-3xl pointer-events-none" />
+
+            {/* Arch Window Frame */}
+            <div className="relative mx-auto h-[320px] w-[260px] overflow-hidden rounded-t-full rounded-b-none border-2 border-[#7D52FD]/40 bg-card/40 shadow-[0_0_50px_rgba(125,82,253,0.3)] backdrop-blur-sm sm:h-[390px] sm:w-[310px] md:h-[440px] md:w-[350px]">
+              {/* Subtle top ambient tint */}
+              <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#7D52FD]/10 via-transparent to-transparent pointer-events-none" />
+
+              {/* Profile Image */}
+              <img
+                src="/images/profile-photo.png"
+                alt="Nihindu Dulavin"
+                width={512}
+                height={512}
+                className="h-full w-full object-cover object-top scale-105 transition-transform duration-700 hover:scale-110"
+              />
+
+              {/* Seamless Bottom Gradient Fade into background */}
+              <div className="absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
+            </div>
+
+            {/* Floating Decorative Accents */}
+            <motion.div
+              className="absolute -right-4 top-1/4 h-3.5 w-3.5 rounded-full bg-[#9D86FF] shadow-[0_0_12px_#9D86FF]"
+              animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute -left-4 top-1/3 h-2.5 w-2.5 rounded-full bg-[#7D52FD] shadow-[0_0_10px_#7D52FD]"
+              animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.9, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+            />
+          </motion.div>
+
+          {/* Text Content: Overlapping the bottom of the arch window */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-20 -mt-10 sm:-mt-14 md:-mt-16 flex flex-col items-center"
+          >
+            {/* Headline */}
+            <h1 className="mb-2 font-heading text-4xl font-extrabold leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+              Hey, It&apos;s Nihindu <span className="text-gradient">Dulavin</span>.
             </h1>
+
+            {/* Subtitle Role (Matching reference layout) */}
+            <h2 className="mb-4 font-heading text-2xl font-bold tracking-tight text-foreground/90 sm:text-3xl md:text-4xl">
+              Full Stack <span className="text-[#9D86FF]">Developer</span>
+            </h2>
 
             {/* Role Badges */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="mb-5 flex flex-wrap gap-2"
+              className="mb-5 flex flex-wrap justify-center gap-2"
             >
               {['IT Undergraduate', 'Full Stack Developer', 'Web Developer'].map((item) => (
                 <span
@@ -746,7 +796,7 @@ function Hero({ onOpenCv }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mb-8 max-w-lg text-base leading-relaxed text-muted-foreground"
+              className="mx-auto mb-8 max-w-2xl text-center text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
               A motivated IT undergraduate at SLIIT with hands-on experience in full-stack development, IT support &amp; POS systems, and enterprise internships. Passionate about building modern applications and solving real-world challenges.
             </motion.p>
@@ -756,7 +806,7 @@ function Hero({ onOpenCv }) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="mb-8 flex flex-wrap items-center gap-3"
+              className="mb-8 flex flex-wrap items-center justify-center gap-3"
             >
               <a
                 href="#projects"
@@ -801,8 +851,8 @@ function Hero({ onOpenCv }) {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="flex items-center gap-3"
+              transition={{ delay: 0.7, duration: 0.5 }}
+              className="flex items-center justify-center gap-3"
             >
               <span className="mr-1 text-xs uppercase tracking-widest text-muted-foreground font-semibold">Find me</span>
               {socialLinks.map(({ icon: Icon, href, label }) => (
@@ -818,55 +868,6 @@ function Hero({ onOpenCv }) {
                 </a>
               ))}
             </motion.div>
-          </motion.div>
-
-          {/* Right Column: Circular Profile Showcase */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="flex justify-center"
-          >
-            <div className="relative">
-              {/* Rotating Dashed Outer Ring */}
-              <motion.div
-                className="absolute inset-[-14px] rounded-full border border-dashed border-[#9D86FF]/30"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-              />
-
-              {/* Ambient Glow */}
-              <div className="absolute -inset-6 rounded-full bg-[#7D52FD]/20 blur-2xl pointer-events-none" />
-
-              {/* Rounded Circular Profile Image Container */}
-              <div className="glow-shadow relative my-[15px] h-72 w-72 overflow-hidden rounded-full border-4 border-[#7D52FD]/40 md:h-96 md:w-96 shadow-[0_0_40px_rgba(125,82,253,0.3)]">
-                <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#7D52FD]/10 via-transparent to-[#7D52FD]/10" />
-                <img
-                  src="/images/profile-photo.png"
-                  alt="Nihindu Dulavin"
-                  width={512}
-                  height={512}
-                  className="h-full w-full object-cover scale-105 transition-transform duration-700 hover:scale-110"
-                />
-              </div>
-
-              {/* Floating Decorative Shapes */}
-              <motion.div
-                className="absolute -bottom-3 -right-3 h-16 w-16 rounded-2xl bg-gradient-primary opacity-80 blur-sm"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <motion.div
-                className="absolute -left-4 -top-4 h-10 w-10 rounded-full border-2 border-[#9D86FF]/40"
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <motion.div
-                className="absolute -right-6 top-1/2 h-3.5 w-3.5 rounded-full bg-[#9D86FF] shadow-[0_0_10px_#9D86FF]"
-                animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            </div>
           </motion.div>
         </div>
       </div>
