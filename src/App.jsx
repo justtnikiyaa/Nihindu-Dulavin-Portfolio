@@ -1077,7 +1077,7 @@ function About({ onOpenCv }) {
                 {workExperience.map((job, idx) => (
                   <div
                     key={idx}
-                    className="group rounded-xl border border-border/80 bg-background/50 p-5 sm:p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+                    className="group rounded-xl border border-border/80 bg-background/40 backdrop-blur-md p-5 sm:p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                       <div>
@@ -2253,7 +2253,55 @@ function Services({ setInquiryMessage }) {
           <p className="mx-auto max-w-2xl text-muted-foreground font-medium">What I can help you build.</p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
+        <div className="relative mx-auto max-w-4xl">
+          {/* Glowing Neon Ribbon Wave behind the cards (matching reference image) */}
+          <div className="pointer-events-none absolute inset-x-[-12%] top-1/2 -translate-y-1/2 h-80 overflow-hidden -z-10 opacity-70 dark:opacity-85">
+            <svg className="w-full h-full" viewBox="0 0 1200 300" fill="none" preserveAspectRatio="none">
+              {/* Wide ambient bloom layer */}
+              <path
+                d="M -100 240 C 200 40, 480 280, 800 110 C 1050 10, 1250 200, 1350 120"
+                stroke="url(#neon-wave-glow)"
+                strokeWidth="56"
+                strokeLinecap="round"
+                className="blur-3xl"
+              />
+              {/* Medium glow layer */}
+              <path
+                d="M -100 240 C 200 40, 480 280, 800 110 C 1050 10, 1250 200, 1350 120"
+                stroke="url(#neon-wave-grad)"
+                strokeWidth="16"
+                strokeLinecap="round"
+                className="blur-md opacity-85"
+              />
+              {/* Crisp central neon core line */}
+              <path
+                d="M -100 240 C 200 40, 480 280, 800 110 C 1050 10, 1250 200, 1350 120"
+                stroke="url(#neon-wave-core)"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                className="opacity-95"
+              />
+              <defs>
+                <linearGradient id="neon-wave-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#7D52FD" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#9D86FF" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#C084FC" stopOpacity="0.8" />
+                </linearGradient>
+                <linearGradient id="neon-wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#7D52FD" />
+                  <stop offset="50%" stopColor="#9D86FF" />
+                  <stop offset="100%" stopColor="#C084FC" />
+                </linearGradient>
+                <linearGradient id="neon-wave-core" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#DDD6FE" />
+                  <stop offset="50%" stopColor="#FFFFFF" />
+                  <stop offset="100%" stopColor="#EDE9FE" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
           {services.map(({ icon: Icon, title, description }, index) => (
             <motion.div
               key={title}
@@ -2284,6 +2332,7 @@ function Services({ setInquiryMessage }) {
               </BorderGlow>
             </motion.div>
           ))}
+          </div>
         </div>
       </div>
       </ScrollZoomWrapper>

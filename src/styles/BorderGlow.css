@@ -1,5 +1,5 @@
 .border-glow-card {
-  --card-bg: #1C152E;
+  --card-bg: rgba(28, 21, 46, 0.55);
   --edge-proximity: 0;
   --cursor-angle: 45deg;
   --edge-sensitivity: 30;
@@ -15,11 +15,13 @@
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: var(--card-bg, #1C152E);
+  background: var(--card-bg, rgba(28, 21, 46, 0.55));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   overflow: visible;
   box-shadow:
-    rgba(0, 0, 0, 0.2) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 8px 24px;
+    0 8px 32px 0 rgba(0, 0, 0, 0.36),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
 }
 
@@ -27,12 +29,14 @@
 html.light .border-glow-card,
 .light .border-glow-card,
 [data-theme="light"] .border-glow-card {
-  --card-bg: #FFFFFF;
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  --card-bg: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(125, 82, 253, 0.16);
   box-shadow:
-    rgba(0, 0, 0, 0.04) 0px 2px 8px,
-    rgba(125, 82, 253, 0.08) 0px 10px 30px;
+    0 8px 32px 0 rgba(125, 82, 253, 0.08),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .border-glow-card::before,
@@ -58,7 +62,7 @@ html.light .border-glow-card,
 .border-glow-card::before {
   border: 1.5px solid transparent;
   background:
-    linear-gradient(var(--card-bg, #1C152E) 0 100%) padding-box,
+    linear-gradient(var(--card-bg, rgba(28, 21, 46, 0.55)) 0 100%) padding-box,
     linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
     var(--gradient-one, radial-gradient(at 80% 55%, hsla(268, 100%, 76%, 1) 0px, transparent 50%)) border-box,
     var(--gradient-two, radial-gradient(at 69% 34%, hsla(349, 100%, 74%, 1) 0px, transparent 50%)) border-box,
