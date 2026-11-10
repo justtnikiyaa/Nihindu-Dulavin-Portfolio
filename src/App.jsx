@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
+import { motion, useScroll, useSpring, useTransform, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import Lenis from 'lenis'
 import { IntroSplash } from './components/IntroSplash'
@@ -692,10 +692,41 @@ function Navbar({ theme, toggleTheme }) {
 }
 
 function Hero({ onOpenCv }) {
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+
+  // Smooth spring physics for buttery scroll interpolation
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    restDelta: 0.001,
+  })
+
+  // Cinematic Parallax Zoom Transforms:
+  // 1. Profile Arch Photo zooms forward and glides downward
+  const photoScale = useTransform(smoothProgress, [0, 1], [1, 1.28])
+  const photoY = useTransform(smoothProgress, [0, 1], [0, 95])
+  const photoOpacity = useTransform(smoothProgress, [0, 0.55, 0.95], [1, 0.95, 0])
+
+  // 2. Headline & Content zooms with depth perspective
+  const textScale = useTransform(smoothProgress, [0, 1], [1, 1.14])
+  const textY = useTransform(smoothProgress, [0, 1], [0, 140])
+  const textOpacity = useTransform(smoothProgress, [0, 0.5, 0.9], [1, 0.85, 0])
+
+  // 3. Cyber grid & ambient spotlight zoom outwards
+  const bgScale = useTransform(smoothProgress, [0, 1], [1, 1.35])
+  const bgOpacity = useTransform(smoothProgress, [0, 0.8], [1, 0])
+
   return (
-    <section id="home" className="section-padding relative flex min-h-screen items-center justify-center pt-32 pb-20 overflow-hidden">
-      {/* Subtle Background Grid Accent (matching modern developer hero aesthetic) */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(125,82,253,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,82,253,0.06)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]" />
+    <section id="home" ref={heroRef} className="section-padding relative flex min-h-screen items-center justify-center pt-32 pb-20 overflow-hidden">
+      {/* Subtle Background Grid Accent with Scroll Zoom */}
+      <motion.div
+        style={{ scale: bgScale, opacity: bgOpacity }}
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(125,82,253,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,82,253,0.06)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] origin-center"
+      />
 
       <div className="container relative z-10 mx-auto max-w-5xl">
         <div className="flex flex-col items-center text-center">
@@ -710,13 +741,16 @@ function Hero({ onOpenCv }) {
             <span className="text-sm font-medium text-foreground">Available for opportunities</span>
           </motion.div>
 
-          {/* Arched Profile Showcase (Dome window matching reference) */}
+          {/* Arched Profile Showcase with Scroll Zoom */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
           >
+            <motion.div
+              style={{ scale: photoScale, y: photoY, opacity: photoOpacity }}
+              className="relative origin-center will-change-transform"
+            >
             {/* Ambient Glow behind the arch */}
             <div className="absolute -inset-8 rounded-t-full bg-[#7D52FD]/20 blur-3xl pointer-events-none" />
 
@@ -749,15 +783,19 @@ function Hero({ onOpenCv }) {
               animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.9, 0.4] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
             />
+            </motion.div>
           </motion.div>
 
-          {/* Text Content: Overlapping the bottom of the arch window */}
+          {/* Text Content with Scroll Zoom & Parallax */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-20 -mt-16 sm:-mt-20 md:-mt-24 flex flex-col items-center"
           >
+            <motion.div
+              style={{ scale: textScale, y: textY, opacity: textOpacity }}
+              className="relative z-20 -mt-16 sm:-mt-20 md:-mt-24 flex flex-col items-center origin-center will-change-transform"
+            >
             {/* Headline */}
             <h1 className="mb-2 font-heading text-4xl font-extrabold leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
               Hey, It&apos;s Nihindu <span className="text-gradient">Dulavin</span>.
@@ -861,6 +899,7 @@ function Hero({ onOpenCv }) {
                   <Icon size={16} />
                 </a>
               ))}
+            </motion.div>
             </motion.div>
           </motion.div>
         </div>
