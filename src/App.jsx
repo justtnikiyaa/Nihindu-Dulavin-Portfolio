@@ -691,6 +691,39 @@ function Navbar({ theme, toggleTheme }) {
   )
 }
 
+function ScrollZoomWrapper({ children, className = '' }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+
+  // Smooth spring physics for buttery scroll interpolation
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 26,
+    restDelta: 0.001,
+  })
+
+  // Cinematic Parallax Zoom Transforms:
+  // Enters slightly scaled (0.93), expands to full focus (1.0) in center view,
+  // and smoothly zooms forward (1.04) with smooth fade-out as you scroll past it!
+  const scale = useTransform(smoothProgress, [0, 0.28, 0.72, 1], [0.93, 1, 1, 1.04])
+  const opacity = useTransform(smoothProgress, [0, 0.18, 0.82, 1], [0.55, 1, 1, 0.55])
+  const y = useTransform(smoothProgress, [0, 0.28, 0.72, 1], [35, 0, 0, -25])
+
+  return (
+    <div ref={ref} className={`relative ${className}`}>
+      <motion.div
+        style={{ scale, opacity, y }}
+        className="origin-center will-change-transform"
+      >
+        {children}
+      </motion.div>
+    </div>
+  )
+}
+
 function Hero({ onOpenCv }) {
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -911,7 +944,8 @@ function Hero({ onOpenCv }) {
 function About({ onOpenCv }) {
   return (
     <section id="about" className="section-padding">
-      <div className="container mx-auto">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1084,6 +1118,7 @@ function About({ onOpenCv }) {
           </motion.div>
         </div>
       </div>
+      </ScrollZoomWrapper>
     </section>
   )
 }
@@ -1321,7 +1356,8 @@ function Projects() {
 
   return (
     <section id="projects" className="section-padding">
-      <div className="container mx-auto">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1438,7 +1474,10 @@ function Projects() {
             ))}
           </AnimatePresence>
         </motion.div>
+      </div>
+      </ScrollZoomWrapper>
 
+      <div className="container mx-auto">
         {/* Project Details Modal */}
         <AnimatePresence>
           {selectedProject && (
@@ -1616,7 +1655,8 @@ function TerminalConsole() {
 
   return (
     <section className="section-padding bg-transparent">
-      <div className="container mx-auto max-w-3xl font-sans">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto max-w-3xl font-sans">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1680,6 +1720,7 @@ function TerminalConsole() {
           </BorderGlow>
         </motion.div>
       </div>
+      </ScrollZoomWrapper>
     </section>
   )
 }
@@ -1810,7 +1851,8 @@ function GithubDashboard() {
 
   return (
     <section className="section-padding bg-transparent">
-      <div className="container mx-auto">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1983,6 +2025,7 @@ function GithubDashboard() {
           </div>
         </div>
       </div>
+      </ScrollZoomWrapper>
     </section>
   )
 }
@@ -1998,7 +2041,8 @@ function Skills() {
 
   return (
     <section id="skills" className="section-padding bg-transparent relative">
-      <div className="container mx-auto z-10 relative">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto z-10 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -2067,6 +2111,7 @@ function Skills() {
           </AnimatePresence>
         </motion.div>
       </div>
+      </ScrollZoomWrapper>
     </section>
   )
 }
@@ -2075,7 +2120,8 @@ function Certifications() {
 
   return (
     <section id="certifications" className="section-padding bg-transparent relative">
-      <div className="container mx-auto z-10 relative">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto z-10 relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -2131,7 +2177,10 @@ function Certifications() {
             </motion.div>
           ))}
         </div>
+      </div>
+      </ScrollZoomWrapper>
 
+      <div className="container mx-auto z-10 relative">
         {/* Certificate Image Lightbox Modal */}
         <AnimatePresence>
           {selectedCert && (
@@ -2189,7 +2238,8 @@ function Services({ setInquiryMessage }) {
 
   return (
     <section id="services" className="section-padding bg-transparent">
-      <div className="container mx-auto">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -2236,6 +2286,7 @@ function Services({ setInquiryMessage }) {
           ))}
         </div>
       </div>
+      </ScrollZoomWrapper>
     </section>
   )
 }
@@ -2281,7 +2332,8 @@ function Contact({ inquiryMessage, setInquiryMessage }) {
 
   return (
     <section id="contact" className="section-padding">
-      <div className="container mx-auto">
+      <ScrollZoomWrapper>
+        <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -2408,6 +2460,7 @@ function Contact({ inquiryMessage, setInquiryMessage }) {
           </motion.div>
         </div>
       </div>
+      </ScrollZoomWrapper>
     </section>
   )
 }
