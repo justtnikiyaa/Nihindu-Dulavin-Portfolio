@@ -400,19 +400,22 @@ const educationTimeline = [
 
 const workExperience = [
   {
-    role: 'IT Support & POS Systems Associate',
+    role: 'Junior IT Executive',
     company: 'The Fashion Store (TFS)',
-    period: '07th September 2026 – Present (On-site)',
+    period: 'September 2026 – Present (On-site)',
     description:
-      'Configuring, deploying, and maintaining 40+ POS laptop workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations while managing database synchronization and operational hardware support.',
+    'Providing comprehensive IT support, hardware maintenance, and POS systems administration across multi-branch retail operations while managing workstation deployment, software configurations, and user access.',
     highlights: [
-      'Configured, deployed, and maintained 40+ POS laptop workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations.',
-      'Managed large-scale stock take workflows using Sphere POS, ensuring seamless synchronization with central Microsoft Azure SQL databases.',
+      'Configured, deployed, and maintained laptop workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations.',
+      'Managed large-scale stock take workflows using Sphere POS, ensuring seamless synchronization.',
       'Troubleshooted local hardware, OS, and network connectivity issues, including Azure DB latency/disconnects, TCP/IP configurations, and peripheral setup.',
-      'Conducted operational support for handheld PDT/Android barcode terminals (C65), evaluating wireless keyboard emulation (HID) and batch export workflows for inventory reconciliation.',
-      'Coordinated directly with vendor technical support teams to resolve software patches, database inconsistencies, and terminal configuration bugs.'
+      'Provided day-to-day IT support across branches, resolving software and basic hardware issues on desktops and laptops in a timely manner.',
+      'Installed, configured, and maintained computers, printers, and office software to keep systems running smoothly.',
+      'Managed software installations, updates, user access permissions, and email configurations for staff.',
+      'Coordinated device setup, formatting, and general maintenance to support ongoing IT requirements across stores.',
+      'Maintained accurate IT records and documentation for company devices and systems.'
     ],
-    skills: ['Sphere POS', 'Microsoft Azure SQL', 'Hardware & Peripherals', 'Network Troubleshooting', 'TCP/IP', 'Technical Support']
+    skills: ['Sphere POS', 'IT Support', 'Hardware & Peripherals', 'Network Troubleshooting', 'System Administration', 'User Access Management']
   },
   {
     role: 'IT Intern',
@@ -525,11 +528,10 @@ function Navbar({ theme, toggleTheme }) {
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none">
       <div
         ref={navRef}
-        className={`pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-3 sm:gap-6 rounded-full px-4 sm:px-7 py-2.5 backdrop-blur-2xl transition-all duration-300 overflow-hidden ${
-          isDark
+        className={`pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-3 sm:gap-6 rounded-full px-4 sm:px-7 py-2.5 backdrop-blur-2xl transition-all duration-300 overflow-hidden ${isDark
             ? 'bg-[#151022]/85 border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.15)] text-white'
             : 'bg-white/90 border border-black/10 shadow-[0_8px_30px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.8)] text-slate-900'
-        }`}
+          }`}
       >
         {/* Interactive Liquid Glass Lens Refraction */}
         <FluidGlassNav
@@ -548,9 +550,8 @@ function Navbar({ theme, toggleTheme }) {
           }}
           onMouseEnter={(e) => setActiveHover(e.currentTarget)}
           onMouseLeave={() => setActiveHover(null)}
-          className={`relative z-10 font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors ${
-            isDark ? 'text-white' : 'text-slate-900'
-          }`}
+          className={`relative z-10 font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors ${isDark ? 'text-white' : 'text-slate-900'
+            }`}
         >
           <span className="text-[#9D86FF] text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
           <span className="font-extrabold tracking-tight">Nihindu.</span>
@@ -569,15 +570,14 @@ function Navbar({ theme, toggleTheme }) {
               }}
               onMouseEnter={(e) => setActiveHover(e.currentTarget)}
               onMouseLeave={() => setActiveHover(null)}
-              className={`relative z-10 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
-                activeSection === item.href
+              className={`relative z-10 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${activeSection === item.href
                   ? (isDark
-                      ? 'text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]'
-                      : 'text-[#7D52FD] font-bold drop-shadow-[0_0_6px_rgba(125,82,253,0.3)]')
+                    ? 'text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]'
+                    : 'text-[#7D52FD] font-bold drop-shadow-[0_0_6px_rgba(125,82,253,0.3)]')
                   : (isDark
-                      ? 'text-[#D0CFD3]/80 hover:text-white'
-                      : 'text-slate-600 hover:text-slate-900')
-              }`}
+                    ? 'text-[#D0CFD3]/80 hover:text-white'
+                    : 'text-slate-600 hover:text-slate-900')
+                }`}
             >
               {item.label}
             </a>
@@ -592,11 +592,10 @@ function Navbar({ theme, toggleTheme }) {
             onClick={toggleTheme}
             onMouseEnter={(e) => setActiveHover(e.currentTarget)}
             onMouseLeave={() => setActiveHover(null)}
-            className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-all hover:scale-105 active:scale-95 shadow-sm ${
-              isDark
+            className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-all hover:scale-105 active:scale-95 shadow-sm ${isDark
                 ? 'border-white/20 bg-white/10 text-amber-300'
                 : 'border-black/10 bg-black/5 text-purple-600'
-            }`}
+              }`}
             aria-label="Toggle dark/light theme"
             title={`Switch to ${isDark ? 'Light' : 'Dark'} mode`}
           >
@@ -615,20 +614,18 @@ function Navbar({ theme, toggleTheme }) {
             }}
             onMouseEnter={(e) => setActiveHover(e.currentTarget)}
             onMouseLeave={() => setActiveHover(null)}
-            className={`hidden rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider shadow-md transition-all hover:scale-105 md:inline-flex ${
-              isDark
+            className={`hidden rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider shadow-md transition-all hover:scale-105 md:inline-flex ${isDark
                 ? 'bg-white text-black hover:bg-white/90'
                 : 'bg-primary text-white hover:opacity-90'
-            }`}
+              }`}
           >
             Hire Me
           </a>
 
           <button
             type="button"
-            className={`p-1 rounded-full md:hidden transition-colors ${
-              isDark ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-black/5'
-            }`}
+            className={`p-1 rounded-full md:hidden transition-colors ${isDark ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-black/5'
+              }`}
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label="Toggle menu"
           >
@@ -650,22 +647,20 @@ function Navbar({ theme, toggleTheme }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className={`absolute left-0 right-0 top-full mt-3 rounded-2xl border p-4 backdrop-blur-2xl shadow-2xl md:hidden ${
-                isDark
+              className={`absolute left-0 right-0 top-full mt-3 rounded-2xl border p-4 backdrop-blur-2xl shadow-2xl md:hidden ${isDark
                   ? 'bg-[#151022]/95 border-white/15 text-white'
                   : 'bg-white/95 border-black/10 text-slate-900'
-              }`}
+                }`}
             >
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
-                    className={`block py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
-                      isDark
+                    className={`block py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${isDark
                         ? 'text-[#D0CFD3] hover:bg-white/10 hover:text-white'
                         : 'text-slate-600 hover:bg-black/5 hover:text-slate-900'
-                    }`}
+                      }`}
                     onClick={(e) => {
                       setIsOpen(false)
                       scrollToTarget(e, item.href)
@@ -676,11 +671,10 @@ function Navbar({ theme, toggleTheme }) {
                 ))}
                 <a
                   href="#contact"
-                  className={`mt-2 inline-flex justify-center rounded-full py-2.5 text-xs font-bold uppercase tracking-wider shadow-md ${
-                    isDark
+                  className={`mt-2 inline-flex justify-center rounded-full py-2.5 text-xs font-bold uppercase tracking-wider shadow-md ${isDark
                       ? 'bg-white text-black'
                       : 'bg-primary text-white'
-                  }`}
+                    }`}
                   onClick={(e) => {
                     setIsOpen(false)
                     scrollToTarget(e, '#contact')
@@ -1169,9 +1163,8 @@ function ProjectImageGallery({ images, image, title, preview, onOpenLightbox }) 
                     e.stopPropagation()
                     setCurrentIndex(idx)
                   }}
-                  className={`h-1.5 rounded-full transition-all ${
-                    idx === currentIndex ? 'w-4 bg-primary' : 'w-1.5 bg-white/50 hover:bg-white'
-                  }`}
+                  className={`h-1.5 rounded-full transition-all ${idx === currentIndex ? 'w-4 bg-primary' : 'w-1.5 bg-white/50 hover:bg-white'
+                    }`}
                 />
               ))}
             </div>
@@ -1281,11 +1274,11 @@ function Projects() {
   const filteredProjects = filter === 'All'
     ? projects
     : projects.filter(p => {
-        if (filter === 'Mobile App') {
-          return p.category === 'Mobile App' || p.tech?.includes('Mobile App')
-        }
-        return p.category === filter
-      })
+      if (filter === 'Mobile App') {
+        return p.category === 'Mobile App' || p.tech?.includes('Mobile App')
+      }
+      return p.category === filter
+    })
 
   return (
     <section id="projects" className="section-padding">
@@ -1310,8 +1303,8 @@ function Projects() {
               key={cat}
               onClick={() => setFilter(cat)}
               className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${filter === cat
-                  ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
-                  : 'border border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground'
+                ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
+                : 'border border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground'
                 }`}
             >
               {cat}
@@ -1553,7 +1546,7 @@ function TerminalConsole() {
         reply = 'Nihindu Dulavin - IT Undergraduate at SLIIT.\nFull-stack developer with experience at Sri Lanka Telecom (SLT), IT support at The Fashion Store (TFS), and systems development at RDA. Fast learner and critical problem solver.'
         break
       case 'experience':
-        reply = 'Work Experience:\n1. IT Support & POS Systems Associate | The Fashion Store (TFS) [Sep 2026 - Present]\n2. IT Intern | Road Development Authority (RDA) [Jul 2026 - Sep 2026]\n3. Frontend Developer Intern | Sri Lanka Telecom (SLT) [06th May - 06th Nov]'
+        reply = 'Work Experience:\n1. Junior IT Executive | The Fashion Store (TFS) [Sep 2026 - Present]\n2. IT Intern | Road Development Authority (RDA) [Jul 2026 - Sep 2026]\n3. Frontend Developer Intern | Sri Lanka Telecom (SLT) [06th May - 06th Nov]'
         break
       case 'skills':
         reply = 'Frontend:    HTML, CSS, JavaScript, React, Flutter\nBackend:     Node.js, Express, Firebase, Socket.io\nDatabases:   MongoDB, PostgreSQL, Cloud Firestore\nTools:       Git, Figma, VS Code'
@@ -1827,8 +1820,8 @@ function GithubDashboard() {
                       key={y}
                       onClick={() => setSelectedYear(y)}
                       className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${selectedYear === y
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-secondary text-muted-foreground'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-muted-foreground'
                         }`}
                     >
                       {y}
@@ -1921,8 +1914,8 @@ function GithubDashboard() {
                       key={y}
                       onClick={() => setSelectedYear(y)}
                       className={`rounded-lg px-4 py-2 text-xs font-bold transition-all text-left border ${selectedYear === y
-                          ? 'bg-primary border-primary text-primary-foreground shadow-md shadow-primary/10'
-                          : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/40'
+                        ? 'bg-primary border-primary text-primary-foreground shadow-md shadow-primary/10'
+                        : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/40'
                         }`}
                     >
                       {y}
@@ -1989,8 +1982,8 @@ function Skills() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${activeCategory === cat
-                  ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
-                  : 'border border-border bg-card/50 text-muted-foreground hover:border-primary/30 hover:text-foreground'
+                ? 'bg-gradient-primary text-primary-foreground shadow-md shadow-primary/10 scale-105'
+                : 'border border-border bg-card/50 text-muted-foreground hover:border-primary/30 hover:text-foreground'
                 }`}
             >
               {cat}
