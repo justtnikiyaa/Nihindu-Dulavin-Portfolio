@@ -437,16 +437,16 @@ const workExperience = [
   {
     role: 'Frontend Developer Intern',
     company: 'Sri Lanka Telecom (SLT)',
-    period: '06th May – 06th November (6 Months)',
+    period: '6 months',
     description:
-      'Developed and enhanced responsive web interfaces using React.js for enterprise applications, integrating REST APIs, implementing UI/UX enhancements, and participating in code quality reviews and security testing.',
+      'Developed responsive frontend interfaces with React.js, integrated RESTful APIs, and participated in Agile development cycles, security scanning, and code quality audits for enterprise telecommunication systems.',
     highlights: [
       'Developed and enhanced responsive web interfaces using React.js for the project.',
       'Integrated REST APIs and collaborated with backend services to implement application functionalities.',
       'Performed UI/UX improvements, bug fixes, and responsive design enhancements across multiple modules.',
       'Participated in project discussions, security testing using OWASP ZAP, and code quality reviews with SonarQube.'
     ],
-    skills: ['React.js', 'REST APIs', 'UI/UX Enhancements', 'OWASP ZAP', 'SonarQube', 'Agile']
+    skills: ['React.js', 'REST APIs', 'UI/UX Improvements', 'OWASP ZAP', 'SonarQube', 'Agile Practices']
   }
 ]
 
@@ -1596,7 +1596,7 @@ function TerminalConsole() {
         reply = 'Nihindu Dulavin - IT Undergraduate at SLIIT.\nFull-stack developer with experience at Sri Lanka Telecom (SLT), IT support at The Fashion Store (TFS), and systems development at RDA. Fast learner and critical problem solver.'
         break
       case 'experience':
-        reply = 'Work Experience:\n1. Junior IT Executive | The Fashion Store (TFS) [Sep 2026 - Present]\n2. IT Intern | Road Development Authority (RDA) [Jul 2026 - Sep 2026]\n3. Frontend Developer Intern | Sri Lanka Telecom (SLT) [06th May - 06th Nov]'
+        reply = 'Work Experience:\n1. Junior IT Executive | The Fashion Store (TFS) [Sep 2026 - Present]\n2. IT Intern | Road Development Authority (RDA) [20th Jul 2026 - 04th Sep 2026]\n3. Frontend Developer Intern | Sri Lanka Telecom (SLT) [6 months]'
         break
       case 'skills':
         reply = 'Frontend:    HTML, CSS, JavaScript, React, Flutter\nBackend:     Node.js, Express, Firebase, Socket.io\nDatabases:   MongoDB, PostgreSQL, Cloud Firestore\nTools:       Git, Figma, VS Code'

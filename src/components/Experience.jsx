@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { FiBriefcase, FiMapPin, FiCalendar, FiCheckCircle, FiArrowUpRight } from 'react-icons/fi'
+import { FiBriefcase, FiMapPin, FiCalendar, FiCheckCircle } from 'react-icons/fi'
 
 export const experienceData = [
   {
@@ -8,9 +8,9 @@ export const experienceData = [
     role: 'Junior IT Executive',
     company: 'The Fashion Store (TFS)',
     companyShort: 'TFS',
-    period: 'September 2026 – Present',
+    period: 'September 2026 – Present (On-site)',
     badge: 'Current Role',
-    type: 'Full-Time (On-site)',
+    type: 'On-site',
     location: 'Colombo, Sri Lanka',
     tag: 'Retail & Multi-Branch POS',
     logo: '/images/experience/tfs-logo.png',
@@ -22,22 +22,34 @@ export const experienceData = [
     glowColor: 'rgba(236, 28, 36, 0.16)',
     tagBg: 'bg-red-500/10 text-red-600 border-red-500/20',
     description:
-      'Spearheading comprehensive IT operations, hardware lifecycle maintenance, and POS administration across multi-branch retail stores. Managing workstation deployments, user permissions, and high-stakes stock-take synchronizations.',
+      'Managing multi-branch IT infrastructure, POS systems administration, and hardware/network troubleshooting. Ensuring high-availability retail workstation deployments, stock-take synchronization, and prompt technical support.',
     highlights: [
-      'Configured, deployed, and maintained workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations.',
-      'Managed large-scale stock take workflows using Sphere POS, ensuring zero-downtime database synchronization.',
-      'Troubleshooted network connectivity issues, including Azure DB latency/disconnects, TCP/IP configurations, and peripheral setup.',
-      'Managed user access permissions, software updates, and secure email configurations for staff.',
-      'Coordinated hardware servicing, formatting, and proactive preventive maintenance across retail branches.',
+      'Configured, deployed, and maintained laptop workstations, barcode scanners, and thermal receipt printers for multi-branch retail operations.',
+      'Managed large-scale stock take workflows using Sphere POS, ensuring seamless synchronization.',
+      'Troubleshooted local hardware, OS, and network connectivity issues, including Azure DB latency/disconnects, TCP/IP configurations, and peripheral setup.',
+      'Provided day-to-day IT support across branches, resolving software and basic hardware issues on desktops and laptops in a timely manner.',
+      'Installed, configured, and maintained computers, printers, and office software to keep systems running smoothly.',
+      'Managed software installations, updates, user access permissions, and email configurations for staff.',
+      'Coordinated device setup, formatting, and general maintenance to support ongoing IT requirements across stores.',
+      'Maintained accurate IT records and documentation for company devices and systems.',
     ],
-    skills: ['Sphere POS', 'IT Support', 'Hardware Peripherals', 'Azure DB Sync', 'Network Troubleshooting', 'User Access Control'],
+    skills: [
+      'Sphere POS',
+      'Hardware Troubleshooting',
+      'OS Installation',
+      'Peripheral & POS Configuration',
+      'Network Support (TCP/IP)',
+      'Microsoft Azure SQL',
+      'User Access Management',
+      'Technical Support',
+    ],
   },
   {
     id: 'rda',
     role: 'IT Intern',
     company: 'Road Development Authority (RDA)',
     department: 'Information Systems & Network Management Division',
-    period: 'July 2026 – September 2026',
+    period: '20th July 2026 – 04th September 2026',
     badge: 'Government Enterprise',
     type: 'Internship',
     location: 'Battaramulla, Sri Lanka',
@@ -51,28 +63,36 @@ export const experienceData = [
     glowColor: 'rgba(247, 114, 10, 0.16)',
     tagBg: 'bg-amber-500/10 text-amber-700 border-amber-500/20',
     description:
-      'Engineered internal government management solutions including a centralized Letter Management System and a Web-Based Tax Invoice System. Assisted with official web infrastructure maintenance and national digitalization workshops.',
+      'Supported software development, internal enterprise web systems, technical documentation, network management, and database operations within the Information Systems & Network Management Division.',
     highlights: [
-      'Engineered a complete Letter Management System featuring search UI, dynamic multi-field filtering, backend query processing, and an integrated file viewer.',
-      'Developed a responsive Web-Based Tax Invoice System streamlining divisional invoicing workflows.',
-      'Assisted in updating, auditing, and maintaining the official Road Development Authority web portal.',
-      'Coordinated technical setup and execution for national RDA Digitalization Workshops.',
-      'Supported divisional software testing, technical documentation, and enterprise network management.',
+      'Developed a Letter Management System, including search UI and filters, backend search queries, results listing, detailed view, and integrated file viewer features.',
+      'Developed a Web-Based Tax Invoice System.',
+      'Assisted in updating and maintaining the official RDA website.',
+      'Provided assistance in the coordination and implementation of RDA Digitalization Workshops.',
+      'Supported software development, testing, technical documentation, network management, and database-related tasks assigned by the division.',
     ],
-    skills: ['Letter Management System', 'Tax Invoice System', 'React & Web UI', 'Database Systems', 'Technical Docs', 'Govt. Digitalization'],
+    skills: [
+      'Letter Management System',
+      'Web-Based Tax Invoice System',
+      'RDA Website Maintenance',
+      'Search UI & Filter Architecture',
+      'Technical Documentation',
+      'Network Management',
+      'Database Operations',
+    ],
   },
   {
     id: 'slt',
     role: 'Frontend Developer Intern',
-    company: 'Sri Lanka Telecom (SLT Mobitel)',
+    company: 'Sri Lanka Telecom (SLT)',
     department: 'Enterprise Application Development',
-    period: 'May 2026 – November 2026',
-    badge: 'National Telco (6 Months)',
+    period: '6 months',
+    badge: 'Sri Lanka Telecom (6 Months)',
     type: 'Internship',
     location: 'Colombo, Sri Lanka',
     tag: 'Enterprise Web Applications',
     logo: '/images/experience/slt-mobitel-logo.png',
-    logoAlt: 'SLT Mobitel Logo',
+    logoAlt: 'Sri Lanka Telecom (SLT) Logo',
     // Custom branded canvas tailored specifically to SLT Blue, Mobitel Green & Cyan
     cardBg: 'linear-gradient(135deg, #FFFFFF 0%, #F5FBFF 50%, #EDFDF5 100%)',
     borderColor: 'border-emerald-500/30 hover:border-emerald-500/60',
@@ -80,14 +100,22 @@ export const experienceData = [
     glowColor: 'rgba(77, 184, 72, 0.16)',
     tagBg: 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20',
     description:
-      'Engineered dynamic, accessible user interfaces using React.js for enterprise telecommunication systems. Integrated complex REST APIs, executed code quality improvements, and ran automated vulnerability scans.',
+      'Developed responsive frontend interfaces with React.js, integrated RESTful APIs, and participated in Agile development cycles, security scanning, and code quality audits for enterprise telecommunication systems.',
     highlights: [
-      'Engineered and enhanced responsive enterprise web interfaces using React.js and modern component patterns.',
-      'Integrated RESTful APIs and collaborated with backend engineers for end-to-end service delivery.',
-      'Conducted UI/UX refinements, bug fixes, and responsive performance optimizations across multiple modules.',
-      'Performed code quality assessments using SonarQube and automated vulnerability testing via OWASP ZAP in an Agile workflow.',
+      'Developed and enhanced responsive web interfaces using React.js for the project.',
+      'Integrated REST APIs and collaborated with backend services to implement application functionalities.',
+      'Performed UI/UX improvements, bug fixes, and responsive design enhancements across multiple modules.',
+      'Participated in project discussions, security testing using OWASP ZAP, and code quality reviews with SonarQube.',
     ],
-    skills: ['React.js', 'REST API Integration', 'SonarQube', 'OWASP ZAP', 'Responsive UI/UX', 'Agile/Scrum'],
+    skills: [
+      'React.js',
+      'REST APIs',
+      'UI/UX Improvements',
+      'OWASP ZAP Security Testing',
+      'SonarQube Code Quality',
+      'Agile Practices',
+      'Cross-Functional Collaboration',
+    ],
   },
 ]
 
@@ -211,7 +239,7 @@ export function Experience() {
                     </div>
 
                     {/* Content Grid: 12 Columns on Desktop */}
-                    <div className="pl-12 sm:pl-16 lg:pl-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+                    <div className="pl-12 sm:pl-16 lg:pl-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
                       {/* === COLUMN A (Left Column on Desktop) === */}
                       <motion.div
                         initial={{ opacity: 0, x: isEven ? -40 : 40 }}
@@ -355,8 +383,8 @@ function ExperienceDetailsCard({ job, align = 'left' }) {
         {job.description}
       </p>
 
-      {/* Bulleted Highlights */}
-      <ul className="space-y-2 pt-1">
+      {/* Bulleted Highlights Exactly from CV */}
+      <ul className="space-y-2.5 pt-1">
         {job.highlights.map((point, pIdx) => (
           <li key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-muted-foreground">
             <FiCheckCircle
