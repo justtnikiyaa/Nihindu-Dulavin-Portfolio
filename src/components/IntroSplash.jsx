@@ -1,108 +1,184 @@
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { StrokeText } from './StrokeText'
+import React, { useState, useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
+
+const TOTAL_SLICES = 10
+
+const sliceVariants = {
+  initial: {
+    y: '0%',
+  },
+  exit: (i) => ({
+    y: '100%',
+    transition: {
+      duration: 0.65,
+      ease: [0.76, 0, 0.24, 1], // Smooth staircase cascade
+      delay: i * 0.08,
+    },
+  }),
+}
+
+const letterVariants = {
+  initial: {
+    y: '120%',
+  },
+  animate: (i) => ({
+    y: '0%',
+    transition: {
+      duration: 0.4,
+      ease: [0.22, 1, 0.36, 1],
+      delay: 0.15 + i * 0.045,
+    },
+  }),
+}
 
 export function IntroSplash({ onComplete }) {
-  const [isVisible, setIsVisible] = useState(true)
+  const [isExiting, setIsExiting] = useState(false)
+  const [isDismissed, setIsDismissed] = useState(false)
 
+  // Lock body scroll during splash intro
   useEffect(() => {
-    // Transition after the slow sequential stroke writing & fill finishes
-    const timer = setTimeout(() => {
-      handleDismiss()
-    }, 6200)
-
-    return () => clearTimeout(timer)
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = originalOverflow
+    }
   }, [])
 
-  const handleDismiss = () => {
-    setIsVisible(false)
-    if (onComplete) {
-      setTimeout(onComplete, 750) // Call onComplete after exit animation finishes
+  const triggerExit = useCallback(() => {
+    if (isExiting) {
+      // If clicked again during cascade, dismiss immediately
+      setIsDismissed(true)
+      if (onComplete) onComplete()
+      return
     }
-  }
+
+    setIsExiting(true)
+
+    // Total duration for all 10 slices: (9 * 0.08s) + 0.65s = 1.37s + buffer
+    const totalDuration = (TOTAL_SLICES * 0.08 + 0.65) * 1000 + 100
+    setTimeout(() => {
+      setIsDismissed(true)
+      if (onComplete) onComplete()
+    }, totalDuration)
+  }, [isExiting, onComplete])
+
+  useEffect(() => {
+    // Letters take ~0.15 + 14 * 0.045 + 0.4 = ~1.18s to enter.
+    // Hold name for ~0.8s, then cascade slices down at ~2.0s.
+    const exitTimer = setTimeout(() => {
+      triggerExit()
+    }, 2000)
+
+    return () => clearTimeout(exitTimer)
+  }, [triggerExit])
+
+  if (isDismissed) return null
+
+  const firstName = 'NIHINDU'
+  const lastName = 'DULAVIN'
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -40, scale: 1.03, filter: 'blur(12px)' }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#151022] overflow-hidden px-4 select-none cursor-pointer"
-          onClick={handleDismiss}
+    <div
+      className="fixed inset-0 z-[100] overflow-hidden select-none cursor-pointer"
+      onClick={triggerExit}
+      aria-label="Click anywhere to skip intro"
+    >
+      {/* 10 Staggered Vertical Curtain Slices (Exact Tajmirul Architecture) */}
+      <div className="absolute inset-0 flex w-full h-full pointer-events-none overflow-hidden">
+        {Array.from({ length: TOTAL_SLICES }).map((_, i) => (
+          <motion.div
+            key={i}
+            custom={i}
+            initial="initial"
+            animate={isExiting ? 'exit' : 'initial'}
+            variants={sliceVariants}
+            className="h-full w-[10.05%] -mr-px bg-[#05030A] will-change-transform border-none"
+          />
+        ))}
+      </div>
+
+      {/* Central Bold Name - Stays visible as slices drop, then smoothly fades out */}
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={
+          isExiting
+            ? {
+                opacity: 0,
+                y: -15,
+                transition: {
+                  duration: 0.45,
+                  delay: 0.4, // Stays visible while slices 0-4 drop, matching Tajmirul screenshot
+                  ease: 'easeInOut',
+                },
+              }
+            : { opacity: 1, y: 0 }
+        }
+        className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none px-4"
+      >
+        {/* Giant Anton Display Heading */}
+        <h1 className="font-anton uppercase tracking-tight text-white leading-none text-center select-none flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-4 sm:gap-x-7 text-[15vw] sm:text-[12vw] md:text-[11vw] lg:text-[140px] drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+          {/* NIHINDU */}
+          <span className="flex overflow-hidden">
+            {firstName.split('').map((char, index) => (
+              <motion.span
+                key={`first-${index}`}
+                custom={index}
+                initial="initial"
+                animate="animate"
+                variants={letterVariants}
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </span>
+
+          {/* DULAVIN */}
+          <span className="flex overflow-hidden text-[#9D86FF]">
+            {lastName.split('').map((char, index) => (
+              <motion.span
+                key={`last-${index}`}
+                custom={firstName.length + index}
+                initial="initial"
+                animate="animate"
+                variants={letterVariants}
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </span>
+        </h1>
+
+        {/* Minimal Subtitle Role */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={
+            isExiting
+              ? { opacity: 0, transition: { duration: 0.25 } }
+              : { opacity: 0.75, y: 0 }
+          }
+          transition={{ delay: 0.85, duration: 0.4 }}
+          className="mt-4 sm:mt-6 text-xs sm:text-sm font-mono tracking-[0.4em] uppercase text-[#D0CFD3]"
         >
-          {/* Background Spotlight Cones & Stage Glow */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="spotlight-beam-left" />
-            <div className="spotlight-beam-right" />
-            <div className="spotlight-center-glow" />
-          </div>
+          Full Stack Developer
+        </motion.p>
 
-          {/* Central Animated Content */}
-          <div className="relative z-10 flex flex-col items-center text-center max-w-4xl w-full">
-            {/* Top Welcome Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.7 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#9D86FF]/30 bg-[#1C152E]/80 px-4 py-1.5 backdrop-blur-md shadow-[0_0_20px_rgba(125,82,253,0.25)]"
-            >
-              <span className="text-[#9D86FF] text-base animate-pulse">✦</span>
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#D0CFD3]">
-                Welcome To My Portfolio
-              </span>
-            </motion.div>
-
-            {/* ReactBits Stroke Text Animation (Slow & Sequential Drawing) */}
-            <div className="w-full px-2 sm:px-6 my-2">
-              <StrokeText
-                text="Nihindu Dulavin"
-                stroke="#a78bfa"
-                fillColor="#7C3AED"
-                strokeWidth={1.5}
-                letterDrawDuration={2.0}
-                stagger={0.18}
-                fillDelay={0.25}
-                fontSize={105}
-                fontWeight={800}
-                letterSpacing="-3px"
-              />
-            </div>
-
-            {/* Subtitle & Role Tagline */}
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 3.5, duration: 0.8 }}
-              className="mt-4 text-xs sm:text-sm font-medium tracking-wider text-[#D0CFD3]/80 uppercase"
-            >
-              Full Stack Developer &bull; IT Undergraduate &bull; Web Developer
-            </motion.p>
-
-            {/* Animated Loading Bar & Skip Button */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-8 flex flex-col items-center gap-3 w-full max-w-xs"
-            >
-              <div className="h-[3px] w-full rounded-full bg-white/10 overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-primary rounded-full shadow-[0_0_10px_#9D86FF]"
-                  initial={{ width: '0%' }}
-                  animate={{ width: '100%' }}
-                  transition={{ duration: 5.8, ease: 'easeInOut' }}
-                />
-              </div>
-
-              <span className="text-[11px] font-mono text-[#D0CFD3]/50 hover:text-white transition-colors">
-                Click anywhere to skip &rarr;
-              </span>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        {/* Click to skip cue */}
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={
+            isExiting
+              ? { opacity: 0, transition: { duration: 0.2 } }
+              : { opacity: 0.35 }
+          }
+          transition={{ delay: 1.1, duration: 0.4 }}
+          className="absolute bottom-8 text-[10px] font-mono tracking-widest uppercase text-white/50"
+        >
+          Click anywhere to skip
+        </motion.span>
+      </motion.div>
+    </div>
   )
 }
 

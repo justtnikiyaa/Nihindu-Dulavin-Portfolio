@@ -44,6 +44,7 @@ export default {
       },
       fontFamily: {
         heading: ['"Space Grotesk"', 'sans-serif'],
+        anton: ['"Anton"', 'Impact', 'sans-serif'],
       },
       animation: {
         'spin-slow': 'spin 12s linear infinite',
