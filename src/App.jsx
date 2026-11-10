@@ -721,7 +721,7 @@ function Hero({ onOpenCv }) {
             <div className="absolute -inset-8 rounded-t-full bg-[#7D52FD]/20 blur-3xl pointer-events-none" />
 
             {/* Arch Window Frame */}
-            <div className="relative mx-auto h-[320px] w-[260px] overflow-hidden rounded-t-full rounded-b-none border-2 border-[#7D52FD]/40 bg-card/40 shadow-[0_0_50px_rgba(125,82,253,0.3)] backdrop-blur-sm sm:h-[390px] sm:w-[310px] md:h-[440px] md:w-[350px]">
+            <div className="relative mx-auto h-[320px] w-[260px] overflow-hidden rounded-t-full rounded-b-none border-t-2 border-x-2 border-b-0 border-[#7D52FD]/40 bg-card/40 shadow-[0_0_50px_rgba(125,82,253,0.3)] backdrop-blur-sm sm:h-[390px] sm:w-[310px] md:h-[440px] md:w-[350px] [mask-image:linear-gradient(to_bottom,black_45%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_45%,transparent_98%)]">
               {/* Subtle top ambient tint */}
               <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#7D52FD]/10 via-transparent to-transparent pointer-events-none" />
 
@@ -735,7 +735,7 @@ function Hero({ onOpenCv }) {
               />
 
               {/* Seamless Bottom Gradient Fade into background */}
-              <div className="absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-background via-background/70 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 z-10 h-48 bg-gradient-to-t from-background via-background/90 to-transparent pointer-events-none" />
             </div>
 
             {/* Floating Decorative Accents */}
@@ -756,15 +756,15 @@ function Hero({ onOpenCv }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-20 -mt-10 sm:-mt-14 md:-mt-16 flex flex-col items-center"
+            className="relative z-20 -mt-16 sm:-mt-20 md:-mt-24 flex flex-col items-center"
           >
             {/* Headline */}
-            <h1 className="mb-2 font-heading text-4xl font-extrabold leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="mb-2 font-heading text-4xl font-extrabold leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
               Hey, It&apos;s Nihindu <span className="text-gradient">Dulavin</span>.
             </h1>
 
             {/* Subtitle Role (Matching reference layout) */}
-            <h2 className="mb-4 font-heading text-2xl font-bold tracking-tight text-foreground/90 sm:text-3xl md:text-4xl">
+            <h2 className="mb-4 font-heading text-2xl font-bold tracking-tight text-foreground/90 sm:text-3xl md:text-4xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]">
               Full Stack <span className="text-[#9D86FF]">Developer</span>
             </h2>
 
