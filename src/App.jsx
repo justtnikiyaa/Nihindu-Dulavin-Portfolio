@@ -2209,7 +2209,13 @@ function Services({ setInquiryMessage }) {
   }
 
   return (
-    <section id="services" className="section-padding bg-transparent">
+    <section id="services" className="relative section-padding bg-transparent overflow-hidden">
+      {/* Soft Seamless Ambient Background Glow */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden -z-10">
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 h-96 w-96 rounded-full bg-primary/10 blur-[140px]" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 h-96 w-96 rounded-full bg-[#9D86FF]/10 blur-[140px]" />
+      </div>
+
       <ScrollZoomWrapper>
         <div className="container mx-auto">
         <motion.div
@@ -2226,53 +2232,6 @@ function Services({ setInquiryMessage }) {
         </motion.div>
 
         <div className="relative mx-auto max-w-4xl">
-          {/* Glowing Neon Ribbon Wave behind the cards (matching reference image) */}
-          <div className="pointer-events-none absolute inset-x-[-12%] top-1/2 -translate-y-1/2 h-80 overflow-hidden -z-10 opacity-70 dark:opacity-85">
-            <svg className="w-full h-full" viewBox="0 0 1200 300" fill="none" preserveAspectRatio="none">
-              {/* Wide ambient bloom layer */}
-              <path
-                d="M -100 240 C 200 40, 480 280, 800 110 C 1050 10, 1250 200, 1350 120"
-                stroke="url(#neon-wave-glow)"
-                strokeWidth="56"
-                strokeLinecap="round"
-                className="blur-3xl"
-              />
-              {/* Medium glow layer */}
-              <path
-                d="M -100 240 C 200 40, 480 280, 800 110 C 1050 10, 1250 200, 1350 120"
-                stroke="url(#neon-wave-grad)"
-                strokeWidth="16"
-                strokeLinecap="round"
-                className="blur-md opacity-85"
-              />
-              {/* Crisp central neon core line */}
-              <path
-                d="M -100 240 C 200 40, 480 280, 800 110 C 1050 10, 1250 200, 1350 120"
-                stroke="url(#neon-wave-core)"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-                className="opacity-95"
-              />
-              <defs>
-                <linearGradient id="neon-wave-glow" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#7D52FD" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#9D86FF" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#C084FC" stopOpacity="0.8" />
-                </linearGradient>
-                <linearGradient id="neon-wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#7D52FD" />
-                  <stop offset="50%" stopColor="#9D86FF" />
-                  <stop offset="100%" stopColor="#C084FC" />
-                </linearGradient>
-                <linearGradient id="neon-wave-core" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#DDD6FE" />
-                  <stop offset="50%" stopColor="#FFFFFF" />
-                  <stop offset="100%" stopColor="#EDE9FE" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-
           <div className="grid gap-8 md:grid-cols-2">
           {services.map(({ icon: Icon, title, description }, index) => (
             <motion.div
