@@ -532,7 +532,7 @@ function Navbar({ theme, toggleTheme }) {
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none">
       <div
         ref={navRef}
-        className={`pointer-events-auto relative flex w-full max-w-5xl items-center justify-between gap-3 sm:gap-6 rounded-full px-4 sm:px-7 py-2.5 backdrop-blur-2xl transition-all duration-300 overflow-hidden ${isDark
+        className={`pointer-events-auto relative flex w-full max-w-6xl items-center justify-between gap-2 sm:gap-4 lg:gap-5 rounded-full px-4 sm:px-5 xl:px-7 py-2.5 backdrop-blur-2xl transition-all duration-300 overflow-hidden ${isDark
             ? 'bg-[#151022]/85 border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.15)] text-white'
             : 'bg-white/90 border border-black/10 shadow-[0_8px_30px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.8)] text-slate-900'
           }`}
@@ -554,15 +554,15 @@ function Navbar({ theme, toggleTheme }) {
           }}
           onMouseEnter={(e) => setActiveHover(e.currentTarget)}
           onMouseLeave={() => setActiveHover(null)}
-          className={`relative z-10 font-heading text-lg sm:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors ${isDark ? 'text-white' : 'text-slate-900'
+          className={`relative z-10 font-heading text-base lg:text-lg xl:text-xl font-bold flex items-center gap-1.5 group shrink-0 px-2 py-1 rounded-full transition-colors ${isDark ? 'text-white' : 'text-slate-900'
             }`}
         >
-          <span className="text-[#9D86FF] text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
+          <span className="text-[#9D86FF] text-lg lg:text-xl xl:text-2xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">✦</span>
           <span className="font-extrabold tracking-tight">Nihindu.</span>
         </a>
 
         {/* Center Nav Links */}
-        <div className="relative z-10 hidden items-center gap-1 lg:gap-1.5 md:flex">
+        <div className="relative z-10 hidden min-w-0 items-center gap-0.5 lg:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -574,7 +574,7 @@ function Navbar({ theme, toggleTheme }) {
               }}
               onMouseEnter={(e) => setActiveHover(e.currentTarget)}
               onMouseLeave={() => setActiveHover(null)}
-              className={`relative z-10 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${activeSection === item.href
+              className={`relative z-10 whitespace-nowrap rounded-full px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-all duration-200 ${activeSection === item.href
                   ? (isDark
                     ? 'text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]'
                     : 'text-[#7D52FD] font-bold drop-shadow-[0_0_6px_rgba(125,82,253,0.3)]')
@@ -618,7 +618,7 @@ function Navbar({ theme, toggleTheme }) {
             }}
             onMouseEnter={(e) => setActiveHover(e.currentTarget)}
             onMouseLeave={() => setActiveHover(null)}
-            className={`hidden rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider shadow-md transition-all hover:scale-105 md:inline-flex ${isDark
+            className={`hidden rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-wide shadow-md transition-all hover:scale-105 lg:inline-flex ${isDark
                 ? 'bg-white text-black hover:bg-white/90'
                 : 'bg-primary text-white hover:opacity-90'
               }`}
@@ -628,7 +628,7 @@ function Navbar({ theme, toggleTheme }) {
 
           <button
             type="button"
-            className={`p-1 rounded-full md:hidden transition-colors ${isDark ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-black/5'
+            className={`p-1 rounded-full lg:hidden transition-colors ${isDark ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-black/5'
               }`}
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label="Toggle menu"
@@ -651,7 +651,7 @@ function Navbar({ theme, toggleTheme }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className={`absolute left-0 right-0 top-full mt-3 rounded-2xl border p-4 backdrop-blur-2xl shadow-2xl md:hidden ${isDark
+              className={`absolute left-0 right-0 top-full mt-3 rounded-2xl border p-4 backdrop-blur-2xl shadow-2xl lg:hidden ${isDark
                   ? 'bg-[#151022]/95 border-white/15 text-white'
                   : 'bg-white/95 border-black/10 text-slate-900'
                 }`}
