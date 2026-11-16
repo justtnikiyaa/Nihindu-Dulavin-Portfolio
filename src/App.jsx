@@ -62,7 +62,8 @@ import {
   SiGit,
   SiFigma,
   SiFlutter,
-  SiFirebase
+  SiFirebase,
+  SiSpringboot,
 } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'
 
@@ -104,7 +105,8 @@ const skillsData = [
   { name: 'Figma', icon: SiFigma, color: '#F24E1E', category: 'Tools' },
   { name: 'Flutter', icon: SiFlutter, color: '#02569B', category: 'Frontend' },
   { name: 'Firebase', icon: SiFirebase, color: '#FFCA28', category: 'Backend' },
-  { name: 'Java', icon: FaJava, color: '#007396', category: 'Tools' },
+  { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F', category: 'Backend' },
+  { name: 'Java', icon: FaJava, color: '#007396', category: 'Languages' },
 ]
 
 const certifications = [
@@ -365,13 +367,13 @@ const projects = [
     tech: ['MERN Stack', 'Authentication', 'Payments'],
     image: '/images/project-autorenthub.jpg',
     github: 'https://github.com/justtnikiyaa/AutoRentHub.git',
-    preview: '#',
+    preview: null,
   },
 ]
 
 const educationTimeline = [
   {
-    year: 'Oct 2023 – Oct 2027',
+    year: '2024 – 2028',
     title: 'B.Sc (Hons.) in Information Technology',
     subtitle: 'Specialising in Information Technology',
     institution: 'SLIIT',
@@ -978,7 +980,7 @@ function About({ onOpenCv }) {
                 <span className="h-2.5 w-2.5 rounded-full bg-primary" /> Who I Am
               </h3>
               <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
-                I&apos;m <strong className="text-foreground font-semibold">Nihindu Dulavin</strong>, an IT undergraduate specializing in Information Technology at the Sri Lanka Institute of Information Technology (SLIIT), pursuing my BSc (Hons) in IT (2023–Present).
+                I&apos;m <strong className="text-foreground font-semibold">Nihindu Dulavin</strong>, an IT undergraduate specializing in Information Technology at the Sri Lanka Institute of Information Technology (SLIIT), pursuing my BSc (Hons) in IT (2024–2028).
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
                 Experienced in full-stack development (MERN, Java, Spring Boot) and practical IT operations through roles at The Fashion Store (TFS), Road Development Authority (RDA), and Sri Lanka Telecom (SLT). Skilled in building responsive web applications, REST APIs, POS workflows, and database synchronization.
@@ -1135,50 +1137,64 @@ function ProjectImageGallery({ images, image, title, preview, onOpenLightbox }) 
             {displayDomain}
           </div>
         </div>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
-          }}
-          className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:bg-background hover:text-primary transition-colors"
-          title="Full Screen View"
-        >
-          <FiMaximize2 size={13} />
-        </button>
-      </div>
-
-      {/* Main Image View */}
-      <div className="relative aspect-video w-full overflow-hidden bg-black/20">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentIndex}
-            src={imageList[currentIndex]}
-            alt={`${title} screenshot ${currentIndex + 1}`}
-            initial={{ opacity: 0.4, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0.4, scale: 0.98 }}
-            transition={{ duration: 0.25 }}
+        {imageList.length > 0 && (
+          <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation()
               if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
             }}
-            className="h-full w-full object-cover object-top cursor-zoom-in transition-transform duration-500 group-hover:scale-105"
-          />
-        </AnimatePresence>
+            className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:bg-background hover:text-primary transition-colors"
+            title="Full Screen View"
+            aria-label={`View ${title} screenshot full screen`}
+          >
+            <FiMaximize2 size={13} />
+          </button>
+        )}
+      </div>
 
-        {/* Hover overlay hint */}
-        <div
-          onClick={(e) => {
-            e.stopPropagation()
-            if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
-          }}
-          className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        >
-          <span className="flex items-center gap-1.5 rounded-full bg-black/80 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md border border-white/20 shadow-xl">
-            <FiMaximize2 size={13} /> Click to Expand Photo
-          </span>
-        </div>
+      {/* Main Image View */}
+      <div className="relative aspect-video w-full overflow-hidden bg-black/20">
+        {imageList.length > 0 ? (
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentIndex}
+              src={imageList[currentIndex]}
+              alt={`${title} screenshot ${currentIndex + 1}`}
+              loading="lazy"
+              decoding="async"
+              initial={{ opacity: 0.4, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0.4, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
+              }}
+              className="h-full w-full object-cover object-top cursor-zoom-in transition-transform duration-500 group-hover:scale-105"
+            />
+          </AnimatePresence>
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-secondary/80 via-card to-primary/10 px-6 text-center">
+            <FiLayers className="text-primary/80" size={30} aria-hidden="true" />
+            <p className="font-heading text-sm font-semibold text-foreground">{title}</p>
+            <p className="text-xs text-muted-foreground">Project screenshots coming soon</p>
+          </div>
+        )}
+
+        {imageList.length > 0 && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onOpenLightbox) onOpenLightbox(imageList, currentIndex, title)
+            }}
+            className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          >
+            <span className="flex items-center gap-1.5 rounded-full bg-black/80 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md border border-white/20 shadow-xl">
+              <FiMaximize2 size={13} /> Click to Expand Photo
+            </span>
+          </div>
+        )}
 
         {/* Navigation Arrows (if multiple images) */}
         {imageList.length > 1 && (
@@ -1699,19 +1715,29 @@ function TerminalConsole() {
 
 function GithubDashboard() {
   const [githubData, setGithubData] = useState(null)
+  const [githubStatus, setGithubStatus] = useState('loading')
   const currentYear = new Date().getFullYear().toString()
   const [selectedYear, setSelectedYear] = useState(currentYear)
 
   useEffect(() => {
+    const controller = new AbortController()
+
     async function fetchStats() {
       try {
         const [userRes, contributionsRes] = await Promise.all([
-          fetch('https://api.github.com/users/justtnikiyaa'),
-          fetch('https://github-contributions-api.jogruber.de/v4/justtnikiyaa')
+          fetch('https://api.github.com/users/justtnikiyaa', { signal: controller.signal }),
+          fetch('https://github-contributions-api.jogruber.de/v4/justtnikiyaa', { signal: controller.signal })
         ])
+
+        if (!userRes.ok || !contributionsRes.ok) {
+          throw new Error('GitHub activity request failed')
+        }
 
         const userData = await userRes.json()
         const contribData = await contributionsRes.json()
+        if (!Array.isArray(contribData.contributions)) {
+          throw new Error('GitHub contributions response was invalid')
+        }
 
         // Calculate Longest Streak
         let currentStreak = 0
@@ -1733,34 +1759,41 @@ function GithubDashboard() {
 
         // Calculate active weeks (out of the last 52 weeks)
         const lastYearContribs = sorted.slice(-364)
-        let activeWeeksCount = 0
-        for (let i = 0; i < lastYearContribs.length; i += 7) {
-          const week = lastYearContribs.slice(i, i + 7)
-          if (week.some(day => day.count > 0)) {
-            activeWeeksCount++
-          }
-        }
+        const activeWeeks = new Set(
+          lastYearContribs
+            .filter(day => day.count > 0)
+            .map((day) => {
+              const weekStart = new Date(`${day.date}T00:00:00`)
+              weekStart.setDate(weekStart.getDate() - ((weekStart.getDay() + 6) % 7))
+              return `${weekStart.getFullYear()}-${weekStart.getMonth()}-${weekStart.getDate()}`
+            })
+        )
 
         setGithubData({
           publicRepos: userData.public_repos || 0,
           longestStreak: maxStreak,
-          activeWeeks: `${activeWeeksCount}/52`,
-          allTotals: contribData.total, // e.g. {"2024":1, "2025":0, "2026":258}
+          activeWeeks: `${activeWeeks.size}/52`,
+          allTotals: contribData.total || {},
           allContributions: sorted
         })
+        setGithubStatus('loaded')
       } catch (err) {
-        console.error('Failed to fetch github stats', err)
+        if (!controller.signal.aborted) {
+          console.error('Failed to fetch github stats', err)
+          setGithubStatus('error')
+        }
       }
     }
 
     fetchStats()
+    return () => controller.abort()
   }, [])
 
   // Filter and group calendar days
   let displayDays = []
   if (githubData) {
     if (selectedYear === currentYear) {
-      displayDays = githubData.allContributions.slice(-364) // Last 364 days
+      displayDays = githubData.allContributions.filter(c => c.date.startsWith(currentYear))
     } else {
       displayDays = githubData.allContributions.filter(c => c.date.startsWith(selectedYear))
     }
@@ -1769,20 +1802,13 @@ function GithubDashboard() {
   // Align starting weekday
   let alignedDays = []
   if (displayDays.length > 0) {
-    const firstDayOfWeek = new Date(displayDays[0].date).getDay()
+    const firstDayOfWeek = (new Date(`${displayDays[0].date}T00:00:00`).getDay() + 6) % 7
     const placeholders = Array.from({ length: firstDayOfWeek }, () => ({
       date: '',
       count: -1,
       level: -1
     }))
     alignedDays = [...placeholders, ...displayDays]
-  } else {
-    // Simulated loading/fallback days
-    alignedDays = Array.from({ length: 53 * 7 }, (_, idx) => ({
-      date: '',
-      count: (idx % 11 === 0 || idx % 19 === 0) ? (idx % 4) : 0,
-      level: (idx % 11 === 0 || idx % 19 === 0) ? (idx % 4) : 0
-    }))
   }
 
   // Group into weeks
@@ -1797,7 +1823,7 @@ function GithubDashboard() {
   weeksList.forEach((week, colIdx) => {
     const firstValidDay = week.find(d => d.date !== '')
     if (firstValidDay) {
-      const dateObj = new Date(firstValidDay.date)
+      const dateObj = new Date(`${firstValidDay.date}T00:00:00`)
       const monthName = dateObj.toLocaleString('default', { month: 'short' })
       if (monthName !== prevMonth) {
         monthsHeader.push({ label: monthName, colIndex: colIdx })
@@ -1808,17 +1834,17 @@ function GithubDashboard() {
 
   const years = githubData
     ? Object.keys(githubData.allTotals).sort((a, b) => b - a)
-    : [currentYear, '2025', '2024']
+    : []
 
   const yearTotal = githubData
     ? (githubData.allTotals[selectedYear] || 0)
-    : 272
+    : null
 
   const stats = [
-    { label: 'Total Repositories', value: githubData ? `${githubData.publicRepos}` : '18+' },
-    { label: 'Annual Contributions', value: githubData ? `${githubData.allTotals[currentYear] || 0}` : '258' },
-    { label: 'Active Weeks', value: githubData ? githubData.activeWeeks : '48/52' },
-    { label: 'Longest Streak', value: githubData ? `${githubData.longestStreak} Days` : '18 Days' }
+    { label: 'Total Repositories', value: githubData ? `${githubData.publicRepos}` : '—' },
+    { label: 'Annual Contributions', value: githubData ? `${githubData.allTotals[currentYear] || 0}` : '—' },
+    { label: 'Active Weeks', value: githubData ? githubData.activeWeeks : '—' },
+    { label: 'Longest Streak', value: githubData ? `${githubData.longestStreak} Days` : '—' }
   ]
 
   return (
@@ -1850,9 +1876,15 @@ function GithubDashboard() {
               <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <h3 className="text-lg font-bold text-foreground">
-                    {yearTotal} contributions in {selectedYear === currentYear ? 'the last year' : selectedYear}
+                    {githubData ? `${yearTotal} contributions in ${selectedYear}` : 'GitHub activity'}
                   </h3>
-                  <p className="text-xs text-muted-foreground">Account: @justtnikiyaa</p>
+                  <p className="text-xs text-muted-foreground" role="status" aria-live="polite">
+                    {githubStatus === 'loaded'
+                      ? 'Account: @justtnikiyaa'
+                      : githubStatus === 'error'
+                        ? 'Activity data is temporarily unavailable.'
+                        : 'Loading activity from GitHub…'}
+                  </p>
                 </div>
                 <a
                   href="https://github.com/justtnikiyaa"
@@ -2005,7 +2037,7 @@ function GithubDashboard() {
 function Skills() {
   const [activeCategory, setActiveCategory] = useState('All')
 
-  const categories = ['All', 'Frontend', 'Backend', 'Tools']
+  const categories = ['All', 'Frontend', 'Backend', 'Languages', 'Tools']
 
   const filteredSkills = activeCategory === 'All'
     ? skillsData
